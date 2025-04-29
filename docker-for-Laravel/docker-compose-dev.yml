@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+  testapi:
+    build:
+      dockerfile: ./dockerfiles/app.Dockerfile
+      context: .
+    image: $APP_IMAGE
+    restart: unless-stopped
+    container_name: test
+    volumes:
+      - $APP_VOLUMES_SRC:/var/www/html
+    env_file:
+      - ./envs/app.env
+  
+  test-nginx:
+    depends_on:
+      - testapi
+    image: nginx:stable-alpine3.17
+    restart: unless-stopped
+    container_name: test-nginx
+    ports:
+      - $NGINX_PORT:80
+    volumes:
+      - $APP_VOLUMES_SRC:/var/www/html
+      - $SERVER_SRC:/etc/nginx/conf.d/default.conf
