@@ -1,0 +1,14 @@
+services:
+  optiomax_runner:
+    image: $APP_IMAGE_NAME:$VERSION
+    container_name: $APP_CONTAINER_NAME
+    env_file:
+      - ./envs/app.env
+
+  nginx:
+    depends_on:
+      - optiomax_runner
+    image: $PROXY_IMAGE_NAME:$VERSION
+    container_name: $PROXY_CONTAINER_NAME
+    ports:
+      - $APP_PROXY_PORT:80

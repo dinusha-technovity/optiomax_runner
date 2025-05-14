@@ -1,0 +1,45 @@
+install and setup Redis on server or localpc
+
+Step 1: Install Redis locally (if not already)
+
+sudo apt update
+sudo apt install redis-server
+sudo systemctl start redis-server
+(if you are using docker container add redis php extention to docker container)
+
+Step 2: Update Laravel .env (inside your Docker volume)
+
+QUEUE_CONNECTION=redis
+CACHE_DRIVER=redis
+SESSION_DRIVER=redis
+REDIS_HOST=172.17.0.1
+REDIS_PORT=6379
+
+Step 3: redis config file edit and allow to all ip
+
+Step 4: check redix connection with laravel tinker or run below commond on your docker root
+redis-cli -h 172.17.0.1 ping
+result->pong
+
+Step 5: run after below commond on your project root
+
+php artisan check:asset-expiry
+php artisan notify:critically-based-asset-schedule
+php artisan notify:maintenance-tasks-asset-schedule
+php artisan listen:tenant-asset-actions
+php artisan queue:work redis --queue=emails or php artisan queue:work redis
+
+
+php artisan cache:clear
+php artisan config:clear
+php artisan route:clear
+php artisan view:clear
+
+php artisan check:asset-expiry
+php artisan listen:tenant-asset-actions
+php artisan queue:work redis --queue=emails
+
+
+---------------------------------------------------------------
+
+setup supervisor with laravel docker.
