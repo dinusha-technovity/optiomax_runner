@@ -10,6 +10,7 @@ class Kernel extends ConsoleKernel
     protected $commands = [
         \App\Console\Commands\ListenTenantAssetActions::class,
         \App\Console\Commands\NotifyCriticallyBasedAssetSchedule::class,
+        \App\Console\Commands\NotifyMaintenanceTasksAssetSchedule::class,
     ];
     
     /**
