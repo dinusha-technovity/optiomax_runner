@@ -37,5 +37,11 @@ COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
 COPY ./dockerfiles/supervisor/supervisord.conf /etc/supervisord.conf
 COPY ./dockerfiles/supervisor/laravel-worker.conf /etc/supervisor/conf.d/laravel-worker.conf
 
+COPY ./dockerfiles/supervisor/scheduler.conf /etc/supervisor/conf.d/scheduler.conf
+COPY ./dockerfiles/supervisor/queue-worker.conf /etc/supervisor/conf.d/queue-worker.conf
+COPY ./dockerfiles/supervisor/listen-asset.conf /etc/supervisor/conf.d/listen-asset.conf
+COPY ./dockerfiles/supervisor/notify-critically.conf /etc/supervisor/conf.d/notify-critically.conf
+COPY ./dockerfiles/supervisor/notify-maintenance.conf /etc/supervisor/conf.d/notify-maintenance.conf
+
 # Set entrypoint to start supervisor
 CMD ["/usr/bin/supervisord", "-c", "/etc/supervisord.conf"]
