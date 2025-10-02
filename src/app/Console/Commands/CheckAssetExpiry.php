@@ -9,6 +9,7 @@ use App\Jobs\SendAssetActionEmailJob;
 use Illuminate\Support\Facades\Mail;
 use Carbon\Carbon;
 use App\Mail\SupplierQuotationExpiryMail;
+use Illuminate\Support\Facades\Log;
 
 class CheckAssetExpiry extends Command
 {
@@ -18,6 +19,7 @@ class CheckAssetExpiry extends Command
     public function handle()
     {
         $this->info('Starting Expiry Checker...');
+
 
         $tenants = DB::table('tenants')->get();
 
@@ -54,6 +56,7 @@ class CheckAssetExpiry extends Command
 
         $this->checkExpiringAssets($db, $tenant, $targetDate, $today);
         $this->checkSupplierQuotations($db, $tenant, $quotationReminderDate, $today);
+        $this->runAssetItemDepreciations($db, $tenant, $today);
     }
 
     protected function checkExpiringAssets($db, $tenant, $targetDate, $today)
@@ -66,7 +69,7 @@ class CheckAssetExpiry extends Command
                 ->where(function ($query) use ($targetDate) {
                     $query->where(function ($q) use ($targetDate) {
                         $q->whereDate('warranty_exparing_at', $targetDate)
-                          ->whereIn('warrenty_condition_type_id', [1, 3]);
+                            ->whereIn('warrenty_condition_type_id', [1, 3]);
                     })->orWhere(function ($q) use ($targetDate) {
                         $q->whereDate('insurance_exparing_at', $targetDate);
                     });
@@ -121,7 +124,7 @@ class CheckAssetExpiry extends Command
     protected function checkSupplierQuotations($db, $tenant, $expiryDate, $today)
     {
         $expiringRequests = $db->table('supplier_quotation_request')
-            ->whereDate('expires_at', $expiryDate) 
+            ->whereDate('expires_at', $expiryDate)
             ->where('request_status', 'pending')
             ->whereNull('deleted_at')
             ->where('isactive', true)
@@ -137,7 +140,7 @@ class CheckAssetExpiry extends Command
 
             if (!$alreadySent) {
                 Mail::to($request->email)->queue(new SupplierQuotationExpiryMail($request));
-                
+
                 // Optional: Log it to prevent resending
                 $db->table('supplier_email_logs')->insert([
                     'reference_id' => $request->id,
@@ -152,4 +155,31 @@ class CheckAssetExpiry extends Command
             }
         }
     }
+
+    protected function runAssetItemDepreciations($db, $tenant, $today)
+    {
+        // timer_start('database_queries_for_depreciation');
+        try {
+
+            // Log::debug("Running asset item depreciations for tenant: {$tenant->id} : date {$today->toDateString()}");
+            // Calling the stored procedure to calculate daily depreciation
+
+            logger()->debug("Running asset item depreciations for tenant: {$tenant->id} : date {$today->toDateString()}");
+                $db->select("CALL generate_daily_depreciation(CAST(? AS BIGINT), CAST(? AS DATE))", [
+                    $tenant->id,
+                    $today->toDateString()
+                ]);
+
+            logger()->info("Depreciation calculation success for tenant id: {$tenant->id}");
+
+            // timer_stop('database_queries_for_depreciation');
+
+        } catch (\Throwable $th) {
+            logger()->error("Error occurred while running asset item depreciations for tenant {$tenant->id}: {$th->getMessage()}");
+            
+        }
+    }
+
 }
+
+
