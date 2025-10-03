@@ -82,4 +82,4 @@ jobs:
           username: ${{ secrets.VPS_USER }}
           password: ${{ secrets.VPS_PASSWORD }}
           script: |
-            docker exec -t optiomax_runner sh -c "php artisan migrate"
+            docker exec -t optiomax_runner sh -c "php artisan migrate && php artisan passport:install && php artisan tenantss:migrates:all tenant"

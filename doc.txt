@@ -43,3 +43,11 @@ php artisan queue:work redis --queue=emails
 ---------------------------------------------------------------
 
 setup supervisor with laravel docker.
+
+
+
+# Start the queue worker for Redis
+php artisan queue:work redis --queue=tenant-registration,default
+
+# In another terminal, run the listener
+php artisan listen:tenant-registration-actions --batch=10

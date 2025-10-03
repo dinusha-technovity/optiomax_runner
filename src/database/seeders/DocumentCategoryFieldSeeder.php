@@ -1,0 +1,768 @@
+<?php
+
+namespace Database\Seeders;
+
+use Carbon\Carbon;
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
+
+class DocumentCategoryFieldSeeder extends Seeder
+{ 
+    /**
+     * Run the database seeds.
+     */
+    public function run(): void
+    { 
+        if (Schema::hasTable('document_category_field')) {
+            // Schema::disableForeignKeyConstraints();
+            DB::table('document_category_field')->truncate();
+            // Schema::enableForeignKeyConstraints();
+        }
+        DB::table('document_category_field')->insert([
+            // 1
+            [
+                'document_category_id'=>8,
+                'document_field_name'=>"Br attachment",
+                'description'=>"Br attachment of supplire",
+                'file_path'=>'uploads/supplier/br_attachment',
+                'isactive'=>true,
+                'document_formats'=>'PDF,DOC,DOCX,JPG,PNG,JPEG',
+                'max_upload_count'=>5,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+                'listable'=>true,
+            ],
+            // 2
+            [
+                'document_category_id'=>16,
+                'document_field_name'=>"Item master image",
+                'description'=>"Item master image",
+                'file_path'=>'uploads/items/item_images',
+                'isactive'=>true,
+                'document_formats'=>'PDF,DOC,DOCX,JPG,PNG,JPEG',
+                'max_upload_count'=>5,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+                'listable'=>true,
+            ],
+            // 3
+            [
+                'document_category_id'=>11,
+                'document_field_name'=>"User Profile image",
+                'description'=>"profile image",
+                'file_path'=>'uploads/profile_image',
+                'isactive'=>true,
+                'document_formats'=>'SVG,PNG,JPG,GIF',
+                'max_upload_count'=>1,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+                'listable'=>false,
+
+            ],
+            // 4
+            [
+                'document_category_id'=>4,
+                'document_field_name'=>"any document related with asset",
+                'description'=>"any document related with asset",
+                'file_path'=>'uploads/AssestRequisition/Assest',
+                'isactive'=>true,
+                'document_formats'=>'SVG,PNG,JPG,GIF,DOC,DOCX,CSV,PDF',
+                'max_upload_count'=>5,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+                'listable'=>true,
+
+            ],
+            // 5
+            [
+                'document_category_id'=>2,
+                'document_field_name'=>"Thumbnail images",
+                'description'=>"new asset group",
+                'file_path'=>'uploads/assets/thumbnail_image',
+                'isactive'=>true,
+                'document_formats'=>'SVG,PNG,JPG,GIF,DOC,DOCX,CSV,PDF',
+                'max_upload_count'=>1,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+                'listable'=>false,
+            ],
+            // 6
+            [
+                'document_category_id'=>3,
+                'document_field_name'=>"Thumbnail images",
+                'description'=>"new asset item",
+                'file_path'=>'uploads/assets/thumbnail_image',
+                'isactive'=>true,
+                'document_formats'=>'SVG,PNG,JPG,GIF,DOC,DOCX,CSV,PDF',
+                'max_upload_count'=>5,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+                'listable'=>false,
+
+            ],
+            // 7
+            [
+                'document_category_id'=>3,
+                'document_field_name'=>"Purchase documents",
+                'description'=>"pruchase docs",
+                'file_path'=>'uploads/assets/purchase_document',
+                'isactive'=>true,
+                'document_formats'=>'SVG,PNG,JPG,GIF,DOC,DOCX,CSV,PDF',
+                'max_upload_count'=>5,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+                'listable'=>true,
+            ],
+            // 8
+            [
+                'document_category_id'=>3,
+                'document_field_name'=>"item documents",
+                'description'=>"item docs",
+                'file_path'=>'uploads/assets/assets_document',
+                'isactive'=>true,
+                'document_formats'=>'SVG,PNG,JPG,GIF,DOC,DOCX,CSV,PDF',
+                'max_upload_count'=>5,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+                'listable'=>true,
+
+            ],
+            // 9
+            [
+                'document_category_id'=>3,
+                'document_field_name'=>"insurance documents",
+                'description'=>"insurance docs",
+                'file_path'=>'uploads/assets/insurance_document',
+                'isactive'=>true,
+                'document_formats'=>'SVG,PNG,JPG,GIF,DOC,DOCX,CSV,PDF',
+                'max_upload_count'=>5,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+                'listable'=>true,
+
+            ],
+            // 10
+            [
+                'document_category_id'=>14,
+                'document_field_name'=>"permit documents",
+                'description'=>"permit docs",
+                'file_path'=>'uploads/work_orders/permit_documents',
+                'isactive'=>true,
+                'document_formats'=>'SVG,PNG,JPG,GIF,DOC,DOCX,CSV,PDF',
+                'max_upload_count'=>5,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+                'listable'=>true,
+
+            ],
+            // 11
+            [
+                'document_category_id'=>5,
+                'document_field_name'=>"upload files",
+                'description'=>"uploads files",
+                'file_path'=>'uploads/Procurement/attachment',
+                'isactive'=>true,
+                'document_formats'=>'SVG,PNG,JPG,GIF,DOC,DOCX,CSV,PDF',
+                'max_upload_count'=>5,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+                'listable'=>true,
+            ],
+            // 12
+            [
+                'document_category_id'=>5,
+                'document_field_name'=>"RPF documents",
+                'description'=>"RPF doc files",
+                'file_path'=>'uploads/Procurement/rpf_document',
+                'isactive'=>true,
+                'document_formats'=>'SVG,PNG,JPG,GIF,DOC,DOCX,CSV,PDF',
+                'max_upload_count'=>5,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+                'listable'=>true,
+
+            ],
+            // 13
+            [
+                'document_category_id'=>15,
+                'document_field_name'=>"Work order completion image",
+                'description'=>"work order completion docs",
+                'file_path'=>'uploads/work_orders/completion_images',
+                'isactive'=>true,
+                'document_formats'=>'SVG,PNG,JPG,GIF,DOC,DOCX,CSV,PDF',
+                'max_upload_count'=>5,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+                'listable'=>true,
+
+            ],
+            // 14
+            [
+                'document_category_id'=>17,
+                'document_field_name'=>"Incident reports Attachments",
+                'description'=>"incident reports docs",
+                'file_path'=>'uploads/incident_reports/attachments',
+                'isactive'=>true,
+                'document_formats'=>'SVG,PNG,JPG,GIF,DOC,DOCX,CSV,PDF',
+                'max_upload_count'=>5,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+                'listable'=>true,
+
+            ],
+
+            // 15
+            [
+                'document_category_id'=>9,
+                'document_field_name'=>"Supplier Quotation Attachments",
+                'description'=>"supplier quotation docs",
+                'file_path'=>'uploads/supplier_quotation/attachments',
+                'isactive'=>true,
+                'document_formats'=>'SVG,PNG,JPG,GIF,DOC,DOCX,CSV,PDF',
+                'max_upload_count'=>5,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+                'listable'=>true,
+            ],
+            
+            // 16
+            [
+                'document_category_id'=>19,
+                'document_field_name'=>"Asset Availability Attachments",
+                'description'=>"asset availability docs",
+                'file_path'=>'uploads/asset_availability/attachments',
+                'isactive'=>true,
+                'document_formats'=>'SVG,PNG,JPG,GIF,DOC,DOCX,CSV,PDF',
+                'max_upload_count'=>5,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+                'listable'=>true,
+            ],
+            // 17
+            [
+                'document_category_id'=>20,
+                'document_field_name'=>"National ID card",
+                'description'=>"Government-issued National ID card",
+                'file_path'=>'uploads/asset_booking/identity/national_id',
+                'isactive'=>true,
+                'document_formats'=>'PDF,JPG,PNG',
+                'max_upload_count'=>1,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+                'listable'=>true,
+            ],
+            // 18
+            [
+                'document_category_id'=>20,
+                'document_field_name'=>"Passport",
+                'description'=>"Government-issued Passport",
+                'file_path'=>'uploads/asset_booking/identity/passport',
+                'isactive'=>true,
+                'document_formats'=>'PDF,JPG,PNG',
+                'max_upload_count'=>1,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+                'listable'=>true,
+            ],
+            // 19
+            [
+                'document_category_id'=>20,
+                'document_field_name'=>"Driver’s license",
+                'description'=>"Driver’s license for vehicles or equipment",
+                'file_path'=>'uploads/asset_booking/identity/drivers_license',
+                'isactive'=>true,
+                'document_formats'=>'PDF,JPG,PNG',
+                'max_upload_count'=>1,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+                'listable'=>true,
+            ],
+            // 20
+            [
+                'document_category_id'=>20,
+                'document_field_name'=>"Employee ID card",
+                'description'=>"Proof of employment - Employee ID card",
+                'file_path'=>'uploads/asset_booking/employment/employee_id',
+                'isactive'=>true,
+                'document_formats'=>'PDF,JPG,PNG',
+                'max_upload_count'=>1,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+                'listable'=>true,
+            ],
+            // 21
+            [
+                'document_category_id'=>20,
+                'document_field_name'=>"Company authorization letter",
+                'description'=>"Company authorization letter for access",
+                'file_path'=>'uploads/asset_booking/employment/authorization_letter',
+                'isactive'=>true,
+                'document_formats'=>'PDF,JPG,PNG,DOC,DOCX',
+                'max_upload_count'=>1,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+                'listable'=>true,
+            ],
+            // 22
+            [
+                'document_category_id'=>20,
+                'document_field_name'=>"Student ID",
+                'description'=>"Student ID for educational institution users",
+                'file_path'=>'uploads/asset_booking/employment/student_id',
+                'isactive'=>true,
+                'document_formats'=>'PDF,JPG,PNG',
+                'max_upload_count'=>1,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+                'listable'=>true,
+            ],
+            // 23
+            [
+                'document_category_id'=>20,
+                'document_field_name'=>"Utility bill",
+                'description'=>"Recent utility bill as proof of address",
+                'file_path'=>'uploads/asset_booking/address/utility_bill',
+                'isactive'=>true,
+                'document_formats'=>'PDF,JPG,PNG',
+                'max_upload_count'=>1,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+                'listable'=>true,
+            ],
+            // 24
+            [
+                'document_category_id'=>20,
+                'document_field_name'=>"Bank statement",
+                'description'=>"Bank statement as proof of address",
+                'file_path'=>'uploads/asset_booking/address/bank_statement',
+                'isactive'=>true,
+                'document_formats'=>'PDF,JPG,PNG',
+                'max_upload_count'=>1,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+                'listable'=>true,
+            ],
+            // 25
+            [
+                'document_category_id'=>20,
+                'document_field_name'=>"Official correspondence",
+                'description'=>"Official correspondence as proof of address",
+                'file_path'=>'uploads/asset_booking/address/official_correspondence',
+                'isactive'=>true,
+                'document_formats'=>'PDF,JPG,PNG',
+                'max_upload_count'=>1,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+                'listable'=>true,
+            ],
+            // 26
+            [
+                'document_category_id'=>20,
+                'document_field_name'=>"Equipment operation license",
+                'description'=>"License/certificate for equipment operation",
+                'file_path'=>'uploads/asset_booking/licenses/equipment_operation',
+                'isactive'=>true,
+                'document_formats'=>'PDF,JPG,PNG',
+                'max_upload_count'=>1,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+                'listable'=>true,
+            ],
+            // 27
+            [
+                'document_category_id'=>20,
+                'document_field_name'=>"Access permit",
+                'description'=>"Access permit for restricted areas/assets",
+                'file_path'=>'uploads/asset_booking/licenses/access_permit',
+                'isactive'=>true,
+                'document_formats'=>'PDF,JPG,PNG',
+                'max_upload_count'=>1,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+                'listable'=>true,
+            ],
+            // 28
+            [
+                'document_category_id'=>20,
+                'document_field_name'=>"Forklift/heavy machinery operator license",
+                'description'=>"License for forklift or heavy machinery operation",
+                'file_path'=>'uploads/asset_booking/licenses/forklift_operator',
+                'isactive'=>true,
+                'document_formats'=>'PDF,JPG,PNG',
+                'max_upload_count'=>1,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+                'listable'=>true,
+            ],
+            // 29
+            [
+                'document_category_id'=>20,
+                'document_field_name'=>"Supervisor approval",
+                'description'=>"Supervisor/manager approval for booking",
+                'file_path'=>'uploads/asset_booking/authorization/supervisor_approval',
+                'isactive'=>true,
+                'document_formats'=>'PDF,JPG,PNG,DOC,DOCX',
+                'max_upload_count'=>1,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+                'listable'=>true,
+            ],
+            // 30
+            [
+                'document_category_id'=>20,
+                'document_field_name'=>"Department head approval",
+                'description'=>"Department head approval for booking",
+                'file_path'=>'uploads/asset_booking/authorization/department_head_approval',
+                'isactive'=>true,
+                'document_formats'=>'PDF,JPG,PNG,DOC,DOCX',
+                'max_upload_count'=>1,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+                'listable'=>true,
+            ],
+            // 31
+            [
+                'document_category_id'=>20,
+                'document_field_name'=>"Project manager approval",
+                'description'=>"Project manager approval for project assets",
+                'file_path'=>'uploads/asset_booking/authorization/project_manager_approval',
+                'isactive'=>true,
+                'document_formats'=>'PDF,JPG,PNG,DOC,DOCX',
+                'max_upload_count'=>1,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+                'listable'=>true,
+            ],
+            // 32
+            [
+                'document_category_id'=>20,
+                'document_field_name'=>"Insurance certificate",
+                'description'=>"Personal or company insurance certificate",
+                'file_path'=>'uploads/asset_booking/insurance/certificate',
+                'isactive'=>true,
+                'document_formats'=>'PDF,JPG,PNG',
+                'max_upload_count'=>1,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+                'listable'=>true,
+            ],
+            // 33
+            [
+                'document_category_id'=>20,
+                'document_field_name'=>"Temporary insurance",
+                'description'=>"Temporary insurance for high-value/risk assets",
+                'file_path'=>'uploads/asset_booking/insurance/temporary',
+                'isactive'=>true,
+                'document_formats'=>'PDF,JPG,PNG',
+                'max_upload_count'=>1,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+                'listable'=>true,
+            ],
+            // 34
+            [
+                'document_category_id'=>20,
+                'document_field_name'=>"Liability waiver",
+                'description'=>"Liability waiver form",
+                'file_path'=>'uploads/asset_booking/insurance/liability_waiver',
+                'isactive'=>true,
+                'document_formats'=>'PDF,JPG,PNG,DOC,DOCX',
+                'max_upload_count'=>1,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+                'listable'=>true,
+            ],
+            // 35
+            [
+                'document_category_id'=>20,
+                'document_field_name'=>"Credit/debit card details",
+                'description'=>"Payment/deposit - credit or debit card details",
+                'file_path'=>'uploads/asset_booking/payment/card_details',
+                'isactive'=>true,
+                'document_formats'=>'PDF,JPG,PNG',
+                'max_upload_count'=>1,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+                'listable'=>true,
+            ],
+            // 36
+            [
+                'document_category_id'=>20,
+                'document_field_name'=>"Purchase order",
+                'description'=>"Purchase order for corporate bookings",
+                'file_path'=>'uploads/asset_booking/payment/purchase_order',
+                'isactive'=>true,
+                'document_formats'=>'PDF,JPG,PNG,DOC,DOCX',
+                'max_upload_count'=>1,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+                'listable'=>true,
+            ],
+            // 37
+            [
+                'document_category_id'=>20,
+                'document_field_name'=>"Bank transfer/deposit slip",
+                'description'=>"Bank transfer or deposit slip",
+                'file_path'=>'uploads/asset_booking/payment/bank_transfer',
+                'isactive'=>true,
+                'document_formats'=>'PDF,JPG,PNG',
+                'max_upload_count'=>1,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+                'listable'=>true,
+            ],
+            // 38
+            [
+                'document_category_id'=>20,
+                'document_field_name'=>"Internal cost center code",
+                'description'=>"Internal cost center code for accounting",
+                'file_path'=>'uploads/asset_booking/payment/cost_center_code',
+                'isactive'=>true,
+                'document_formats'=>'PDF,JPG,PNG,DOC,DOCX',
+                'max_upload_count'=>1,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+                'listable'=>true,
+            ],
+            // 39
+            [
+                'document_category_id'=>20,
+                'document_field_name'=>"Safety training certificate",
+                'description'=>"Safety training certificate for hazardous equipment",
+                'file_path'=>'uploads/asset_booking/special/safety_training',
+                'isactive'=>true,
+                'document_formats'=>'PDF,JPG,PNG',
+                'max_upload_count'=>1,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+                'listable'=>true,
+            ],
+            // 40
+            [
+                'document_category_id'=>20,
+                'document_field_name'=>"Event permit",
+                'description'=>"Event permit for asset use at events",
+                'file_path'=>'uploads/asset_booking/special/event_permit',
+                'isactive'=>true,
+                'document_formats'=>'PDF,JPG,PNG',
+                'max_upload_count'=>1,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+                'listable'=>true,
+            ],
+            // 41
+            [
+                'document_category_id'=>20,
+                'document_field_name'=>"Health certificate",
+                'description'=>"Health certificate for health-related assets",
+                'file_path'=>'uploads/asset_booking/special/health_certificate',
+                'isactive'=>true,
+                'document_formats'=>'PDF,JPG,PNG',
+                'max_upload_count'=>1,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+                'listable'=>true,
+            ],
+            // 42
+            [
+                'document_category_id'=>20,
+                'document_field_name'=>"Customs clearance documents",
+                'description'=>"Customs clearance for cross-border assets",
+                'file_path'=>'uploads/asset_booking/special/customs_clearance',
+                'isactive'=>true,
+                'document_formats'=>'PDF,JPG,PNG',
+                'max_upload_count'=>1,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+                'listable'=>true,
+            ],
+            // 43
+            [
+                'document_category_id'=>20,
+                'document_field_name'=>"Environmental clearance",
+                'description'=>"Environmental clearance/permit for equipment",
+                'file_path'=>'uploads/asset_booking/special/environmental_clearance',
+                'isactive'=>true,
+                'document_formats'=>'PDF,JPG,PNG',
+                'max_upload_count'=>1,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+                'listable'=>true,
+            ],
+            // 44
+            [
+                'document_category_id'=>20,
+                'document_field_name'=>"Equipment calibration certificate",
+                'description'=>"Equipment calibration certificate",
+                'file_path'=>'uploads/asset_booking/special/calibration_certificate',
+                'isactive'=>true,
+                'document_formats'=>'PDF,JPG,PNG',
+                'max_upload_count'=>1,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+                'listable'=>true,
+            ],
+            // 45
+            [
+                'document_category_id'=>20,
+                'document_field_name'=>"Signed rental agreement",
+                'description'=>"Signed rental or usage agreement",
+                'file_path'=>'uploads/asset_booking/terms/rental_agreement',
+                'isactive'=>true,
+                'document_formats'=>'PDF,JPG,PNG,DOC,DOCX',
+                'max_upload_count'=>1,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+                'listable'=>true,
+            ],
+            // 46
+            [
+                'document_category_id'=>20,
+                'document_field_name'=>"Digital acceptance of terms",
+                'description'=>"Digital acceptance of terms and conditions",
+                'file_path'=>'uploads/asset_booking/terms/digital_acceptance',
+                'isactive'=>true,
+                'document_formats'=>'PDF,JPG,PNG',
+                'max_upload_count'=>1,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+                'listable'=>true,
+            ],
+            // 47
+            [
+                'document_category_id'=>20,
+                'document_field_name'=>"Non-disclosure agreement",
+                'description'=>"Non-disclosure agreement for confidential assets",
+                'file_path'=>'uploads/asset_booking/terms/nda',
+                'isactive'=>true,
+                'document_formats'=>'PDF,JPG,PNG,DOC,DOCX',
+                'max_upload_count'=>1,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+                'listable'=>true,
+            ],
+            // 48
+            [
+                'document_category_id'=>20,
+                'document_field_name'=>"Asset check-out form",
+                'description'=>"Asset handover/check-out form",
+                'file_path'=>'uploads/asset_booking/handover/checkout_form',
+                'isactive'=>true,
+                'document_formats'=>'PDF,JPG,PNG,DOC,DOCX',
+                'max_upload_count'=>1,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+                'listable'=>true,
+            ],
+            // 49
+            [
+                'document_category_id'=>20,
+                'document_field_name'=>"Asset check-in form",
+                'description'=>"Asset check-in/return form",
+                'file_path'=>'uploads/asset_booking/handover/checkin_form',
+                'isactive'=>true,
+                'document_formats'=>'PDF,JPG,PNG,DOC,DOCX',
+                'max_upload_count'=>1,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+                'listable'=>true,
+            ],
+            // 50
+            [
+                'document_category_id'=>20,
+                'document_field_name'=>"Condition report",
+                'description'=>"Condition report before and after use",
+                'file_path'=>'uploads/asset_booking/handover/condition_report',
+                'isactive'=>true,
+                'document_formats'=>'PDF,JPG,PNG,DOC,DOCX',
+                'max_upload_count'=>1,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+                'listable'=>true,
+            ],
+            // 51
+            [
+                'document_category_id'=>20,
+                'document_field_name'=>"Photo evidence of asset condition",
+                'description'=>"Photo evidence of asset condition",
+                'file_path'=>'uploads/asset_booking/handover/photo_evidence',
+                'isactive'=>true,
+                'document_formats'=>'JPG,PNG',
+                'max_upload_count'=>5,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+                'listable'=>true,
+            ],
+            // 52
+            [
+                'document_category_id'=>20,
+                'document_field_name'=>"Project proposal",
+                'description'=>"Project proposal or justification for asset",
+                'file_path'=>'uploads/asset_booking/supporting/project_proposal',
+                'isactive'=>true,
+                'document_formats'=>'PDF,JPG,PNG,DOC,DOCX',
+                'max_upload_count'=>1,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+                'listable'=>true,
+            ],
+            // 53
+            [
+                'document_category_id'=>20,
+                'document_field_name'=>"Budget approval document",
+                'description'=>"Budget approval for asset usage",
+                'file_path'=>'uploads/asset_booking/supporting/budget_approval',
+                'isactive'=>true,
+                'document_formats'=>'PDF,JPG,PNG,DOC,DOCX',
+                'max_upload_count'=>1,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+                'listable'=>true,
+            ],
+            // 54
+            [
+                'document_category_id'=>20,
+                'document_field_name'=>"Reference/endorsement letter",
+                'description'=>"Reference or endorsement letter for external users",
+                'file_path'=>'uploads/asset_booking/supporting/reference_letter',
+                'isactive'=>true,
+                'document_formats'=>'PDF,JPG,PNG,DOC,DOCX',
+                'max_upload_count'=>1,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+                'listable'=>true,
+            ],
+
+            // 55
+            [
+                'document_category_id'=>18,
+                'document_field_name'=>"Customer Attachments",
+                'description'=>"customer attachments docs",
+                'file_path'=>'uploads/customer_attachments',
+                'isactive'=>true,
+                'document_formats'=>'SVG,PNG,JPG,GIF,DOC,DOCX,CSV,PDF',
+                'max_upload_count'=>5,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+                'listable'=>true,
+            ],
+
+            // 56
+             [
+                'document_category_id'=>18,
+                'document_field_name'=>"Customer logo/image",
+                'description'=>"customer logo/image docs",
+                'file_path'=>'uploads/customer_thumbnail_image',
+                'isactive'=>true,
+                'document_formats'=>'SVG,PNG,JPG,JPEG',
+                'max_upload_count'=>1,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+                'listable'=>false,
+            ],
+
+        ]);
+    }
+}
