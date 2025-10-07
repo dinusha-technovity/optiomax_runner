@@ -175,7 +175,7 @@ class Tenant_WidgetsDataSeeder extends Seeder
             ],
 
         ];
-
+ 
         DB::table('app_widgets')->insert($itemLists);
     }
 }
