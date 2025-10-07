@@ -51,9 +51,13 @@ class User extends Authenticatable implements MustVerifyEmail
         'system_user_expires_at', 
         'created_by',
         'tenant_id',
-        'designation_id'
+        'designation_id',
+        'stripe_customer_id',
+        'stripe_payment_method_id',
+        'billing_address',
+        'payment_method_updated_at',
     ];
-
+    
     protected $hidden = [
         'password',
         'portal_password',

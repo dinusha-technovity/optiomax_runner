@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Config;
 use App\Models\User;
 use App\Models\tenants;
+use App\Models\tenant_configuration;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
@@ -84,6 +85,7 @@ class TenantHelper
 
     public static function setupTenantDatabase($tenantUser, $packageType, $invitedusers, $validatedUser): void
     {
+        DB::beginTransaction(); // Ensure transaction safety
         try {
             if ($packageType == "ENTERPRISE" && $tenantUser) { 
                 $tenantDbHost = env('DB_HOST');
@@ -279,6 +281,12 @@ class TenantHelper
                         'tenant_id' => $tenant->id,
                         'is_system_user' => true,
                         'system_user_expires_at' => Carbon::now()->addDays(30), 
+                    ]);
+
+                    tenant_configuration::create([
+                        'system_user_email' => $systemUserEmail,
+                        'system_user_password' => $password,
+                        'tenant_id' => $tenant->id
                     ]);
 
                     $selectedTenantId = $tenant->id;
@@ -623,6 +631,12 @@ class TenantHelper
                         'system_user_expires_at' => Carbon::now()->addDays(30), 
                     ]);
 
+                    tenant_configuration::create([
+                        'system_user_email' => $systemUserEmail,
+                        'system_user_password' => $password,
+                        'tenant_id' => $tenant->id
+                    ]);
+
                     $selectedTenantId = $tenant->id;
 
                     app()->singleton('selectedTenantId', function () use ($selectedTenantId) {
@@ -640,6 +654,7 @@ class TenantHelper
             \Log::error("Error setting up tenant database: " . $e->getMessage());
             throw $e;
         }
+        DB::commit(); // Commit transaction if successful
     }
 
     private static function rollbackChanges($tenantDbName): void

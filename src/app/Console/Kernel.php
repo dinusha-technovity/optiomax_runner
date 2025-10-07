@@ -11,6 +11,7 @@ class Kernel extends ConsoleKernel
         \App\Console\Commands\ListenTenantAssetActions::class,
         \App\Console\Commands\NotifyCriticallyBasedAssetSchedule::class,
         \App\Console\Commands\NotifyMaintenanceTasksAssetSchedule::class,
+        \App\Console\Commands\ProcessPaymentRetries::class,
     ];
     
     /**
@@ -22,6 +23,19 @@ class Kernel extends ConsoleKernel
         $schedule->command('check:asset-expiry')->dailyAt('00:30');
         $schedule->command('notify:critically-based-asset-schedule')->everyMinute()->runInBackground();
         $schedule->command('notify:maintenance-tasks-asset-schedule')->everyMinute()->runInBackground();
+        // Process payment retries and renewals daily at 12:30 AM
+        $schedule->command('payment:process-retries')
+                 ->dailyAt('00:30')
+                 ->withoutOverlapping()
+                 ->onOneServer()
+                 ->appendOutputTo(storage_path('logs/payment-retries.log'));
+
+        // Send payment reminders daily at 9:00 AM
+        $schedule->command('payment:process-retries')
+                 ->dailyAt('09:00')
+                 ->withoutOverlapping()
+                 ->onOneServer()
+                 ->appendOutputTo(storage_path('logs/payment-reminders.log'));
     }
 
     /**

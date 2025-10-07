@@ -1,0 +1,321 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations. 
+     */
+    public function up(): void
+    {
+        // DB::unprepared(<<<SQL
+        //     CREATE OR REPLACE FUNCTION get_asset_availability_schedules(
+        //         p_tenant_id BIGINT,
+        //         p_schedule_id BIGINT DEFAULT NULL,
+        //         p_asset_id BIGINT DEFAULT NULL,
+        //         p_start_datetime TIMESTAMPTZ DEFAULT NULL,
+        //         p_end_datetime TIMESTAMPTZ DEFAULT NULL,
+        //         p_timezone TEXT DEFAULT 'UTC'
+        //     )
+        //     RETURNS TABLE (
+        //         status TEXT,
+        //         message TEXT,
+        //         id BIGINT,
+        //         asset_id BIGINT,
+        //         asset_name TEXT,
+        //         start_datetime TIMESTAMPTZ,
+        //         end_datetime TIMESTAMPTZ,
+        //         publish_status TEXT,
+        //         visibility_id BIGINT,
+        //         visibility_name TEXT,
+        //         approval_type_id BIGINT,
+        //         approval_type_name TEXT,
+        //         term_type_id BIGINT,
+        //         term_type_name TEXT,
+        //         rate NUMERIC,
+        //         rate_currency_type_id BIGINT,
+        //         rate_currency_name TEXT,
+        //         rate_period_type_id BIGINT,
+        //         rate_period_name TEXT,
+        //         deposit_required BOOLEAN,
+        //         deposit_amount NUMERIC,
+        //         description TEXT,
+        //         recurring_enabled BOOLEAN,
+        //         recurring_pattern TEXT,
+        //         recurring_config JSONB,
+        //         created_by BIGINT,
+        //         creator_name TEXT,
+        //         deleted_at TIMESTAMPTZ,
+        //         is_active BOOLEAN,
+        //         tenant_id BIGINT,
+        //         created_at TIMESTAMPTZ,
+        //         updated_at TIMESTAMPTZ
+        //     )
+        //     LANGUAGE plpgsql
+        //     AS $$
+        //     DECLARE
+        //         schedule_count INT;
+        //     BEGIN
+        //         -- Validate tenant ID
+        //         IF p_tenant_id IS NULL OR p_tenant_id <= 0 THEN
+        //             RETURN QUERY SELECT 
+        //                 'FAILURE'::TEXT, 'Invalid tenant ID provided'::TEXT,
+        //                 NULL::BIGINT, NULL::BIGINT, NULL::TEXT, NULL::TIMESTAMPTZ, NULL::TIMESTAMPTZ, NULL::TEXT,
+        //                 NULL::BIGINT, NULL::TEXT, NULL::BIGINT, NULL::TEXT, NULL::BIGINT, NULL::TEXT,
+        //                 NULL::NUMERIC, NULL::BIGINT, NULL::TEXT, NULL::BIGINT, NULL::TEXT, NULL::BOOLEAN,
+        //                 NULL::NUMERIC, NULL::TEXT, NULL::BOOLEAN, NULL::TEXT, NULL::JSONB, NULL::BIGINT,
+        //                 NULL::TEXT, NULL::TIMESTAMPTZ, NULL::BOOLEAN, NULL::BIGINT, NULL::TIMESTAMPTZ, NULL::TIMESTAMPTZ;
+        //             RETURN;
+        //         END IF;
+
+        //         -- Validate schedule ID (optional)
+        //         IF p_schedule_id IS NOT NULL AND p_schedule_id < 0 THEN
+        //             RETURN QUERY SELECT 
+        //                 'FAILURE'::TEXT, 'Invalid schedule ID provided'::TEXT,
+        //                 NULL::BIGINT, NULL::BIGINT, NULL::TEXT, NULL::TIMESTAMPTZ, NULL::TIMESTAMPTZ, NULL::TEXT,
+        //                 NULL::BIGINT, NULL::TEXT, NULL::BIGINT, NULL::TEXT, NULL::BIGINT, NULL::TEXT,
+        //                 NULL::NUMERIC, NULL::BIGINT, NULL::TEXT, NULL::BIGINT, NULL::TEXT, NULL::BOOLEAN,
+        //                 NULL::NUMERIC, NULL::TEXT, NULL::BOOLEAN, NULL::TEXT, NULL::JSONB, NULL::BIGINT,
+        //                 NULL::TEXT, NULL::TIMESTAMPTZ, NULL::BOOLEAN, NULL::BIGINT, NULL::TIMESTAMPTZ, NULL::TIMESTAMPTZ;
+        //             RETURN;
+        //         END IF;
+
+        //         -- Always normalize to UTC
+        //         p_start_datetime := (p_start_datetime AT TIME ZONE 'UTC');
+        //         p_end_datetime   := (p_end_datetime   AT TIME ZONE 'UTC');
+
+        //         -- Check if any matching schedules exist
+        //         SELECT COUNT(*) INTO schedule_count
+        //         FROM asset_availability_schedules s
+        //         WHERE (p_schedule_id IS NULL OR s.id = p_schedule_id)
+        //         AND s.tenant_id = p_tenant_id
+        //         AND (p_asset_id IS NULL OR s.asset_id = p_asset_id)
+        //         AND (p_start_datetime IS NULL OR s.end_datetime > p_start_datetime)
+        //         AND (p_end_datetime IS NULL OR s.start_datetime < p_end_datetime)
+        //         AND s.deleted_at IS NULL
+        //         AND s.is_active = TRUE;
+
+        //         IF schedule_count = 0 THEN
+        //             RETURN QUERY SELECT 
+        //                 'FAILURE'::TEXT, 'No matching schedules found'::TEXT,
+        //                 NULL::BIGINT, NULL::BIGINT, NULL::TEXT, NULL::TIMESTAMPTZ, NULL::TIMESTAMPTZ, NULL::TEXT,
+        //                 NULL::BIGINT, NULL::TEXT, NULL::BIGINT, NULL::TEXT, NULL::BIGINT, NULL::TEXT,
+        //                 NULL::NUMERIC, NULL::BIGINT, NULL::TEXT, NULL::BIGINT, NULL::TEXT, NULL::BOOLEAN,
+        //                 NULL::NUMERIC, NULL::TEXT, NULL::BOOLEAN, NULL::TEXT, NULL::JSONB, NULL::BIGINT,
+        //                 NULL::TEXT, NULL::TIMESTAMPTZ, NULL::BOOLEAN, NULL::BIGINT, NULL::TIMESTAMPTZ, NULL::TIMESTAMPTZ;
+        //             RETURN;
+        //         END IF;
+
+        //         -- Return the matching records with proper timezone conversion
+        //         RETURN QUERY
+        //         SELECT
+        //             'SUCCESS'::TEXT AS status,
+        //             'Schedules fetched successfully'::TEXT AS message,
+        //             s.id,
+        //             s.asset_id,
+        //             a.name::TEXT AS asset_name,
+        //             (s.start_datetime AT TIME ZONE 'UTC') AT TIME ZONE p_timezone AS start_datetime,
+        //             (s.end_datetime AT TIME ZONE 'UTC') AT TIME ZONE p_timezone AS end_datetime,
+        //             s.publish_status::TEXT,
+        //             s.visibility_id,
+        //             avt.name::TEXT AS visibility_name,
+        //             s.approval_type_id,
+        //             abt.name::TEXT AS approval_type_name,
+        //             s.term_type_id,
+        //             att.name::TEXT AS term_type_name,
+        //             s.rate,
+        //             s.rate_currency_type_id,
+        //             c.name::TEXT AS rate_currency_name,
+        //             s.rate_period_type_id,
+        //             tpe.name::TEXT AS rate_period_name,
+        //             s.deposit_required,
+        //             s.deposit_amount,
+        //             s.description,
+        //             s.recurring_enabled,
+        //             s.recurring_pattern::TEXT,
+        //             s.recurring_config::JSONB,
+        //             s.created_by,
+        //             u.name::TEXT AS creator_name,
+        //             s.deleted_at AT TIME ZONE p_timezone AS deleted_at,
+        //             s.is_active,
+        //             s.tenant_id,
+        //             s.created_at AT TIME ZONE p_timezone AS created_at,
+        //             s.updated_at AT TIME ZONE p_timezone AS updated_at
+        //         FROM asset_availability_schedules s
+        //         LEFT JOIN asset_items ai ON s.asset_id = ai.id
+        //         LEFT JOIN assets a ON ai.asset_id = a.id
+        //         LEFT JOIN asset_availability_visibility_types avt ON s.visibility_id = avt.id
+        //         LEFT JOIN asset_booking_approval_types abt ON s.approval_type_id = abt.id
+        //         LEFT JOIN asset_availability_term_types att ON s.term_type_id = att.id
+        //         LEFT JOIN currencies c ON s.rate_currency_type_id = c.id
+        //         LEFT JOIN time_period_entries tpe ON s.rate_period_type_id = tpe.id
+        //         LEFT JOIN users u ON s.created_by = u.id
+        //         WHERE 
+        //             (p_schedule_id IS NULL OR s.id = p_schedule_id)
+        //             AND s.tenant_id = p_tenant_id
+        //             AND (p_asset_id IS NULL OR s.asset_id = p_asset_id)
+        //             AND (p_start_datetime IS NULL OR s.end_datetime > p_start_datetime)
+        //             AND (p_end_datetime IS NULL OR s.start_datetime < p_end_datetime)
+        //             AND s.deleted_at IS NULL
+        //             AND s.is_active = TRUE;
+        //     END;
+        //     $$;
+        // SQL);
+        DB::unprepared(<<<SQL
+            CREATE OR REPLACE FUNCTION get_asset_availability_schedules(
+                p_tenant_id BIGINT,
+                p_timezone TEXT,
+                p_schedule_id BIGINT DEFAULT NULL,
+                p_asset_id BIGINT DEFAULT NULL,
+                p_start_datetime TIMESTAMPTZ DEFAULT NULL,
+                p_end_datetime TIMESTAMPTZ DEFAULT NULL
+            )
+            RETURNS TABLE (
+                status TEXT,
+                message TEXT,
+                id BIGINT,
+                asset_id BIGINT,
+                asset_name TEXT,
+                start_datetime TIMESTAMPTZ,
+                end_datetime TIMESTAMPTZ,
+                publish_status TEXT,
+                visibility_id BIGINT,
+                visibility_name TEXT,
+                approval_type_id BIGINT,
+                approval_type_name TEXT,
+                term_type_id BIGINT,
+                term_type_name TEXT,
+                rate NUMERIC,
+                rate_currency_type_id BIGINT,
+                rate_currency_name TEXT,
+                rate_period_type_id BIGINT,
+                rate_period_name TEXT,
+                deposit_required BOOLEAN,
+                deposit_amount NUMERIC,
+                description TEXT,
+                recurring_enabled BOOLEAN,
+                recurring_pattern TEXT,
+                recurring_config JSONB,
+                created_by BIGINT,
+                creator_name TEXT,
+                deleted_at TIMESTAMPTZ,
+                is_active BOOLEAN,
+                tenant_id BIGINT,
+                created_at TIMESTAMPTZ,
+                updated_at TIMESTAMPTZ
+            )
+            LANGUAGE plpgsql
+            AS $$
+            DECLARE
+                schedule_count INT;
+            BEGIN
+                -- Validate tenant ID
+                IF p_tenant_id IS NULL OR p_tenant_id <= 0 THEN
+                    RETURN QUERY SELECT 
+                        'FAILURE'::TEXT, 'Invalid tenant ID provided'::TEXT,
+                        NULL::BIGINT, NULL::BIGINT, NULL::TEXT, NULL::TIMESTAMPTZ, NULL::TIMESTAMPTZ, NULL::TEXT,
+                        NULL::BIGINT, NULL::TEXT, NULL::BIGINT, NULL::TEXT, NULL::BIGINT, NULL::TEXT,
+                        NULL::NUMERIC, NULL::BIGINT, NULL::TEXT, NULL::BIGINT, NULL::TEXT, NULL::BOOLEAN,
+                        NULL::NUMERIC, NULL::TEXT, NULL::BOOLEAN, NULL::TEXT, NULL::JSONB, NULL::BIGINT,
+                        NULL::TEXT, NULL::TIMESTAMPTZ, NULL::BOOLEAN, NULL::BIGINT, NULL::TIMESTAMPTZ, NULL::TIMESTAMPTZ;
+                    RETURN;
+                END IF;
+
+                -- Normalize optional inputs to UTC
+                IF p_start_datetime IS NOT NULL THEN
+                    p_start_datetime := (p_start_datetime AT TIME ZONE 'UTC');
+                END IF;
+                IF p_end_datetime IS NOT NULL THEN
+                    p_end_datetime := (p_end_datetime AT TIME ZONE 'UTC');
+                END IF;
+
+                -- Count matching schedules
+                SELECT COUNT(*) INTO schedule_count
+                FROM asset_availability_schedules s
+                WHERE (p_schedule_id IS NULL OR s.id = p_schedule_id)
+                AND s.tenant_id = p_tenant_id
+                AND (p_asset_id IS NULL OR s.asset_id = p_asset_id)
+                AND (p_start_datetime IS NULL OR s.end_datetime > p_start_datetime)
+                AND (p_end_datetime IS NULL OR s.start_datetime < p_end_datetime)
+                AND s.deleted_at IS NULL
+                AND s.is_active = TRUE;
+
+                IF schedule_count = 0 THEN
+                    RETURN QUERY SELECT 
+                        'FAILURE'::TEXT, 'No matching schedules found'::TEXT,
+                        NULL::BIGINT, NULL::BIGINT, NULL::TEXT, NULL::TIMESTAMPTZ, NULL::TIMESTAMPTZ, NULL::TEXT,
+                        NULL::BIGINT, NULL::TEXT, NULL::BIGINT, NULL::TEXT, NULL::BIGINT, NULL::TEXT,
+                        NULL::NUMERIC, NULL::BIGINT, NULL::TEXT, NULL::BIGINT, NULL::TEXT, NULL::BOOLEAN,
+                        NULL::NUMERIC, NULL::TEXT, NULL::BOOLEAN, NULL::TEXT, NULL::JSONB, NULL::BIGINT,
+                        NULL::TEXT, NULL::TIMESTAMPTZ, NULL::BOOLEAN, NULL::BIGINT, NULL::TIMESTAMPTZ, NULL::TIMESTAMPTZ;
+                    RETURN;
+                END IF;
+
+                -- Return results with timezone conversion
+                RETURN QUERY
+                SELECT
+                    'SUCCESS'::TEXT AS status,
+                    'Schedules fetched successfully'::TEXT AS message,
+                    s.id,
+                    s.asset_id,
+                    a.name::TEXT AS asset_name,
+                    (s.start_datetime AT TIME ZONE p_timezone)::timestamptz AS start_datetime,
+                    (s.end_datetime AT TIME ZONE p_timezone)::timestamptz AS end_datetime,
+                    s.publish_status::TEXT,
+                    s.visibility_id,
+                    avt.name::TEXT AS visibility_name,
+                    s.approval_type_id,
+                    abt.name::TEXT AS approval_type_name,
+                    s.term_type_id,
+                    att.name::TEXT AS term_type_name,
+                    s.rate,
+                    s.rate_currency_type_id,
+                    c.name::TEXT AS rate_currency_name,
+                    s.rate_period_type_id,
+                    tpe.name::TEXT AS rate_period_name,
+                    s.deposit_required,
+                    s.deposit_amount,
+                    s.description,
+                    s.recurring_enabled,
+                    s.recurring_pattern::TEXT,
+                    s.recurring_config::JSONB,
+                    s.created_by,
+                    u.name::TEXT AS creator_name,
+                    (s.deleted_at AT TIME ZONE p_timezone)::timestamptz AS deleted_at,
+                    s.is_active,
+                    s.tenant_id,
+                    (s.created_at AT TIME ZONE p_timezone)::timestamptz AS created_at,
+                    (s.updated_at AT TIME ZONE p_timezone)::timestamptz AS updated_at
+                FROM asset_availability_schedules s
+                LEFT JOIN asset_items ai ON s.asset_id = ai.id
+                LEFT JOIN assets a ON ai.asset_id = a.id
+                LEFT JOIN asset_availability_visibility_types avt ON s.visibility_id = avt.id
+                LEFT JOIN asset_booking_approval_types abt ON s.approval_type_id = abt.id
+                LEFT JOIN asset_availability_term_types att ON s.term_type_id = att.id
+                LEFT JOIN currencies c ON s.rate_currency_type_id = c.id
+                LEFT JOIN time_period_entries tpe ON s.rate_period_type_id = tpe.id
+                LEFT JOIN users u ON s.created_by = u.id
+                WHERE 
+                    (p_schedule_id IS NULL OR s.id = p_schedule_id)
+                    AND s.tenant_id = p_tenant_id
+                    AND (p_asset_id IS NULL OR s.asset_id = p_asset_id)
+                    AND (p_start_datetime IS NULL OR s.end_datetime > p_start_datetime)
+                    AND (p_end_datetime IS NULL OR s.start_datetime < p_end_datetime)
+                    AND s.deleted_at IS NULL
+                    AND s.is_active = TRUE;
+            END;
+            $$;
+        SQL);
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        DB::unprepared('DROP FUNCTION IF EXISTS get_asset_availability_schedules(BIGINT, TIMESTAMP, TIMESTAMP, TEXT)');
+    }
+};
