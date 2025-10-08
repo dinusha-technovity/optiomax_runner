@@ -27,9 +27,41 @@ COPY --from=composer_runner /app .
 COPY ../prod/supervisor/supervisord.conf /etc/supervisord.conf
 COPY ../prod/supervisor/conf.d/ /etc/supervisor/conf.d/
 
-# Fix permissions
-RUN chown -R www-data:www-data . \
-    && chmod -R 775 .
+# Create necessary directories first
+RUN mkdir -p storage/logs storage/framework/cache storage/framework/sessions storage/framework/views bootstrap/cache
 
-# Entrypoint to run both php-fpm and supervisor
-CMD ["/bin/sh", "-c", "php-fpm -D && supervisord -c /etc/supervisord.conf"]
+# Create startup script with comprehensive permission fixes
+RUN echo '#!/bin/bash' > /startup.sh \
+    && echo 'set -e' >> /startup.sh \
+    && echo 'echo "Starting application initialization..."' >> /startup.sh \
+    && echo '' >> /startup.sh \
+    && echo '# Create directories if they dont exist' >> /startup.sh \
+    && echo 'mkdir -p storage/logs storage/framework/cache storage/framework/sessions storage/framework/views bootstrap/cache' >> /startup.sh \
+    && echo '' >> /startup.sh \
+    && echo '# Remove any existing log files that might have wrong permissions' >> /startup.sh \
+    && echo 'rm -f storage/logs/laravel.log storage/logs/*.log' >> /startup.sh \
+    && echo '' >> /startup.sh \
+    && echo '# Set ownership and permissions' >> /startup.sh \
+    && echo 'chown -R www-data:www-data storage bootstrap/cache' >> /startup.sh \
+    && echo 'chmod -R 777 storage' >> /startup.sh \
+    && echo 'chmod -R 775 bootstrap/cache' >> /startup.sh \
+    && echo '' >> /startup.sh \
+    && echo '# Create initial log file with correct permissions' >> /startup.sh \
+    && echo 'touch storage/logs/laravel.log' >> /startup.sh \
+    && echo 'chown www-data:www-data storage/logs/laravel.log' >> /startup.sh \
+    && echo 'chmod 666 storage/logs/laravel.log' >> /startup.sh \
+    && echo '' >> /startup.sh \
+    && echo 'echo "Starting PHP-FPM..."' >> /startup.sh \
+    && echo 'php-fpm -D' >> /startup.sh \
+    && echo '' >> /startup.sh \
+    && echo 'echo "Starting Supervisor..."' >> /startup.sh \
+    && echo 'exec supervisord -c /etc/supervisord.conf' >> /startup.sh \
+    && chmod +x /startup.sh
+
+# Set proper ownership and permissions during build
+RUN chown -R www-data:www-data . \
+    && chmod -R 777 storage \
+    && chmod -R 775 bootstrap/cache
+
+# Use startup script as entrypoint
+CMD ["/startup.sh"]

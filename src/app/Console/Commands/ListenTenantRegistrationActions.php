@@ -8,6 +8,7 @@ use App\Jobs\ProcessTenantRegistrationJob;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Redis;
+use Illuminate\Support\Facades\DB;
  
 class ListenTenantRegistrationActions extends Command
 {
@@ -23,8 +24,14 @@ class ListenTenantRegistrationActions extends Command
         $daemonMode = $this->option('daemon');
         
         if ($monitorMode) {
-            $this->displayMonitoringInfo();
+            $this->displayEnterpriseMonitoring();
             return;
+        }
+        
+        // Health check before starting
+        if (!$this->performHealthCheck()) {
+            $this->error("Health check failed. Exiting...");
+            return 1;
         }
         
         // Set up signal handlers for graceful shutdown
@@ -80,13 +87,14 @@ class ListenTenantRegistrationActions extends Command
                                     ->onQueue('tenant-registration')
                                     ->delay(now()->addSeconds($processedCount * 2));
                                 
-                                Log::info("Dispatched optimized registration job for ID: {$reg->id}");
+                                Log::info("Dispatched optimized registration job for ID: {$reg->id} to queue: tenant-registration");
                                 $processedCount++;
                                 
                             } catch (\Exception $e) {
                                 $reg->update(['status' => 'failed', 'error_message' => $e->getMessage()]);
                                 $failedCount++;
                                 Log::error("Failed to dispatch job for ID: {$reg->id} - " . $e->getMessage());
+                                Log::error("Stack trace: " . $e->getTraceAsString());
                                 Cache::lock($lockKey)->release();
                             }
                         } else {
@@ -137,6 +145,103 @@ class ListenTenantRegistrationActions extends Command
         }
     }
     
+    private function performHealthCheck(): bool
+    {
+        $checks = [
+            'database' => $this->checkDatabase(),
+            'redis' => $this->checkRedis(),
+            'storage' => $this->checkStorage(),
+        ];
+        
+        foreach ($checks as $service => $status) {
+            if (!$status) {
+                $this->error("Health check failed for: {$service}");
+                return false;
+            }
+        }
+        
+        return true;
+    }
+
+    private function checkDatabase(): bool
+    {
+        try {
+            DB::select('SELECT 1');
+            return true;
+        } catch (\Exception $e) {
+            return false;
+        }
+    }
+
+    private function checkRedis(): bool
+    {
+        try {
+            Redis::ping();
+            return true;
+        } catch (\Exception $e) {
+            return false;
+        }
+    }
+
+    private function checkStorage(): bool
+    {
+        return is_writable(storage_path('logs'));
+    }
+    
+    private function displayEnterpriseMonitoring()
+    {
+        $this->info('🏢 Enterprise Tenant Registration Monitoring Dashboard');
+        $this->info('==================================================');
+        
+        // Current status
+        $pending = RegistrationDebug::where('status', 'pending')->count();
+        $processing = RegistrationDebug::where('status', 'processing')->count();
+        $completed = RegistrationDebug::where('status', 'completed')->count();
+        $failed = RegistrationDebug::where('status', 'failed')->count();
+        
+        $this->info("📊 Current Status:");
+        $this->info("  ⏳ Pending: {$pending}");
+        $this->info("  🔄 Processing: {$processing}");
+        $this->info("  ✅ Completed: {$completed}");
+        $this->info("  ❌ Failed: {$failed}");
+        
+        // Queue health
+        $queueSizes = [
+            'tenant-registration' => Redis::llen('queues:tenant-registration'),
+            'emails' => Redis::llen('queues:emails'),
+            'default' => Redis::llen('queues:default'),
+            'failed' => Redis::llen('queues:failed'),
+        ];
+        
+        $this->info("\n🚀 Queue Status:");
+        foreach ($queueSizes as $queue => $size) {
+            $icon = $size > 1000 ? '⚠️' : ($size > 100 ? '📈' : '✅');
+            $this->info("  {$icon} {$queue}: {$size} jobs");
+        }
+        
+        // Performance metrics
+        $hourlyMetrics = $this->getHourlyMetrics();
+        if ($hourlyMetrics) {
+            $this->info("\n📈 Performance (Last Hour):");
+            $this->info("  🎯 Started: " . ($hourlyMetrics['started'] ?? 0));
+            $this->info("  ✅ Completed: " . ($hourlyMetrics['completed'] ?? 0));
+            $this->info("  ❌ Failed: " . ($hourlyMetrics['failed'] ?? 0));
+            $this->info("  🚨 Permanent Failures: " . ($hourlyMetrics['permanent_failure'] ?? 0));
+        }
+        
+        // System health
+        $this->info("\n💊 System Health:");
+        $this->info("  🗄️  Database: " . ($this->checkDatabase() ? '✅ Healthy' : '❌ Down'));
+        $this->info("  🔴 Redis: " . ($this->checkRedis() ? '✅ Healthy' : '❌ Down'));
+        $this->info("  📁 Storage: " . ($this->checkStorage() ? '✅ Writable' : '❌ Read-only'));
+    }
+
+    private function getHourlyMetrics(): ?array
+    {
+        $key = "tenant_registration_metrics_" . date('Y-m-d-H');
+        return json_decode(Redis::get($key), true);
+    }
+    
     private function displayMonitoringInfo()
     {
         $metrics = json_decode(Redis::get('tenant_registration_metrics'), true);
@@ -164,3 +269,4 @@ class ListenTenantRegistrationActions extends Command
         $this->info("  - Email Queue: {$emailQueueSize} jobs");
     }
 }
+

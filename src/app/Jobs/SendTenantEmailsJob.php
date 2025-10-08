@@ -25,11 +25,14 @@ class SendTenantEmailsJob implements ShouldQueue
 
     public function __construct($registrationDebugId)
     {
-        $this->registrationDebugId = $registrationDebugId;
+        $this->registrationDebugId = (int) $registrationDebugId; // Ensure it's serializable
+        $this->onQueue('emails'); // Set default queue
     }
 
     public function handle()
     {
+        Log::info("SendTenantEmailsJob started for registration ID: {$this->registrationDebugId}");
+        
         $reg = RegistrationDebug::find($this->registrationDebugId);
         if (!$reg) {
             Log::error("Registration record not found for SendTenantEmailsJob: {$this->registrationDebugId}");
@@ -91,6 +94,8 @@ class SendTenantEmailsJob implements ShouldQueue
             Log::error("Stack trace: " . $e->getTraceAsString());
             throw $e;
         }
+
+        Log::info("SendTenantEmailsJob completed successfully for registration ID: {$this->registrationDebugId}");
     }
 
     private function sendAppInvitationEmail($user, $password, $inviterName)
@@ -195,6 +200,9 @@ class SendTenantEmailsJob implements ShouldQueue
 
     public function failed(\Throwable $exception)
     {
+        Log::error("SendTenantEmailsJob failed permanently for ID: {$this->registrationDebugId} - " . $exception->getMessage());
+        Log::error("Stack trace: " . $exception->getTraceAsString());
+        
         $reg = RegistrationDebug::find($this->registrationDebugId);
         if ($reg) {
             $reg->update(['status' => 'email_failed', 'error_message' => $exception->getMessage()]);
@@ -202,7 +210,5 @@ class SendTenantEmailsJob implements ShouldQueue
         
         // Clean up cache on failure
         Cache::forget("tenant_users_{$this->registrationDebugId}");
-        
-        Log::error("SendTenantEmailsJob failed permanently for ID: {$this->registrationDebugId} - " . $exception->getMessage());
     }
 }
