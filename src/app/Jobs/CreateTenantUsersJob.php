@@ -30,11 +30,14 @@ class CreateTenantUsersJob implements ShouldQueue
 
     public function __construct($registrationDebugId)
     {
-        $this->registrationDebugId = $registrationDebugId;
+        $this->registrationDebugId = (int) $registrationDebugId; // Ensure it's serializable
+        $this->onQueue('tenant-registration');
     }
 
     public function handle()
     {
+        Log::info("CreateTenantUsersJob started for registration ID: {$this->registrationDebugId}");
+        
         $reg = RegistrationDebug::find($this->registrationDebugId);
         if (!$reg) throw new \Exception('Registration record not found');
 
@@ -62,6 +65,8 @@ class CreateTenantUsersJob implements ShouldQueue
             Log::error("Stack trace: " . $e->getTraceAsString());
             throw $e;
         }
+
+        Log::info("CreateTenantUsersJob completed successfully for registration ID: {$this->registrationDebugId}");
     }
 
     private function createTenantUsers($tenant, $tenantUser, $invitedUsers)
@@ -69,7 +74,7 @@ class CreateTenantUsersJob implements ShouldQueue
         $originalDefaultConnection = Config::get('database.default');
         
         // Check if tenant has separate database (Enterprise package)
-        $isEnterpriseWithSeparateDB = ($tenant->package === 'Enterprise' && 
+        $isEnterpriseWithSeparateDB = ($tenant->package === 'ENTERPRISE' && 
                                      $tenant->db_name !== env('DB_DATABASE'));
         
         if ($isEnterpriseWithSeparateDB) {
@@ -155,9 +160,6 @@ class CreateTenantUsersJob implements ShouldQueue
 
                 app()->singleton('selectedTenantId', fn() => $tenant->id);
                 Artisan::call('db:seed', ['--class' => 'TenantModelHasRolesSeeder']);
-                
-                // Switch back to main database
-                Config::set('database.default', $originalDefaultConnection);
 
                 // Create tenant_configuration in main database
                 tenant_configuration::create([
@@ -165,6 +167,9 @@ class CreateTenantUsersJob implements ShouldQueue
                     'system_user_password' => $systemPassword,
                     'tenant_id' => $tenant->id
                 ]);
+                
+                // Switch back to main database
+                Config::set('database.default', $originalDefaultConnection);
 
                 // Create duplicate system user in main database
                 User::create([
@@ -237,10 +242,12 @@ class CreateTenantUsersJob implements ShouldQueue
 
     public function failed(\Throwable $exception)
     {
+        Log::error("CreateTenantUsersJob failed permanently for ID: {$this->registrationDebugId} - " . $exception->getMessage());
+        Log::error("Stack trace: " . $exception->getTraceAsString());
+        
         $reg = RegistrationDebug::find($this->registrationDebugId);
         if ($reg) {
             $reg->update(['status' => 'failed', 'error_message' => $exception->getMessage()]);
         }
-        Log::error("CreateTenantUsersJob failed for ID: {$this->registrationDebugId} - " . $exception->getMessage());
     }
 }

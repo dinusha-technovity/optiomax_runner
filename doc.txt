@@ -44,10 +44,59 @@ php artisan queue:work redis --queue=emails
 
 setup supervisor with laravel docker.
 
+Local Development Commands (Run in separate terminals): 
 
+# Terminal 1: Start the tenant registration queue worker
+php artisan queue:work redis --queue=tenant-registration --sleep=1 --tries=5 --timeout=300 --memory=512
 
-# Start the queue worker for Redis
-php artisan queue:work redis --queue=tenant-registration,default
+# Terminal 2: Start the general queue worker (for emails and other jobs)
+php artisan queue:work redis --queue=default,emails --sleep=1 --tries=3 --timeout=300 --memory=512
+
+# Terminal 3: Run the tenant registration listener
+php artisan listen:tenant-registration-actions --batch=10
+
+# Terminal 4: (Optional) Monitor the queues
+php artisan listen:tenant-registration-actions --monitor
+
+Production Commands (Single terminal for testing):
+
+# Start combined queue worker for both tenant-registration and default queues
+php artisan queue:work redis --queue=tenant-registration,default,emails --sleep=1 --tries=3 --timeout=300 --memory=512
 
 # In another terminal, run the listener
-php artisan listen:tenant-registration-actions --batch=10
+php artisan listen:tenant-registration-actions --batch=10 --daemon
+
+Local Testing Commands:
+
+# Check queue status
+php artisan queue:monitor
+
+# Clear failed jobs
+php artisan queue:clear redis
+php artisan queue:flush
+
+# Debug specific registration
+php artisan debug:tenant-registration --id=27
+
+# View enterprise monitoring
+php artisan listen:tenant-registration-actions --monitor
+
+Health Check Commands:
+
+# Test database connection
+php artisan tinker
+>>> DB::select('SELECT 1');
+
+# Test Redis connection
+>>> Redis::ping();
+
+# Check storage permissions
+>>> is_writable(storage_path('logs'));
+
+Quick Setup for Local Development:
+
+1. Start Redis: sudo systemctl start redis-server
+2. Clear caches: php artisan cache:clear && php artisan config:clear
+3. Start queue worker: php artisan queue:work redis --queue=tenant-registration,default,emails
+4. Start listener: php artisan listen:tenant-registration-actions --batch=5
+5. Monitor: php artisan listen:tenant-registration-actions --monitor
