@@ -44,7 +44,7 @@ php artisan queue:work redis --queue=emails
 
 setup supervisor with laravel docker.
 
-Local Development Commands (Run in separate terminals):
+Local Development Commands (Run in separate terminals): 
 
 # Terminal 1: Start the tenant registration queue worker
 php artisan queue:work redis --queue=tenant-registration --sleep=1 --tries=5 --timeout=300 --memory=512
