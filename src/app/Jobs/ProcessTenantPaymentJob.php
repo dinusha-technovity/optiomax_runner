@@ -4,6 +4,7 @@ namespace App\Jobs;
 
 use App\Models\RegistrationDebug;
 use App\Models\tenants;
+use App\Models\User;
 use App\Models\TenantSubscription;
 use App\Models\PaymentTransaction;
 use App\Services\StripePaymentService;
@@ -85,12 +86,19 @@ class ProcessTenantPaymentJob implements ShouldQueue
                 return;
             }
 
+            $owner_user = User::find($tenant->owner_user);
+            if (!$owner_user) {
+                Log::error("Owner user not found for tenant ID: {$tenantId}");
+                $reg->update(['status' => 'payment_failed', 'error_message' => 'Owner user not found']);
+                return;
+            }
+
             // Extract payment details from tenant record
-            $customerId = $tenant->stripe_customer_id;
-            $paymentMethodId = $tenant->stripe_payment_method_id;
+            $customerId = $owner_user->stripe_customer_id;
+            $paymentMethodId = $owner_user->stripe_payment_method_id;
 
             Log::info("Payment details check - Customer ID: " . ($customerId ? 'found' : 'missing') . 
-                     ", Payment Method ID: " . ($paymentMethodId ? 'found' : 'missing'));
+                     ", Payment Method ID: " . ($paymentMethodId ? 'found' : 'missing') . ", Owner User: " . ($owner_user->name ?? 'unknown'));
 
             if (!$customerId || !$paymentMethodId) {
                 Log::warning("Payment details not found for paid package '{$package->name}'. Package price: {$package->price}");
