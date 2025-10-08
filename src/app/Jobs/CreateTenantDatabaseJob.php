@@ -60,7 +60,7 @@ class CreateTenantDatabaseJob implements ShouldQueue
                 throw new \Exception("Package with ID '{$selectedPackageId}' not found");
             }
 
-            Log::info("Using package: {$package->name} (ID: {$package->id}), Type: {$package->type}");
+            Log::info("Using package: {$package->name} (ID: {$package->id}), Type: {$package->billing_type}");
 
             if ($packageType == "ENTERPRISE") {
                 $dbCredentials = $this->createEnterpriseDatabase($validatedUser);
@@ -79,7 +79,7 @@ class CreateTenantDatabaseJob implements ShouldQueue
                 'tenant_id' => $tenant->id,
                 'selected_package_id' => $selectedPackageId,
                 'package_name' => $package->name,
-                'package_type_billing' => $package->type
+                'package_type_billing' => $package->billing_type
             ]);
             
             $reg->update([
