@@ -47,7 +47,7 @@ class DatabaseSeeder extends Seeder
         $this->call(TimePeriodSeeder::class);
         $this->call(PackageAddonsSeeder::class);
         $this->call(PackageDiscountsSeeder::class);
-
+        $this->call(PackageFeaturesSeeder::class);
 
     }
 }
