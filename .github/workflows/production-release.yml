@@ -67,9 +67,13 @@ jobs:
             && docker pull ghcr.io/dinusha-technovity/optiomax_runner:${{ needs.set_version.outputs.RELEASE_VERSION }} \
             && docker pull ghcr.io/dinusha-technovity/optiomax_runner_proxy:${{ needs.set_version.outputs.RELEASE_VERSION }} \
             && VERSION=${{ needs.set_version.outputs.RELEASE_VERSION }} docker compose -f docker-compose-prod.yml up -d --build --remove-orphans \
-            && sleep 20 \
+            && sleep 30 \
+            && echo "Checking container status..." \
+            && docker ps \
+            && echo "Checking if container is healthy..." \
+            && docker exec -t optiomax_runner php /var/www/html/artisan --version \
             && echo "Fixing permissions..." \
-            && docker exec -t optiomax_runner sh -c "supervisorctl stop all" \
+            && docker exec -t optiomax_runner sh -c "supervisorctl stop all || true" \
             && docker exec -t optiomax_runner sh -c "rm -f /var/www/html/storage/logs/*.log" \
             && docker exec -t optiomax_runner sh -c "mkdir -p /var/www/html/storage/logs /var/www/html/storage/framework/cache /var/www/html/storage/framework/sessions /var/www/html/storage/framework/views /var/www/html/bootstrap/cache" \
             && docker exec -t optiomax_runner sh -c "chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache" \
@@ -78,9 +82,23 @@ jobs:
             && docker exec -t optiomax_runner sh -c "touch /var/www/html/storage/logs/laravel.log" \
             && docker exec -t optiomax_runner sh -c "chown www-data:www-data /var/www/html/storage/logs/laravel.log" \
             && docker exec -t optiomax_runner sh -c "chmod 666 /var/www/html/storage/logs/laravel.log" \
-            && docker exec -t optiomax_runner sh -c "supervisorctl start all" \
-            && echo "Checking final permissions..." \
-            && docker exec -t optiomax_runner sh -c "ls -la /var/www/html/storage/logs/" \
+            && echo "Checking available artisan commands..." \
+            && docker exec -t optiomax_runner sh -c "php /var/www/html/artisan list | grep -E '(listen|queue)'" \
+            && echo "Starting supervisor processes..." \
+            && docker exec -t optiomax_runner sh -c "supervisorctl start all || true" \
+            && sleep 10 \
+            && echo "Checking supervisor status..." \
+            && docker exec -t optiomax_runner sh -c "supervisorctl status" \
+            && echo "Checking for any failed processes..." \
+            && if docker exec -t optiomax_runner sh -c "supervisorctl status | grep -q ERROR"; then \
+                echo "Some processes failed to start, checking logs..."; \
+                docker exec -t optiomax_runner sh -c "supervisorctl tail listen-registration stderr"; \
+                docker exec -t optiomax_runner sh -c "ls -la /var/www/html/storage/logs/"; \
+                echo "Attempting to restart failed processes..."; \
+                docker exec -t optiomax_runner sh -c "supervisorctl restart all"; \
+                sleep 10; \
+                docker exec -t optiomax_runner sh -c "supervisorctl status"; \
+              fi \
             && docker logout \
             && docker system prune -af
           
