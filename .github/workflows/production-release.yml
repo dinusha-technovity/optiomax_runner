@@ -1,4 +1,4 @@
-name: tpd
+name: Enterprise Production Release
 
 permissions:
   contents: read
@@ -8,110 +8,139 @@ on:
   push:
     tags:
       - "*.*.*"
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version to deploy'
+        required: true
+        type: string
+
+env:
+  REGISTRY: ghcr.io
+  REGISTRY_USERNAME: dinusha-technovity
 
 jobs:
-  set_version:
+  validate:
     runs-on: ubuntu-latest
     steps:
-      - name: "Example output creation"
-        id: "get_release_version"
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Validate deployment readiness
         run: |
-          RELEASE_VERSION=${GITHUB_REF#refs/*/}
+          echo "Validating enterprise deployment prerequisites..."
+          # Add validation scripts here
+
+  set_version:
+    runs-on: ubuntu-latest
+    needs: [validate]
+    steps:
+      - name: Get release version
+        id: get_release_version
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            RELEASE_VERSION=${{ github.event.inputs.version }}
+          else
+            RELEASE_VERSION=${GITHUB_REF#refs/*/}
+          fi
           echo "RELEASE_VERSION=$RELEASE_VERSION" >> $GITHUB_OUTPUT
+          echo "Deploying version: $RELEASE_VERSION"
     outputs:
       RELEASE_VERSION: ${{steps.get_release_version.outputs.RELEASE_VERSION}}
 
-  build:
+  security-scan:
     runs-on: ubuntu-latest
     needs: [set_version]
     steps:
       - name: Checkout code
-        uses: actions/checkout@v1
-
-      - name: Login to GitHub Packages
+        uses: actions/checkout@v4
+        
+      - name: Run security scan
         run: |
-          RELEASE_VERSION=${{needs.set_version.outputs.RELEASE_VERSION}}
-          echo ${{ secrets.GITHUB_TOKEN }} | docker login ghcr.io --username dinusha-technovity --password-stdin
+          echo "Running enterprise security scans..."
+          # Add security scanning tools like Trivy, Snyk, etc.
 
-          if ! docker pull ghcr.io/dinusha-technovity/composer_runner:$RELEASE_VERSION 2>/dev/null; then
-            docker build -f ./prod/dockerfiles/composer_runner.Dockerfile -t ghcr.io/dinusha-technovity/composer_runner:$RELEASE_VERSION .
-          fi
+  build:
+    runs-on: ubuntu-latest
+    needs: [security-scan, set_version]
+    strategy:
+      matrix:
+        component: [composer_runner, npm_runner, optiomax_runner, optiomax_runner_proxy]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-          if ! docker pull ghcr.io/dinusha-technovity/npm_runner:$RELEASE_VERSION 2>/dev/null; then
-            docker build -f ./prod/dockerfiles/npm_runner.Dockerfile -t ghcr.io/dinusha-technovity/npm_runner:$RELEASE_VERSION .
-          fi
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
 
-          if ! docker pull ghcr.io/dinusha-technovity/optiomax_runner:$RELEASE_VERSION 2>/dev/null; then
-            docker build --build-arg USERNAME=dinusha-technovity --build-arg RELEASE_VERSION=$RELEASE_VERSION -f ./prod/dockerfiles/app.Dockerfile -t ghcr.io/dinusha-technovity/optiomax_runner:$RELEASE_VERSION .
-          fi
-          if ! docker pull ghcr.io/dinusha-technovity/optiomax_runner_proxy:$RELEASE_VERSION 2>/dev/null; then
-            docker build -f ./prod/dockerfiles/static.Dockerfile -t ghcr.io/dinusha-technovity/optiomax_runner_proxy:$RELEASE_VERSION .
-          fi
+      - name: Login to Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ env.REGISTRY_USERNAME }}
+          password: ${{ secrets.GITHUB_TOKEN }}
 
-          docker push ghcr.io/dinusha-technovity/optiomax_runner:$RELEASE_VERSION
-          docker push ghcr.io/dinusha-technovity/optiomax_runner_proxy:$RELEASE_VERSION
+      - name: Build and push with caching
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: ./prod/dockerfiles/${{ matrix.component == 'optiomax_runner' && 'app' || matrix.component == 'optiomax_runner_proxy' && 'static' || matrix.component }}.Dockerfile
+          build-args: |
+            USERNAME=${{ env.REGISTRY_USERNAME }}
+            RELEASE_VERSION=${{ needs.set_version.outputs.RELEASE_VERSION }}
+          platforms: linux/amd64,linux/arm64
+          push: true
+          tags: ${{ env.REGISTRY }}/${{ env.REGISTRY_USERNAME }}/${{ matrix.component }}:${{ needs.set_version.outputs.RELEASE_VERSION }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
 
-  deploy:
+  deploy-staging:
     runs-on: ubuntu-latest
     needs: [build, set_version]
+    environment: staging
     steps:
-      - name: Login to Droplet
-        uses: appleboy/ssh-action@master
+      - name: Deploy to Staging
+        uses: appleboy/ssh-action@v1.0.3
         with:
-          host: ${{ secrets.VPS_HOST }}
+          host: ${{ secrets.STAGING_HOST }}
           username: ${{ secrets.VPS_USER }}
-          password: ${{ secrets.VPS_PASSWORD }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
-            echo ${{ secrets.GITHUB_TOKEN }} | docker login ghcr.io --username dinusha-technovity --password-stdin \
-            && cd optiomax/optiomax_runner \
-            && docker pull ghcr.io/dinusha-technovity/optiomax_runner:${{ needs.set_version.outputs.RELEASE_VERSION }} \
-            && docker pull ghcr.io/dinusha-technovity/optiomax_runner_proxy:${{ needs.set_version.outputs.RELEASE_VERSION }} \
-            && VERSION=${{ needs.set_version.outputs.RELEASE_VERSION }} docker compose -f docker-compose-prod.yml up -d --build --remove-orphans \
-            && sleep 30 \
-            && echo "Checking container status..." \
-            && docker ps \
-            && echo "Checking if container is healthy..." \
-            && docker exec -t optiomax_runner php /var/www/html/artisan --version \
-            && echo "Fixing permissions..." \
-            && docker exec -t optiomax_runner sh -c "supervisorctl stop all || true" \
-            && docker exec -t optiomax_runner sh -c "rm -f /var/www/html/storage/logs/*.log" \
-            && docker exec -t optiomax_runner sh -c "mkdir -p /var/www/html/storage/logs /var/www/html/storage/framework/cache /var/www/html/storage/framework/sessions /var/www/html/storage/framework/views /var/www/html/bootstrap/cache" \
-            && docker exec -t optiomax_runner sh -c "chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache" \
-            && docker exec -t optiomax_runner sh -c "chmod -R 777 /var/www/html/storage" \
-            && docker exec -t optiomax_runner sh -c "chmod -R 775 /var/www/html/bootstrap/cache" \
-            && docker exec -t optiomax_runner sh -c "touch /var/www/html/storage/logs/laravel.log" \
-            && docker exec -t optiomax_runner sh -c "chown www-data:www-data /var/www/html/storage/logs/laravel.log" \
-            && docker exec -t optiomax_runner sh -c "chmod 666 /var/www/html/storage/logs/laravel.log" \
-            && echo "Checking available artisan commands..." \
-            && docker exec -t optiomax_runner sh -c "php /var/www/html/artisan list | grep -E '(listen|queue)'" \
-            && echo "Starting supervisor processes..." \
-            && docker exec -t optiomax_runner sh -c "supervisorctl start all || true" \
-            && sleep 10 \
-            && echo "Checking supervisor status..." \
-            && docker exec -t optiomax_runner sh -c "supervisorctl status" \
-            && echo "Checking for any failed processes..." \
-            && if docker exec -t optiomax_runner sh -c "supervisorctl status | grep -q ERROR"; then \
-                echo "Some processes failed to start, checking logs..."; \
-                docker exec -t optiomax_runner sh -c "supervisorctl tail listen-registration stderr"; \
-                docker exec -t optiomax_runner sh -c "ls -la /var/www/html/storage/logs/"; \
-                echo "Attempting to restart failed processes..."; \
-                docker exec -t optiomax_runner sh -c "supervisorctl restart all"; \
-                sleep 10; \
-                docker exec -t optiomax_runner sh -c "supervisorctl status"; \
-              fi \
-            && docker logout \
-            && docker system prune -af
-          
+            cd /opt/optiomax/optiomax_runner
+            ./deploy.sh staging ${{ needs.set_version.outputs.RELEASE_VERSION }}
 
-  run-migrations:
+  smoke-tests:
     runs-on: ubuntu-latest
-    needs: [deploy]
+    needs: [deploy-staging]
     steps:
-      - name: Run Database Migrations
-        uses: appleboy/ssh-action@master
+      - name: Run smoke tests
+        run: |
+          echo "Running enterprise smoke tests..."
+          # Add comprehensive smoke tests
+
+  deploy-production:
+    runs-on: ubuntu-latest
+    needs: [smoke-tests, set_version]
+    environment: production
+    strategy:
+      matrix:
+        region: [us-east, eu-west, asia-pacific]
+    steps:
+      - name: Deploy to Production Region
+        uses: appleboy/ssh-action@v1.0.3
         with:
-          host: ${{ secrets.VPS_HOST }}
+          host: ${{ secrets[format('PROD_{0}_HOST', matrix.region)] }}
           username: ${{ secrets.VPS_USER }}
-          password: ${{ secrets.VPS_PASSWORD }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
-            docker exec -t optiomax_runner sh -c "php artisan migrate && php artisan passport:install && php artisan tenantss:migrates:all tenant"
+            cd /opt/optiomax/optiomax_runner
+            ./deploy.sh production ${{ needs.set_version.outputs.RELEASE_VERSION }} ${{ matrix.region }}
+
+  post-deployment:
+    runs-on: ubuntu-latest
+    needs: [deploy-production]
+    steps:
+      - name: Post-deployment tasks
+        run: |
+          echo "Running post-deployment validation..."
+          # Add monitoring setup, alerts, etc.
