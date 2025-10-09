@@ -2,63 +2,73 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Carbon\Carbon;
 
 class PaymentRetryLog extends Model
 {
+    use HasFactory;
+
     protected $fillable = [
         'tenant_id',
-        'subscription_id',
-        'stripe_invoice_id',
-        'retry_attempt',
-        'max_retries',
-        'status',
-        'next_retry_at',
-        'last_retry_at',
-        'failure_reasons',
+        'subscription_id', 
+        'package_id',
         'amount',
         'currency',
+        'retry_attempt',
+        'max_retry_attempts',
+        'retry_interval_days',
+        'grace_period_days',
+        'status',
+        'last_failure_reason',
+        'failure_reasons',
+        'next_retry_date',
+        'grace_period_end',
+        'stripe_error_code',
+        'decline_code',
         'reminder_sent',
         'reminder_sent_at'
     ];
 
     protected $casts = [
-        'amount' => 'decimal:2',
         'failure_reasons' => 'array',
-        'next_retry_at' => 'timestamp',
-        'last_retry_at' => 'timestamp',
+        'next_retry_date' => 'datetime',
+        'grace_period_end' => 'datetime',
         'reminder_sent' => 'boolean',
-        'reminder_sent_at' => 'timestamp'
+        'reminder_sent_at' => 'datetime'
     ];
 
-    public function tenant(): BelongsTo
+    public function tenant()
     {
         return $this->belongsTo(tenants::class, 'tenant_id');
     }
 
-    public function subscription(): BelongsTo
+    public function subscription()
     {
         return $this->belongsTo(TenantSubscription::class, 'subscription_id');
     }
 
-    public function hasRetriesLeft(): bool
+    public function package()
     {
-        return $this->retry_attempt < $this->max_retries;
+        return $this->belongsTo(TenantPackage::class, 'package_id');
     }
 
-    public function isReadyForRetry(): bool
+    public function isReadyForRetry()
     {
-        return $this->status === 'pending' && 
-               $this->next_retry_at && 
-               $this->next_retry_at <= now() &&
-               $this->hasRetriesLeft();
+        return $this->status === 'pending' 
+            && $this->retry_attempt < $this->max_retry_attempts 
+            && $this->next_retry_date <= now()
+            && $this->grace_period_end > now();
     }
 
-    public function shouldSendReminder(): bool
+    public function hasExceededMaxRetries()
     {
-        return !$this->reminder_sent && 
-               $this->next_retry_at && 
-               $this->next_retry_at->subDays(7) <= now();
+        return $this->retry_attempt >= $this->max_retry_attempts;
+    }
+
+    public function isInGracePeriod()
+    {
+        return $this->grace_period_end > now();
     }
 }

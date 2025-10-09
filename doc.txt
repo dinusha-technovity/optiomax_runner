@@ -100,3 +100,5 @@ Quick Setup for Local Development:
 3. Start queue worker: php artisan queue:work redis --queue=tenant-registration,default,emails
 4. Start listener: php artisan listen:tenant-registration-actions --batch=5
 5. Monitor: php artisan listen:tenant-registration-actions --monitor
+
+php artisan stripe:setup-products

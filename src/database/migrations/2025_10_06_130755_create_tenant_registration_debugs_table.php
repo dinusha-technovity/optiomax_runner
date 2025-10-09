@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('owner_user_id')->nullable();
             $table->unsignedBigInteger('selected_package_id')->nullable();
+            $table->jsonb('tenant_addons')->nullable();
             $table->string('package_type')->nullable();
             $table->jsonb('invited_users')->nullable();
             $table->jsonb('validated_user')->nullable();

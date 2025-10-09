@@ -2,207 +2,138 @@
 
 namespace App\Services;
 
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Stripe\StripeClient;
+use Stripe\Exception\ApiErrorException;
 
 class StripePaymentService
 {
+    private $stripe;
+
     public function __construct()
     {
-        // Initialize Stripe if configured
-        if (env('STRIPE_SECRET')) {
-            \Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
-        }
+        $this->stripe = new StripeClient(env('STRIPE_SECRET'));
     }
 
-    public function createSubscription($tenantId, $packageId, $customerId, $paymentMethodId, $billingCycle)
+    public function createSubscriptionWithAddons($tenantId, $packageId, $customerId, $paymentMethodId, $billingCycle, $addonDetails = [])
     {
         try {
-            $package = DB::table('tenant_packages')->find($packageId);
-            $tenant = DB::table('tenants')->find($tenantId);
+            Log::info("Creating Stripe subscription with addons for tenant {$tenantId}");
 
-            if (!$package || !$tenant) {
-                throw new \Exception('Package or tenant not found');
-            }
+            // First, cancel any incomplete subscriptions for this customer
+            $this->cancelIncompleteSubscriptions($customerId);
 
-            Log::info("Creating subscription for tenant {$tenantId}, package {$packageId}, amount: {$package->price}");
+            // Get package details to determine trial period
+            $package = \DB::table('tenant_packages')->where('id', $packageId)->first();
+            $trialDays = $package->trial_days ?? 0;
 
-            // If Stripe is properly configured and we have valid customer/payment method
-            if (env('STRIPE_SECRET') && $customerId && $paymentMethodId && strpos($customerId, 'cus_') === 0) {
-                return $this->createStripeSubscription($tenantId, $packageId, $customerId, $paymentMethodId, $billingCycle, $package);
-            } else {
-                // Create local subscription without Stripe
-                return $this->createLocalOnlySubscription($tenantId, $packageId, $customerId, $paymentMethodId, $billingCycle, $package);
-            }
-
-        } catch (\Exception $e) {
-            Log::error('Subscription creation failed: ' . $e->getMessage());
-            return [
-                'success' => false,
-                'message' => $e->getMessage()
-            ];
-        }
-    }
-
-    private function createStripeSubscription($tenantId, $packageId, $customerId, $paymentMethodId, $billingCycle, $package)
-    {
-        try {
-            // Get Stripe price ID
-            $stripePriceId = $billingCycle === 'yearly' 
-                ? $package->stripe_price_id_yearly 
-                : $package->stripe_price_id_monthly;
-
-            if ($stripePriceId) {
-                // Create actual Stripe subscription
-                $subscription = \Stripe\Subscription::create([
-                    'customer' => $customerId,
-                    'items' => [['price' => $stripePriceId]],
-                    'default_payment_method' => $paymentMethodId,
-                    'metadata' => [
-                        'tenant_id' => $tenantId,
-                        'package_id' => $packageId,
-                        'billing_cycle' => $billingCycle
-                    ]
-                ]);
-
-                // Process initial payment if not in trial
-                $paymentIntent = null;
-                if ($subscription->latest_invoice) {
-                    $invoice = \Stripe\Invoice::retrieve($subscription->latest_invoice);
-                    if ($invoice->payment_intent) {
-                        $paymentIntent = \Stripe\PaymentIntent::retrieve($invoice->payment_intent);
-                    }
-                }
-
-                // Create local subscription record
-                $localSubscriptionId = $this->createLocalSubscription(
-                    $tenantId, 
-                    $packageId, 
-                    $customerId, 
-                    $paymentMethodId, 
-                    $billingCycle, 
-                    $package,
-                    $subscription->id
-                );
-
-                return [
-                    'success' => true,
-                    'subscription_id' => $subscription->id,
-                    'local_subscription_id' => $localSubscriptionId,
-                    'status' => $subscription->status,
-                    'stripe_payment_intent_id' => $paymentIntent ? $paymentIntent->id : null,
-                    'stripe_invoice_id' => $subscription->latest_invoice,
-                    'amount_charged' => $paymentIntent ? ($paymentIntent->amount / 100) : $package->price
+            // Prepare subscription items
+            $subscriptionItems = [];
+            
+            // Add base package item
+            $priceId = $billingCycle === 'yearly' ? $package->stripe_price_id_yearly : $package->stripe_price_id_monthly;
+            if ($priceId) {
+                $subscriptionItems[] = [
+                    'price' => $priceId,
+                    'quantity' => 1,
                 ];
-            } else {
-                // No Stripe price ID configured, create local only
-                return $this->createLocalOnlySubscription($tenantId, $packageId, $customerId, $paymentMethodId, $billingCycle, $package);
             }
 
-        } catch (\Stripe\Exception\CardException $e) {
-            Log::error('Stripe card error: ' . $e->getMessage());
-            return [
-                'success' => false,
-                'message' => 'Payment failed: ' . $e->getMessage(),
-                'error_type' => 'card_error'
-            ];
-        } catch (\Exception $e) {
-            Log::error('Stripe subscription creation failed: ' . $e->getMessage());
-            return [
-                'success' => false,
-                'message' => $e->getMessage()
-            ];
-        }
-    }
-
-    private function createLocalOnlySubscription($tenantId, $packageId, $customerId, $paymentMethodId, $billingCycle, $package)
-    {
-        // Create local subscription record without actual Stripe processing
-        $localSubscriptionId = $this->createLocalSubscription(
-            $tenantId, 
-            $packageId, 
-            $customerId, 
-            $paymentMethodId, 
-            $billingCycle, 
-            $package
-        );
-
-        return [
-            'success' => true,
-            'subscription_id' => 'local_' . $localSubscriptionId,
-            'local_subscription_id' => $localSubscriptionId,
-            'status' => 'active',
-            'amount_charged' => $package->price
-        ];
-    }
-
-    private function createLocalSubscription($tenantId, $packageId, $customerId, $paymentMethodId, $billingCycle, $package, $stripeSubscriptionId = null)
-    {
-        return DB::table('tenant_subscriptions')->insertGetId([
-            'tenant_id' => $tenantId,
-            'package_id' => $packageId,
-            'stripe_customer_id' => $customerId,
-            'stripe_subscription_id' => $stripeSubscriptionId,
-            'stripe_payment_method_id' => $paymentMethodId,
-            'billing_cycle' => $billingCycle,
-            'status' => $package->trial_days > 0 ? 'trialing' : 'active',
-            'amount' => $package->price,
-            'current_period_start' => now(),
-            'current_period_end' => $billingCycle === 'yearly' ? now()->addYear() : now()->addMonth(),
-            'trial_end' => $package->trial_days > 0 ? now()->addDays($package->trial_days) : null,
-            'metadata' => json_encode([
-                'package_name' => $package->name,
-                'billing_cycle' => $billingCycle,
-                'created_via' => 'registration'
-            ]),
-            'created_at' => now(),
-            'updated_at' => now(),
-        ]);
-    }
-
-    public function retrySubscriptionPayment($subscriptionId)
-    {
-        try {
-            $subscription = DB::table('tenant_subscriptions')->find($subscriptionId);
-            if (!$subscription) {
-                throw new \Exception('Subscription not found');
-            }
-
-            if ($subscription->stripe_subscription_id && env('STRIPE_SECRET')) {
-                // Retry Stripe subscription payment
-                $stripeSubscription = \Stripe\Subscription::retrieve($subscription->stripe_subscription_id);
+            // Add addon items
+            foreach ($addonDetails as $addon) {
+                $addonPriceId = $billingCycle === 'yearly' ? 
+                    ($addon['stripe_price_id_yearly'] ?? null) : 
+                    ($addon['stripe_price_id_monthly'] ?? null);
                 
-                if ($stripeSubscription->latest_invoice) {
-                    $invoice = \Stripe\Invoice::retrieve($stripeSubscription->latest_invoice);
-                    
-                    if ($invoice->status === 'open') {
-                        // Attempt to pay the invoice
-                        $invoice->pay();
-                        
-                        // Update local subscription status
-                        DB::table('tenant_subscriptions')
-                            ->where('id', $subscriptionId)
-                            ->update([
-                                'status' => 'active',
-                                'updated_at' => now()
-                            ]);
+                if ($addonPriceId) {
+                    $subscriptionItems[] = [
+                        'price' => $addonPriceId,
+                        'quantity' => $addon['quantity'] ?? 1,
+                    ];
+                }
+            }
 
-                        return [
-                            'success' => true,
-                            'message' => 'Payment retry successful',
-                            'amount' => $invoice->amount_paid / 100
-                        ];
+            // Prepare subscription data
+            $subscriptionData = [
+                'customer' => $customerId,
+                'default_payment_method' => $paymentMethodId,
+                'collection_method' => 'charge_automatically',
+                'expand' => ['latest_invoice.payment_intent'],
+                'metadata' => [
+                    'tenant_id' => $tenantId,
+                    'package_id' => $packageId,
+                    'billing_cycle' => $billingCycle,
+                    'addon_count' => count($addonDetails),
+                ],
+            ];
+
+            // Add items if we have them
+            if (!empty($subscriptionItems)) {
+                $subscriptionData['items'] = $subscriptionItems;
+            }
+
+            // Add trial period BEFORE creating subscription
+            if ($trialDays > 0) {
+                $subscriptionData['trial_period_days'] = $trialDays;
+                Log::info("Setting trial period of {$trialDays} days for subscription");
+            } else {
+                // If no trial, try to confirm payment immediately
+                $subscriptionData['payment_behavior'] = 'default_incomplete';
+            }
+
+            // Create the subscription
+            $subscription = $this->stripe->subscriptions->create($subscriptionData);
+
+            Log::info("Stripe subscription created successfully: {$subscription->id}, status: {$subscription->status}");
+
+            // Handle different subscription statuses
+            if ($subscription->status === 'incomplete') {
+                Log::warning("Subscription {$subscription->id} is incomplete - attempting to confirm payment");
+                
+                // Try to confirm the latest invoice
+                if ($subscription->latest_invoice && $subscription->latest_invoice->payment_intent) {
+                    $paymentIntent = $subscription->latest_invoice->payment_intent;
+                    
+                    if ($paymentIntent->status === 'requires_confirmation') {
+                        try {
+                            $confirmedIntent = $this->stripe->paymentIntents->confirm($paymentIntent->id);
+                            Log::info("Payment intent confirmed: {$confirmedIntent->id}, status: {$confirmedIntent->status}");
+                        } catch (\Exception $e) {
+                            Log::warning("Failed to confirm payment intent: " . $e->getMessage());
+                        }
                     }
                 }
             }
 
+            // Refresh subscription to get latest status
+            $subscription = $this->stripe->subscriptions->retrieve($subscription->id);
+
             return [
-                'success' => false,
-                'message' => 'No payment to retry or Stripe not configured'
+                'success' => true,
+                'subscription_id' => $subscription->id,
+                'status' => $subscription->status,
+                'current_period_start' => date('Y-m-d H:i:s', $subscription->current_period_start),
+                'current_period_end' => date('Y-m-d H:i:s', $subscription->current_period_end),
+                'stripe_payment_intent_id' => $subscription->latest_invoice->payment_intent->id ?? null,
+                'stripe_invoice_id' => $subscription->latest_invoice->id ?? null,
+                'client_secret' => $subscription->latest_invoice->payment_intent->client_secret ?? null,
+                'metadata' => [
+                    'tenant_id' => $tenantId,
+                    'package_id' => $packageId,
+                    'billing_cycle' => $billingCycle,
+                    'addon_count' => count($addonDetails),
+                ]
             ];
 
+        } catch (ApiErrorException $e) {
+            Log::error("Stripe API error creating subscription: " . $e->getMessage());
+            return [
+                'success' => false,
+                'message' => $e->getMessage(),
+                'error_code' => $e->getStripeCode()
+            ];
         } catch (\Exception $e) {
-            Log::error('Subscription payment retry failed: ' . $e->getMessage());
+            Log::error("General error creating Stripe subscription: " . $e->getMessage());
             return [
                 'success' => false,
                 'message' => $e->getMessage()
@@ -210,37 +141,58 @@ class StripePaymentService
         }
     }
 
-    public function chargeSetupFee($tenantId, $customerId, $paymentMethodId, $amount)
+    private function cancelIncompleteSubscriptions($customerId)
     {
         try {
-            Log::info("Processing setup fee of {$amount} for tenant {$tenantId}");
+            // Get all incomplete subscriptions for this customer
+            $subscriptions = $this->stripe->subscriptions->all([
+                'customer' => $customerId,
+                'status' => 'incomplete',
+                'limit' => 10,
+            ]);
 
-            // Record transaction (without actual Stripe charge for now)
-            DB::table('payment_transactions')->insert([
-                'tenant_id' => $tenantId,
-                'subscription_id' => null,
-                'stripe_payment_intent_id' => 'setup_' . uniqid(),
-                'type' => 'setup_fee',
-                'amount' => $amount,
+            foreach ($subscriptions->data as $subscription) {
+                try {
+                    $this->stripe->subscriptions->cancel($subscription->id);
+                    Log::info("Cancelled incomplete subscription: {$subscription->id}");
+                } catch (\Exception $e) {
+                    Log::warning("Failed to cancel incomplete subscription {$subscription->id}: " . $e->getMessage());
+                }
+            }
+        } catch (\Exception $e) {
+            Log::warning("Error checking for incomplete subscriptions: " . $e->getMessage());
+        }
+    }
+
+    public function chargeSetupFee($tenantId, $customerId, $paymentMethodId, $amount, $description)
+    {
+        try {
+            $paymentIntent = $this->stripe->paymentIntents->create([
+                'amount' => $amount * 100, // Convert to cents
                 'currency' => 'usd',
-                'status' => 'succeeded',
-                'description' => 'Setup fee for subscription',
-                'stripe_response' => json_encode(['simulated' => true]),
-                'processed_at' => now(),
-                'created_at' => now(),
-                'updated_at' => now(),
+                'customer' => $customerId,
+                'payment_method' => $paymentMethodId,
+                'confirmation_method' => 'automatic',
+                'confirm' => true,
+                'description' => $description,
+                'metadata' => [
+                    'tenant_id' => $tenantId,
+                    'type' => 'setup_fee',
+                ],
             ]);
 
             return [
                 'success' => true,
-                'status' => 'succeeded'
+                'payment_intent_id' => $paymentIntent->id,
+                'status' => $paymentIntent->status,
+                'amount' => $amount,
             ];
 
-        } catch (\Exception $e) {
-            Log::error('Setup fee charge failed: ' . $e->getMessage());
+        } catch (ApiErrorException $e) {
+            Log::error("Stripe API error charging setup fee: " . $e->getMessage());
             return [
                 'success' => false,
-                'message' => $e->getMessage()
+                'message' => $e->getMessage(),
             ];
         }
     }

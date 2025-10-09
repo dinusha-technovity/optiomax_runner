@@ -2,14 +2,13 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class TenantSubscription extends Model
 {
-    use SoftDeletes;
+    use HasFactory, SoftDeletes;
 
     protected $fillable = [
         'tenant_id',
@@ -28,36 +27,50 @@ class TenantSubscription extends Model
     ];
 
     protected $casts = [
-        'amount' => 'decimal:2',
-        'current_period_start' => 'timestamp',
-        'current_period_end' => 'timestamp',
-        'trial_end' => 'timestamp',
-        'canceled_at' => 'timestamp',
+        'current_period_start' => 'datetime',
+        'current_period_end' => 'datetime',
+        'trial_end' => 'datetime',
+        'canceled_at' => 'datetime',
         'metadata' => 'array'
     ];
 
-    public function tenant(): BelongsTo
+    public function tenant()
     {
         return $this->belongsTo(tenants::class, 'tenant_id');
     }
 
-    public function package(): BelongsTo
+    public function package()
     {
         return $this->belongsTo(TenantPackage::class, 'package_id');
     }
 
-    public function transactions(): HasMany
+    public function addons()
+    {
+        return $this->hasMany(SubscriptionAddon::class, 'subscription_id');
+    }
+
+    public function paymentTransactions()
     {
         return $this->hasMany(PaymentTransaction::class, 'subscription_id');
     }
 
-    public function isActive(): bool
+    public function paymentRetryLogs()
+    {
+        return $this->hasMany(PaymentRetryLog::class, 'subscription_id');
+    }
+
+    public function isActive()
     {
         return $this->status === 'active';
     }
 
-    public function isInTrial(): bool
+    public function isInTrial()
     {
-        return $this->status === 'trialing' && $this->trial_end && $this->trial_end > now();
+        return $this->status === 'trialing' && $this->trial_end > now();
+    }
+
+    public function isPastDue()
+    {
+        return $this->status === 'past_due';
     }
 }
