@@ -122,7 +122,7 @@ class TenantPackagesSeeder extends Seeder
                 'slug' => 'professional-plan',
                 'billing_type' => 'both',
                 'base_price_monthly' => 79.00,
-                'base_price_yearly' => 790.00, // 16.7% discount
+                'base_price_yearly' => 790.00,
                 'description' => 'Advanced features for growing businesses and teams',
                 'terms_conditions' => 'Professional terms include SLA guarantees, priority support, and enhanced security features.',
                 'charge_immediately_on_signup' => true,
@@ -155,9 +155,9 @@ class TenantPackagesSeeder extends Seeder
                 'trial_requires_payment_method' => true,
                 'setup_fee' => 0.00,
                 'cancellation_policy' => 'end_of_period',
-                'stripe_price_id_monthly' => 'price_professional_monthly',
-                'stripe_price_id_yearly' => 'price_professional_yearly',
-                'stripe_product_id' => 'prod_professional_plan',
+                'stripe_price_id_monthly' => null, // Will be set by stripe:setup-products command
+                'stripe_price_id_yearly' => null,  // Will be set by stripe:setup-products command
+                'stripe_product_id' => null,       // Will be set by stripe:setup-products command
                 'isactive' => true,
                 'is_popular' => false,
                 'is_legacy' => false,
