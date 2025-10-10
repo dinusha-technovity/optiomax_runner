@@ -16,7 +16,7 @@ return new class extends Migration
             $table->text('blocking_reason')->nullable();
         });
     }
-
+ 
     public function down(): void
     {
         Schema::table('tenants', function (Blueprint $table) {

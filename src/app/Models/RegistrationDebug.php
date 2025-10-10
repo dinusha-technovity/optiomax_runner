@@ -12,6 +12,7 @@ class RegistrationDebug extends Model
     protected $fillable = [
         'owner_user_id',
         'selected_package_id',
+        'tenant_addons',
         'package_type',
         'invited_users',
         'validated_user',

@@ -26,7 +26,7 @@ jobs:
     needs: [set_version]
     steps:
       - name: Checkout code
-        uses: actions/checkout@v1
+        uses: actions/checkout@v4
 
       - name: Login to GitHub Packages
         run: |
@@ -35,21 +35,23 @@ jobs:
 
           if ! docker pull ghcr.io/dinusha-technovity/composer_runner:$RELEASE_VERSION 2>/dev/null; then
             docker build -f ./prod/dockerfiles/composer_runner.Dockerfile -t ghcr.io/dinusha-technovity/composer_runner:$RELEASE_VERSION .
+            docker push ghcr.io/dinusha-technovity/composer_runner:$RELEASE_VERSION
           fi
 
           if ! docker pull ghcr.io/dinusha-technovity/npm_runner:$RELEASE_VERSION 2>/dev/null; then
             docker build -f ./prod/dockerfiles/npm_runner.Dockerfile -t ghcr.io/dinusha-technovity/npm_runner:$RELEASE_VERSION .
+            docker push ghcr.io/dinusha-technovity/npm_runner:$RELEASE_VERSION
           fi
 
           if ! docker pull ghcr.io/dinusha-technovity/optiomax_runner:$RELEASE_VERSION 2>/dev/null; then
             docker build --build-arg USERNAME=dinusha-technovity --build-arg RELEASE_VERSION=$RELEASE_VERSION -f ./prod/dockerfiles/app.Dockerfile -t ghcr.io/dinusha-technovity/optiomax_runner:$RELEASE_VERSION .
+            docker push ghcr.io/dinusha-technovity/optiomax_runner:$RELEASE_VERSION
           fi
+          
           if ! docker pull ghcr.io/dinusha-technovity/optiomax_runner_proxy:$RELEASE_VERSION 2>/dev/null; then
             docker build -f ./prod/dockerfiles/static.Dockerfile -t ghcr.io/dinusha-technovity/optiomax_runner_proxy:$RELEASE_VERSION .
+            docker push ghcr.io/dinusha-technovity/optiomax_runner_proxy:$RELEASE_VERSION
           fi
-
-          docker push ghcr.io/dinusha-technovity/optiomax_runner:$RELEASE_VERSION
-          docker push ghcr.io/dinusha-technovity/optiomax_runner_proxy:$RELEASE_VERSION
 
   deploy:
     runs-on: ubuntu-latest
@@ -64,12 +66,21 @@ jobs:
           script: |
             echo ${{ secrets.GITHUB_TOKEN }} | docker login ghcr.io --username dinusha-technovity --password-stdin \
             && cd optiomax/optiomax_runner \
+            && echo "Cleaning up existing containers..." \
+            && docker compose -f docker-compose-prod.yml down --remove-orphans || true \
+            && docker container prune -f \
+            && echo "Pulling latest images..." \
             && docker pull ghcr.io/dinusha-technovity/optiomax_runner:${{ needs.set_version.outputs.RELEASE_VERSION }} \
             && docker pull ghcr.io/dinusha-technovity/optiomax_runner_proxy:${{ needs.set_version.outputs.RELEASE_VERSION }} \
-            && VERSION=${{ needs.set_version.outputs.RELEASE_VERSION }} docker compose -f docker-compose-prod.yml up -d --build --remove-orphans \
-            && sleep 20 \
-            && echo "Fixing permissions..." \
-            && docker exec -t optiomax_runner sh -c "supervisorctl stop all" \
+            && echo "Starting new containers..." \
+            && VERSION=${{ needs.set_version.outputs.RELEASE_VERSION }} docker compose -f docker-compose-prod.yml up -d --force-recreate --remove-orphans \
+            && sleep 30 \
+            && echo "Checking container status..." \
+            && docker ps \
+            && echo "Waiting for application to be ready..." \
+            && timeout 60 bash -c 'until docker exec optiomax_runner php /var/www/html/artisan --version; do echo "Waiting for Laravel..."; sleep 5; done' \
+            && echo "Application is ready, fixing permissions..." \
+            && docker exec -t optiomax_runner sh -c "supervisorctl stop all || true" \
             && docker exec -t optiomax_runner sh -c "rm -f /var/www/html/storage/logs/*.log" \
             && docker exec -t optiomax_runner sh -c "mkdir -p /var/www/html/storage/logs /var/www/html/storage/framework/cache /var/www/html/storage/framework/sessions /var/www/html/storage/framework/views /var/www/html/bootstrap/cache" \
             && docker exec -t optiomax_runner sh -c "chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache" \
@@ -78,12 +89,25 @@ jobs:
             && docker exec -t optiomax_runner sh -c "touch /var/www/html/storage/logs/laravel.log" \
             && docker exec -t optiomax_runner sh -c "chown www-data:www-data /var/www/html/storage/logs/laravel.log" \
             && docker exec -t optiomax_runner sh -c "chmod 666 /var/www/html/storage/logs/laravel.log" \
-            && docker exec -t optiomax_runner sh -c "supervisorctl start all" \
-            && echo "Checking final permissions..." \
-            && docker exec -t optiomax_runner sh -c "ls -la /var/www/html/storage/logs/" \
+            && echo "Starting supervisor processes..." \
+            && docker exec -t optiomax_runner sh -c "supervisorctl start all || true" \
+            && sleep 15 \
+            && echo "Final supervisor status check..." \
+            && docker exec -t optiomax_runner sh -c "supervisorctl status" \
+            && echo "Checking for any failed processes..." \
+            && if docker exec -t optiomax_runner sh -c "supervisorctl status | grep -q ERROR"; then \
+                echo "Some processes failed to start, checking logs..."; \
+                docker exec -t optiomax_runner sh -c "supervisorctl tail listen-registration stderr" || true; \
+                docker exec -t optiomax_runner sh -c "ls -la /var/www/html/storage/logs/" || true; \
+                echo "Attempting to restart failed processes..."; \
+                docker exec -t optiomax_runner sh -c "supervisorctl restart all" || true; \
+                sleep 10; \
+                docker exec -t optiomax_runner sh -c "supervisorctl status"; \
+              else \
+                echo "All supervisor processes started successfully!"; \
+              fi \
             && docker logout \
             && docker system prune -af
-          
 
   run-migrations:
     runs-on: ubuntu-latest
@@ -96,4 +120,12 @@ jobs:
           username: ${{ secrets.VPS_USER }}
           password: ${{ secrets.VPS_PASSWORD }}
           script: |
-            docker exec -t optiomax_runner sh -c "php artisan migrate && php artisan passport:install && php artisan tenantss:migrates:all tenant"
+            echo "Running database migrations..." \
+            && docker exec -t optiomax_runner sh -c "php artisan migrate --force" \
+            && echo "Installing/updating Passport..." \
+            && docker exec -t optiomax_runner sh -c "php artisan passport:install --force" \
+            && echo "Running tenant migrations..." \
+            && docker exec -t optiomax_runner sh -c "php artisan tenantss:migrates:all tenant" \
+            && echo "Clearing application caches..." \
+            && docker exec -t optiomax_runner sh -c "php artisan config:cache" \
+            && echo "Migration completed successfully!"

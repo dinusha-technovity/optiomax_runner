@@ -2,12 +2,12 @@
 
 namespace App\Mail;
 
-use App\Models\User;
-use App\Models\tenants;
-use App\Models\PaymentRetryLog;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
+use App\Models\User;
+use App\Models\tenants;
+use App\Models\PaymentRetryLog;
 
 class PaymentReminderMail extends Mailable
 {
@@ -26,15 +26,14 @@ class PaymentReminderMail extends Mailable
 
     public function build()
     {
-        return $this->subject('Payment Reminder - Action Required')
+        return $this->subject('Payment Reminder - Update Required')
                     ->view('emails.payment-reminder')
                     ->with([
                         'userName' => $this->user->name,
                         'tenantName' => $this->tenant->tenant_name,
-                        'amount' => $this->retryLog->amount,
-                        'dueDate' => $this->retryLog->next_retry_at,
-                        'attemptsRemaining' => $this->retryLog->max_retries - $this->retryLog->retry_attempt,
-                        'portalUrl' => env('PORTAL_URL')
+                        'retryLog' => $this->retryLog,
+                        'paymentUrl' => config('app.url') . '/billing/payment-methods',
+                        'supportUrl' => config('app.url') . '/support',
                     ]);
     }
 }

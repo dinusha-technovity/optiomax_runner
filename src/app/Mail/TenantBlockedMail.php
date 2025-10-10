@@ -2,11 +2,11 @@
 
 namespace App\Mail;
 
-use App\Models\User;
-use App\Models\tenants;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
+use App\Models\User;
+use App\Models\tenants;
 
 class TenantBlockedMail extends Mailable
 {
@@ -23,15 +23,13 @@ class TenantBlockedMail extends Mailable
 
     public function build()
     {
-        return $this->subject('Account Suspended - Payment Required')
+        return $this->subject('Account Suspended - Action Required')
                     ->view('emails.tenant-blocked')
                     ->with([
                         'userName' => $this->user->name,
                         'tenantName' => $this->tenant->tenant_name,
-                        'blockedAt' => $this->tenant->blocked_at,
-                        'reason' => $this->tenant->blocking_reason,
-                        'portalUrl' => env('PORTAL_URL'),
-                        'supportEmail' => env('SUPPORT_EMAIL', 'support@optiomax.com')
+                        'supportUrl' => config('app.url') . '/support',
+                        'paymentUrl' => config('app.url') . '/billing/payment-methods',
                     ]);
     }
 }

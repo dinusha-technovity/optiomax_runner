@@ -40,13 +40,13 @@ class Tenant_WidgetsDataSeeder extends Seeder
         $img_directory = '/images/widgets_ui';
 
         $itemLists = [
-            [
-                'image_path' => "$img_directory/todo",
-                'category_id' => $categoryIds[0],
-                'design_obj' => json_encode(['x_value' => 0, 'y_value' => 0, 'width' => 7, 'height' => 44]),
-                'design_component' => "Todo List",
-                'widget_type' => "TODO_LIST",
-            ],
+            // [
+            //    'image_path' => "$img_directory/todo",
+            //     'category_id' => $categoryIds[0],
+            //     'design_obj' => json_encode(['x_value' => 0, 'y_value' => 0, 'width' => 7, 'height' => 44]),
+            //     'design_component' => "Todo List",
+            //     'widget_type' => "TODO_LIST",
+            // ],
             // [
             //     'image_path' => "/assets/icons/widget_drawer/analytics-graph-chart-svgrepo-com.svg",
             //     'category_id' => $categoryIds[1],
@@ -175,7 +175,7 @@ class Tenant_WidgetsDataSeeder extends Seeder
             ],
 
         ];
- 
+
         DB::table('app_widgets')->insert($itemLists);
     }
 }

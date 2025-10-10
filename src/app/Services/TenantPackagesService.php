@@ -2,186 +2,142 @@
 
 namespace App\Services;
 
-use Illuminate\Support\Facades\DB;
-use App\Models\TenantPackage;
-use App\Models\PackageAddon;
-use App\Models\PackageDiscount;
+use App\Repositories\TenantPackagesRepository;
+use Illuminate\Support\Facades\Log;
 
 class TenantPackagesService
 {
-    public function getAllTenantPackages(?int $TenantPackagesId = null, ?string $packageType = null, ?string $billingCycle = null)
+    protected $tenantPackagesRepository;
+
+    public function __construct(TenantPackagesRepository $tenantPackagesRepository)
     {
-        DB::beginTransaction();
+        $this->tenantPackagesRepository = $tenantPackagesRepository;
+    }
 
+    public function getAllTenantPackages(?int $tenantPackagesId = null, ?string $packageType = null, ?string $billingCycle = null, ?string $region = null)
+    {
         try {
-            // Convert billing cycle format if needed
-            $dbBillingCycle = null;
-            if ($billingCycle) {
-                $dbBillingCycle = $billingCycle === 'Monthly' ? 'month' : 'year';
-            }
-
-            // Call the enhanced PostgreSQL function
-            $result = DB::select(
-                "SELECT * FROM get_tenant_packages_list(?, ?, ?)",
-                [$TenantPackagesId, $packageType, $dbBillingCycle]
+            $result = $this->tenantPackagesRepository->getAllTenantPackages(
+                $tenantPackagesId, 
+                $packageType, 
+                $billingCycle, 
+                $region
             );
-
-            if (!empty($result)) {
-                $response = collect($result)->map(function ($item) {
-                    $itemArray = (array) $item;
-                    
-                    // Parse JSON fields
-                    if (isset($itemArray['allowed_package_types']) && is_string($itemArray['allowed_package_types'])) {
-                        $itemArray['allowed_package_types'] = json_decode($itemArray['allowed_package_types'], true);
-                    }
-                    if (isset($itemArray['features']) && is_string($itemArray['features'])) {
-                        $itemArray['features'] = json_decode($itemArray['features'], true);
-                    }
-                    if (isset($itemArray['available_addons']) && is_string($itemArray['available_addons'])) {
-                        $itemArray['available_addons'] = json_decode($itemArray['available_addons'], true);
-                    }
-                    
-                    // Add computed fields
-                    $itemArray['effective_price'] = $itemArray['discount_price'] ?? $itemArray['price'];
-                    $itemArray['has_discount'] = !is_null($itemArray['discount_price']);
-                    $itemArray['discount_percentage'] = null;
-                    
-                    if ($itemArray['has_discount'] && $itemArray['discount_price'] > 0) {
-                        $itemArray['discount_percentage'] = round((($itemArray['discount_price'] - $itemArray['price']) / $itemArray['discount_price']) * 100, 1);
-                    }
-                    
-                    return $itemArray;
-                })->toArray();
-
-                DB::commit();
-
-                return [
-                    'success' => true,
-                    'message' => 'Tenant packages list fetched successfully',
-                    'data' => $response,
-                    'filters' => [
-                        'package_type' => $packageType,
-                        'billing_cycle' => $billingCycle,
-                        'package_id' => $TenantPackagesId
-                    ]
-                ];
-            }
-
-            DB::rollBack();
-            return [
-                'success' => false,
-                'message' => 'No matching tenant packages found.',
-                'data' => [],
-            ];
+            
+            return $result;
         } catch (\Exception $e) {
-            DB::rollBack();
+            Log::error('TenantPackagesService::getAllTenantPackages - Error: ' . $e->getMessage());
             return [
                 'success' => false,
-                'message' => $e->getMessage(),
+                'message' => 'Failed to fetch tenant packages: ' . $e->getMessage(),
                 'data' => [],
             ];
         }
     }
 
-    public function getPackagesWithAddonsAndDiscounts(?string $packageType = null, ?string $billingCycle = null)
+    public function getPackagesWithAddonsAndDiscounts(?string $packageType = null, ?string $billingCycle = null, ?string $region = null)
     {
         try {
-            // Get packages
-            $packagesResult = $this->getAllTenantPackages(null, $packageType, $billingCycle);
+            $result = $this->tenantPackagesRepository->getPackagesWithAddonsAndDiscounts(
+                $packageType, 
+                $billingCycle, 
+                $region
+            );
             
-            if (!$packagesResult['success']) {
-                return $packagesResult;
-            }
-
-            $packages = collect($packagesResult['data']);
-
-            // Group by package name for better organization
-            $groupedPackages = $packages->groupBy('name')->map(function ($packageGroup) {
-                $monthly = $packageGroup->where('type', 'month')->first();
-                $yearly = $packageGroup->where('type', 'year')->first();
-                
-                return [
-                    'name' => $packageGroup->first()['name'],
-                    'description' => $packageGroup->first()['description'],
-                    'allowed_package_types' => $packageGroup->first()['allowed_package_types'],
-                    'features' => $packageGroup->first()['features'],
-                    'support' => $packageGroup->first()['support'],
-                    'is_popular' => $packageGroup->first()['is_popular'],
-                    'monthly' => $monthly,
-                    'yearly' => $yearly,
-                    'trial_days' => $packageGroup->first()['trial_days'],
-                    'setup_fee' => $packageGroup->first()['setup_fee'],
-                ];
-            })->values();
-
-            // Get available addons
-            $addons = PackageAddon::where('isactive', true)
-                ->orderBy('sort_order')
-                ->get()
-                ->map(function ($addon) {
-                    return [
-                        'id' => $addon->id,
-                        'name' => $addon->name,
-                        'slug' => $addon->slug,
-                        'description' => $addon->description,
-                        'type' => $addon->type,
-                        'price_monthly' => $addon->price_monthly,
-                        'price_yearly' => $addon->price_yearly,
-                        'quantity' => $addon->quantity,
-                        'is_stackable' => $addon->is_stackable,
-                        'max_quantity' => $addon->max_quantity,
-                        'applicable_packages' => $addon->applicable_packages,
-                    ];
-                });
-
-            // Get active discounts
-            $discounts = PackageDiscount::where('isactive', true)
-                ->where(function($query) {
-                    $query->whereNull('valid_until')
-                          ->orWhere('valid_until', '>', now());
-                })
-                ->where(function($query) {
-                    $query->whereNull('valid_from')
-                          ->orWhere('valid_from', '<=', now());
-                })
-                ->get()
-                ->map(function ($discount) {
-                    return [
-                        'id' => $discount->id,
-                        'name' => $discount->name,
-                        'code' => $discount->code,
-                        'description' => $discount->description,
-                        'type' => $discount->type,
-                        'value' => $discount->value,
-                        'applicable_packages' => $discount->applicable_packages,
-                        'applicable_package_types' => $discount->applicable_package_types,
-                        'billing_cycles' => $discount->billing_cycles,
-                        'is_first_time_only' => $discount->is_first_time_only,
-                        'minimum_amount' => $discount->minimum_amount,
-                        'valid_until' => $discount->valid_until,
-                    ];
-                });
-
-            return [
-                'success' => true,
-                'message' => 'Packages with addons and discounts fetched successfully',
-                'data' => [
-                    'packages' => $groupedPackages,
-                    'addons' => $addons,
-                    'discounts' => $discounts,
-                ],
-                'filters' => [
-                    'package_type' => $packageType,
-                    'billing_cycle' => $billingCycle
-                ]
-            ];
-
+            return $result;
         } catch (\Exception $e) {
+            Log::error('TenantPackagesService::getPackagesWithAddonsAndDiscounts - Error: ' . $e->getMessage());
             return [
                 'success' => false,
-                'message' => $e->getMessage(),
+                'message' => 'Failed to fetch packages with addons and discounts: ' . $e->getMessage(),
                 'data' => [],
             ];
         }
+    }
+
+    public function getPackageDetails(int $packageId, ?string $packageType = null, ?string $billingCycle = null, ?string $region = null)
+    {
+        try {
+            // Get package details
+            $packageResult = $this->getAllTenantPackages($packageId, $packageType, $billingCycle, $region);
+            
+            if (!$packageResult['success'] || empty($packageResult['data'])) {
+                return [
+                    'success' => false,
+                    'message' => 'Package not found',
+                    'data' => null,
+                ];
+            }
+
+            $package = $packageResult['data'][0];
+            
+            // Enrich with pricing calculations
+            $enrichedPackage = $this->enrichPackageWithPricing($package, $billingCycle);
+            
+            return [
+                'success' => true,
+                'message' => 'Package details fetched successfully',
+                'data' => $enrichedPackage,
+            ];
+        } catch (\Exception $e) {
+            Log::error('TenantPackagesService::getPackageDetails - Error: ' . $e->getMessage());
+            return [
+                'success' => false,
+                'message' => 'Failed to fetch package details: ' . $e->getMessage(),
+                'data' => null,
+            ];
+        }
+    }
+
+    public function validateDiscountCode(string $discountCode, int $packageId, ?string $billingCycle = null)
+    {
+        try {
+            $result = $this->tenantPackagesRepository->validateDiscountCode($discountCode, $packageId, $billingCycle);
+            return $result;
+        } catch (\Exception $e) {
+            Log::error('TenantPackagesService::validateDiscountCode - Error: ' . $e->getMessage());
+            return [
+                'success' => false,
+                'message' => 'Failed to validate discount code: ' . $e->getMessage(),
+                'data' => null,
+            ];
+        }
+    }
+
+    public function calculatePricing(int $packageId, array $selectedAddons = [], ?string $discountCode = null, ?string $billingCycle = 'monthly')
+    {
+        try {
+            $result = $this->tenantPackagesRepository->calculatePricing($packageId, $selectedAddons, $discountCode, $billingCycle);
+            return $result;
+        } catch (\Exception $e) {
+            Log::error('TenantPackagesService::calculatePricing - Error: ' . $e->getMessage());
+            return [
+                'success' => false,
+                'message' => 'Failed to calculate pricing: ' . $e->getMessage(),
+                'data' => null,
+            ];
+        }
+    }
+
+    private function enrichPackageWithPricing($package, ?string $billingCycle = null)
+    {
+        // Add computed pricing fields
+        $package['monthly_price'] = $package['base_price_monthly'];
+        $package['yearly_price'] = $package['base_price_yearly'];
+        
+        // Calculate yearly savings
+        if ($package['base_price_yearly'] > 0 && $package['base_price_monthly'] > 0) {
+            $yearlyEquivalent = $package['base_price_monthly'] * 12;
+            $package['yearly_savings'] = $yearlyEquivalent - $package['base_price_yearly'];
+            $package['yearly_savings_percentage'] = round(($package['yearly_savings'] / $yearlyEquivalent) * 100, 1);
+        } else {
+            $package['yearly_savings'] = 0;
+            $package['yearly_savings_percentage'] = 0;
+        }
+        
+        // Set current price based on billing cycle
+        $package['current_price'] = $billingCycle === 'yearly' ? $package['yearly_price'] : $package['monthly_price'];
+        
+        return $package;
     }
 }
