@@ -201,6 +201,78 @@ class DocumentCategorySeeder extends Seeder
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
             ],
-        ]);
-    }
-}
+            // 21
+            [
+                'category_name' => 'Asset Master Bulk Data Import',
+                'description' => 'asset master bulk data import form',
+                'category_tag' => 'ASSET_MASTER_BULK_DATA_IMPORT',
+                'isactive' => true,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ],
+            // 22
+            [ 
+                'category_name' => 'Supplier Bulk Data Import',
+                'description' => 'supplier bulk data import form',
+                'category_tag' => 'SUPPLIER_BULK_DATA_IMPORT',
+                'isactive' => true,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ], 
+            // 23
+            [ 
+                'category_name' => 'Customer Bulk Data Import',
+                'description' => 'customer bulk data import form',
+                'category_tag' => 'CUSTOMER_BULK_DATA_IMPORT',
+                'isactive' => true,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ],
+            // 24
+            [ 
+                'category_name' => 'Asset Category Bulk Data Import',
+                'description' => 'asset category bulk data import form',
+                'category_tag' => 'ASSET_CATEGORY_BULK_DATA_IMPORT',
+                'isactive' => true,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ],
+            // 25
+            [ 
+                'category_name' => 'Asset Sub Category Bulk Data Import',
+                'description' => 'asset sub category bulk data import form',
+                'category_tag' => 'ASSET_SUB_CATEGORY_BULK_DATA_IMPORT',
+                'isactive' => true,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ],
+            // 26
+            [ 
+                'category_name' => 'Asset Group Bulk Data Import',
+                'description' => 'asset group bulk data import form',
+                'category_tag' => 'ASSET_GROUP_BULK_DATA_IMPORT',
+                'isactive' => true,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ],
+            // 27
+            [ 
+                'category_name' => 'Items Master Bulk Data Import',
+                'description' => 'items master bulk data import form',
+                'category_tag' => 'ITEMS_MASTER_BULK_DATA_IMPORT',
+                'isactive' => true,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ],
+            // 28
+            [ 
+                'category_name' => 'Assets Availability Terms Type Bulk Data Import',
+                'description' => 'assets availability terms type bulk data import form',
+                'category_tag' => 'ASSETS_AVAILABILITY_TERMS_TYPE_BULK_DATA_IMPORT',
+                'isactive' => true,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ],
+        ]); 
+    } 
+} 
