@@ -12,11 +12,12 @@ RUN apk --update add \
     postgresql-dev \
     supervisor \
     bash \
+    curl \
     && apk add --no-cache autoconf g++ make \
     && pecl install redis \
     && docker-php-ext-enable redis \
     && docker-php-ext-install pdo_pgsql \
-    && apk del --no-cache
+    && apk del --no-cache autoconf g++ make
 
 # Create Supervisor log directory
 RUN mkdir -p /var/log/supervisor
@@ -33,9 +34,18 @@ WORKDIR /var/www/html
 # Copy Composer from official image
 COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
 
-# Copy supervisor config (fixed paths)
+# Copy supervisor config
 COPY ./dockerfiles/supervisor/supervisord.conf /etc/supervisord.conf
 COPY ./dockerfiles/supervisor/laravel-worker.conf /etc/supervisor/conf.d/laravel-worker.conf
 
-# Set entrypoint to start supervisor
-CMD ["/usr/bin/supervisord", "-c", "/etc/supervisord.conf"]
+# Create startup script
+RUN echo '#!/bin/bash' > /start.sh && \
+    echo 'php-fpm -D' >> /start.sh && \
+    echo '/usr/bin/supervisord -c /etc/supervisord.conf' >> /start.sh && \
+    chmod +x /start.sh
+
+# Expose port 9000 for PHP-FPM
+EXPOSE 9000
+
+# Set entrypoint to start both PHP-FPM and supervisor
+CMD ["/start.sh"]

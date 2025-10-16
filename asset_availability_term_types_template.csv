@@ -1,0 +1,11 @@
+name,description
+Short Term Rental,Assets available for short-term rental agreements (1-30 days)
+Long Term Rental,Assets available for long-term rental agreements (30+ days)
+Purchase Only,Assets that are only available for purchase
+Lease,Assets available for lease agreements
+Temporary Assignment,Assets for temporary assignment to employees or departments
+Permanent Assignment,Assets for permanent assignment to employees or departments
+Seasonal Availability,Assets available only during specific seasons
+Emergency Use,Assets reserved for emergency situations only
+Maintenance Reserve,Assets kept in reserve during maintenance periods
+Trial Period,Assets available for trial periods before purchase
