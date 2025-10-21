@@ -111,7 +111,7 @@ Route::middleware(['auth:api', 'scopes:refresh_portal'])->post('refresh-token', 
 Route::prefix('masterentry')->group(function(){
     Route::get('/get_all_country_codes', [MasterEntryController::class,"getAllCountryCodes"]);
 });
-
+ 
 // Asset Items CSV Import Routes
 Route::prefix('bulk_data_uploading')->group(function () {
     Route::post("/upload", [MasterDocumentController::class, "uploadAssetItemsCsv"]);
