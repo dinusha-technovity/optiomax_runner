@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
 class DocumentCategoryFieldSeeder extends Seeder
-{ 
+{  
     /**
      * Run the database seeds.
      */
@@ -762,7 +762,119 @@ class DocumentCategoryFieldSeeder extends Seeder
                 'updated_at' => Carbon::now(),
                 'listable'=>false,
             ],
+            // 57
+            [
+                'document_category_id'=>21,
+                'document_field_name'=>"Upload bulk data files",
+                'description'=>"upload bulk data files for asset master",
+                'file_path'=>'uploads/bulk_data_import/asset_master',
+                'isactive'=>true,
+                'document_formats'=>'CSV',
+                'max_upload_count'=>1,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+                'listable'=>true,
 
+            ],
+            // 58
+            [ 
+                'document_category_id'=>22,
+                'document_field_name'=>"Upload bulk data files",
+                'description'=>"upload bulk data files for supplier",
+                'file_path'=>'uploads/bulk_data_import/supplier',
+                'isactive'=>true,
+                'document_formats'=>'CSV',
+                'max_upload_count'=>1,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+                'listable'=>true,
+
+            ], 
+            // 59
+            [ 
+                'document_category_id'=>23,
+                'document_field_name'=>"Upload bulk data files",
+                'description'=>"upload bulk data files for customer",
+                'file_path'=>'uploads/bulk_data_import/customer',
+                'isactive'=>true,
+                'document_formats'=>'CSV',
+                'max_upload_count'=>1,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+                'listable'=>true,
+
+            ],
+            // 60
+            [ 
+                'document_category_id'=>24,
+                'document_field_name'=>"Upload bulk data files",
+                'description'=>"upload bulk data files for asset category",
+                'file_path'=>'uploads/bulk_data_import/asset_category',
+                'isactive'=>true,
+                'document_formats'=>'CSV',
+                'max_upload_count'=>1,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+                'listable'=>true,
+
+            ],
+            // 61
+            [ 
+                'document_category_id'=>25,
+                'document_field_name'=>"Upload bulk data files",
+                'description'=>"upload bulk data files for asset sub category",
+                'file_path'=>'uploads/bulk_data_import/asset_sub_category',
+                'isactive'=>true,
+                'document_formats'=>'CSV',
+                'max_upload_count'=>1,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+                'listable'=>true,
+
+            ],
+            // 62
+            [ 
+                'document_category_id'=>26,
+                'document_field_name'=>"Upload bulk data files",
+                'description'=>"upload bulk data files for asset group",
+                'file_path'=>'uploads/bulk_data_import/asset_group',
+                'isactive'=>true,
+                'document_formats'=>'CSV',
+                'max_upload_count'=>1,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+                'listable'=>true,
+
+            ],
+            // 63
+            [ 
+                'document_category_id'=>27,
+                'document_field_name'=>"Upload bulk data files",
+                'description'=>"upload bulk data files for items master",
+                'file_path'=>'uploads/bulk_data_import/items_master',
+                'isactive'=>true,
+                'document_formats'=>'CSV',
+                'max_upload_count'=>1,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+                'listable'=>true,
+
+            ],
+            // 64
+            [ 
+                'document_category_id'=>28,
+                'document_field_name'=>"Upload bulk data files",
+                'description'=>"upload bulk data files for assets availability terms type",
+                'file_path'=>'uploads/bulk_data_import/assets_availability_terms_type',
+                'isactive'=>true,
+                'document_formats'=>'CSV',
+                'max_upload_count'=>1,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+                'listable'=>true,
+
+            ],
         ]);
     }
-}
+} 
+ 

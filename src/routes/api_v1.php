@@ -13,6 +13,7 @@ use App\Http\Controllers\UserAuthenticationController;
 use App\Http\Controllers\TenantAuthController;
 use App\Http\Controllers\TenantPackagesController;
 use App\Http\Controllers\PortalWidgetItemManagementController;
+use App\Http\Controllers\MasterDocumentController;
 
 Route::get('/status', function (Request $request): string {
     return "API is live";
@@ -109,4 +110,20 @@ Route::middleware(['auth:api', 'scopes:refresh_portal'])->post('refresh-token', 
 
 Route::prefix('masterentry')->group(function(){
     Route::get('/get_all_country_codes', [MasterEntryController::class,"getAllCountryCodes"]);
+});
+ 
+// Asset Items CSV Import Routes
+Route::prefix('bulk_data_uploading')->group(function () {
+    Route::post("/upload", [MasterDocumentController::class, "uploadAssetItemsCsv"]);
+    Route::post("/process", [MasterDocumentController::class, "processAssetItemsCsv"]);
+    Route::post("/process_id/{documentId}", [MasterDocumentController::class, "processAssetItemsCsvByDocumentId"]);
+    Route::get("/template", [MasterDocumentController::class, "downloadAssetItemsCsvTemplate"]);
+    Route::get("/status", [MasterDocumentController::class, "getAssetItemsCsvImportStatus"]);
+    Route::get("/history", [MasterDocumentController::class, "getAssetItemsCsvImportHistory"]);
+    Route::post("/cancel/{jobId}", [MasterDocumentController::class, "cancelAssetItemsCsvImport"]);
+    Route::get("/error-report/{jobId}", [MasterDocumentController::class, "downloadAssetItemsCsvErrorReport"]);
+    Route::get("/field-mapping/{documentId}", [MasterDocumentController::class, "getAssetItemsCsvFieldMapping"]);
+    Route::post("/validate/{documentId}", [MasterDocumentController::class, "validateAssetItemsCsvFile"]);
+    Route::get("/statistics", [MasterDocumentController::class, "getAssetItemsCsvImportStatistics"]);
+    Route::post('/list-s3-contents', [MasterDocumentController::class, 'listS3Contents']);
 });

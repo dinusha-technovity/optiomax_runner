@@ -1,0 +1,7 @@
+name,asset_category_name,description,reading_parameters
+Laptops,Electronics,Portable computers including notebooks and ultrabooks for business use,"{""battery"": {""unit"": ""hours"", ""range"": ""4 to 12""}, ""temperature"": {""unit"": ""celsius"", ""range"": ""0 to 50""}}"
+Desktops,Electronics,Desktop computers and workstations for office use,"{""power_consumption"": {""unit"": ""watts"", ""range"": ""100 to 800""}, ""temperature"": {""unit"": ""celsius"", ""range"": ""0 to 70""}}"
+Office Chairs,Furniture,Ergonomic office seating solutions for workplace comfort,"{""weight_capacity"": {""unit"": ""kg"", ""range"": ""100 to 200""}, ""height_adjustment"": {""unit"": ""cm"", ""range"": ""10 to 20""}}"
+Desks,Furniture,Office desks and workstations for employee workspace,"{""weight_capacity"": {""unit"": ""kg"", ""range"": ""50 to 150""}, ""dimensions"": {""format"": ""L x W x H in cm""}}"
+Cars,Vehicles,Company vehicles for transportation and business operations,"{""fuel_efficiency"": {""unit"": ""km/l"", ""range"": ""8 to 25""}, ""maintenance_interval"": {""unit"": ""km"", ""value"": ""10000""}}"
+Operating Systems,Software Licenses,System software licenses for computers and servers,"{""concurrent_users"": {""unit"": ""count"", ""tracking"": ""license_server""}, ""version"": {""format"": ""semantic_version""}}"

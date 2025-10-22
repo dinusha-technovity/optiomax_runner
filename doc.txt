@@ -102,3 +102,5 @@ Quick Setup for Local Development:
 5. Monitor: php artisan listen:tenant-registration-actions --monitor
 
 php artisan stripe:setup-products
+
+php artisan queue:work --tries=3 --timeout=7200 --queue=high-priority,medium-priority,low-priority
