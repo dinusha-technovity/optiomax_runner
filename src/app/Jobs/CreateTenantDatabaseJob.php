@@ -20,6 +20,7 @@ use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use Illuminate\Support\Carbon;
+use Laravel\Passport\Client;
  
 class CreateTenantDatabaseJob implements ShouldQueue
 {
@@ -184,6 +185,17 @@ class CreateTenantDatabaseJob implements ShouldQueue
 
     private function createEnterpriseTenant($tenantUser, $validatedUser, $dbCredentials, $package)
     {
+        // Create a new Passport client for this tenant
+        $passportClient = Client::create([
+            'user_id' => null,
+            'name' => $validatedUser['companyname'] . ' API Client',
+            'redirect' => '',
+            'personal_access_client' => false,
+            'password_client' => false,
+            'revoked' => false,
+            'secret' => Str::random(40),
+        ]);
+
         return tenants::create([
             'tenant_name' => $validatedUser['companyname'],
             'address' => $validatedUser['companyaddress'],
@@ -204,6 +216,8 @@ class CreateTenantDatabaseJob implements ShouldQueue
             'stripe_subscription_id' => null, // Will be set when Stripe subscription is created
             'stripe_payment_method_id' => $validatedUser['paymentMethodId'] ?? null,
             'payment_status' => 'active',
+            'optimesh_passport_client_id' => $passportClient->id,
+            'optimesh_passport_client_secret' => $passportClient->secret,
         ]);
     }
 
@@ -280,6 +294,10 @@ class CreateTenantDatabaseJob implements ShouldQueue
                 Artisan::call('db:seed', ['--class' => 'TenantDBSeeder']);
                 
                 Log::info("Fresh tenant database setup completed for: {$tenant->db_name}");
+
+                // --- FIX: Grant all privileges on all tables to tenant user ---
+                $this->grantTenantUserPrivileges($tenant);
+
             } else {
                 Log::info("Migrations already exist, running any pending migrations for: {$tenant->db_name}");
                 Artisan::call('migrate', ['--path' => 'database/migrations/tenant', '--force' => true]);
@@ -291,6 +309,9 @@ class CreateTenantDatabaseJob implements ShouldQueue
                 }
                 
                 Log::info("Existing tenant database updated for: {$tenant->db_name}");
+
+                // --- FIX: Grant all privileges on all tables to tenant user ---
+                $this->grantTenantUserPrivileges($tenant);
             }
             
         } catch (\Exception $e) {
@@ -298,6 +319,39 @@ class CreateTenantDatabaseJob implements ShouldQueue
         } finally {
             // Always restore original connection
             Config::set('database.default', $originalDefaultConnection);
+        }
+    }
+
+    // --- ADD THIS METHOD ---
+    private function grantTenantUserPrivileges($tenant)
+    {
+        try {
+            Log::info("Granting all privileges on all tables in {$tenant->db_name} to user {$tenant->db_user}");
+
+            // Connect directly to the tenant's database as superuser
+            $tenantDbConnection = DB::connection('pgsql'); // assumes 'pgsql' is superuser connection
+
+            // Switch to the tenant's database for privilege grants
+            $tenantDbConnection->statement("SET search_path TO public;");
+            $tenantDbConnection->statement("GRANT CONNECT ON DATABASE \"{$tenant->db_name}\" TO \"{$tenant->db_user}\";");
+
+            // Grant privileges on all tables, sequences, and functions in the tenant's database only
+            $grantSql = "
+                DO \$\$
+                BEGIN
+                    EXECUTE 'GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO \"{$tenant->db_user}\";';
+                    EXECUTE 'GRANT ALL PRIVILEGES ON ALL SEQUENCES IN SCHEMA public TO \"{$tenant->db_user}\";';
+                    EXECUTE 'GRANT ALL PRIVILEGES ON ALL FUNCTIONS IN SCHEMA public TO \"{$tenant->db_user}\";';
+                END
+                \$\$;
+            ";
+            // Connect to the tenant database for grants
+            DB::connection('tenant')->unprepared($grantSql);
+
+            Log::info("Privileges granted successfully to {$tenant->db_user} on {$tenant->db_name}");
+
+        } catch (\Exception $e) {
+            Log::warning("Failed to grant privileges to tenant user: " . $e->getMessage());
         }
     }
 

@@ -43,16 +43,25 @@ class TenantHelper
 
     public static function generateTenantDbUserName($registeredUserEmail): String
     {
-        do {
-            $dbUserSuffix = substr(hash('sha256', $registeredUserEmail), 0, 5);
-            $randomString = Str::random(5); 
-            $databaseusername = '_' . $randomString . $dbUserSuffix;
+        // Use a globally unique, deterministic username based on SHA256(email + salt)
+        $salt = config('app.key') ?? 'optiomax_salt'; // Use app key as salt for extra uniqueness
+        $hash = hash('sha256', strtolower(trim($registeredUserEmail)) . $salt);
+        $username = 'tenant_user_' . substr($hash, 0, 16);
 
-            $exists = DB::table('tenants')->where('db_user', $databaseusername)->exists();
+        // Ensure uniqueness in the tenants table
+        while (DB::table('tenants')->where('db_user', $username)->exists()) {
+            // If a collision occurs (extremely rare), append a random digit and try again
+            $username = 'tenant_user_' . substr($hash, 0, 15) . rand(0, 9);
+        }
 
-        } while ($exists);
+        return strtolower($username);
+    }
 
-        return $databaseusername;
+    public static function generateTenantDbUserPassword(): String
+    {
+        // Use a cryptographically secure random password, 24 chars, only safe chars
+        $bytes = random_bytes(18);
+        return substr(bin2hex($bytes), 0, 24);
     }
 
     public static function sendPostRequest($email, $dbname)

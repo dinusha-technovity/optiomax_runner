@@ -114,6 +114,7 @@ class CreateTenantUsersJob implements ShouldQueue
                         'is_owner' => $user['accountPerson'],
                         'is_app_user' => $user['admin'],
                         'tenant_id' => $tenant->id,
+                        'designation_id' => 1,
                     ];
                     User::create($userData);
                 }
