@@ -2346,6 +2346,110 @@ class TenantPermissionSeeder extends Seeder
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
             ],
+             // 167
+            [
+                'name' => 'Purchasing Orders',
+                'description' => 'test',
+                'parent_id' => 132,
+                'menulink' => '/purchasing_orders',
+                'icon' => null,
+                'isconfiguration' => false,
+                'ismenu_list' => true,
+                'menu_order' => 2,
+                'isactive' => true,
+                'created_at' => $currentTime,
+                'updated_at' => $currentTime
+            ],
+
+            // 168
+            [
+                'name' => 'Create Purchasing Orders',
+                'description' => 'test',
+                'parent_id' => 132,
+                'menulink' => '#',
+                'icon' => null,
+                'isconfiguration' => false,
+                'ismenu_list' => false,
+                'menu_order' => 3,
+                'isactive' => true,
+                'created_at' => $currentTime,
+                'updated_at' => $currentTime
+            ],
+
+            // 169
+
+            [
+                'name' => 'View Purchasing Orders',
+                'description' => 'test',
+                'parent_id' => 132,
+                'menulink' => '#',
+                'icon' => null,
+                'isconfiguration' => false,
+                'ismenu_list' => false,
+                'menu_order' => 4,
+                'isactive' => true,
+                'created_at' => $currentTime,
+                'updated_at' => $currentTime
+            ],
+
+            // 170
+            [
+                'name' => 'Delete Purchasing Orders',
+                'description' => 'test',
+                'parent_id' => 132,
+                'menulink' => '#',
+                'icon' => null,
+                'isconfiguration' => false,
+                'ismenu_list' => false,
+                'menu_order' => 5,
+                'isactive' => true,
+                'created_at' => $currentTime,
+                'updated_at' => $currentTime
+            ],
+            // 171
+            [
+                'name' => 'Edit Purchasing Orders',
+                'description' => 'test',
+                'parent_id' => 132,
+                'menulink' => '#',
+                'icon' => null,
+                'isconfiguration' => false,
+                'ismenu_list' => false,
+                'menu_order' => 6,
+                'isactive' => true,
+                'created_at' => $currentTime,
+                'updated_at' => $currentTime
+            ],
+
+             // 172
+            [
+                'name' => 'Approval Purchasing Orders',
+                'description' => 'test',
+                'parent_id' => 132,
+                'menulink' => '#',
+                'icon' => null,
+                'isconfiguration' => false,
+                'ismenu_list' => false,
+                'menu_order' => 7,
+                'isactive' => true,
+                'created_at' => $currentTime,
+                'updated_at' => $currentTime
+            ],
+
+             // 173
+            [
+                'name' => 'Manage Purchasing Orders',
+                'description' => 'test',
+                'parent_id' => 132,
+                'menulink' => '#',
+                'icon' => null,
+                'isconfiguration' => false,
+                'ismenu_list' => false,
+                'menu_order' => 8,
+                'isactive' => true,
+                'created_at' => $currentTime,
+                'updated_at' => $currentTime
+            ],
         ];
 
         // Seed multiple permission

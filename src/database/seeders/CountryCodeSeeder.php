@@ -16,8 +16,15 @@ class CountryCodeSeeder extends Seeder
      
     public function run(): void
     {
-        $countries = Storage::get('json_files/country_data.json');
+        $jsonPath = storage_path('app/json_files/country_data.json');
+        if (!file_exists($jsonPath)) {
+            throw new \Exception("country_data.json file not found at $jsonPath");
+        }
+        $countries = file_get_contents($jsonPath);
         $arrayData = json_decode($countries, true); 
+        if (!is_array($arrayData)) {
+            throw new \Exception("country_data.json is empty or invalid JSON");
+        }
         foreach ($arrayData as $country) {
             $iddRoot = $country['idd']['root'] ?? null;
             $iddSuffixes = $country['idd']['suffixes'] ?? [];

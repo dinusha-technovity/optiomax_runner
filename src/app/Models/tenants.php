@@ -36,7 +36,9 @@ class tenants extends Model
         'db_name',
         'db_user',
         'db_password',
-        'updated_by'
+        'updated_by',
+        'optimesh_passport_client_id',
+        'optimesh_passport_client_secret'
     ];
 
     /**
