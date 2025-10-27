@@ -1,5 +1,4 @@
-<x-email-layout :app-details-url="$appDetailsUrl" title="Asset Insurance Expiry Alert">
-
+<x-email-layout :app-details-url="$appDetailsUrl" title="Maintenance Task Schedule Alert">
 
         <!-- Main Content -->
         <div style="padding: 60px; text-align: left; background-color: #ffffff; border: 1px solid #e0e0e0; border-radius: 6px; margin: 10px 0;">
@@ -8,7 +7,7 @@
             </h2>
 
             <p style="font-size: 16px; color: #000;">
-                A scheduled <strong>maintenance task</strong> for the following asset is due soon:
+                A scheduled <strong>maintenance task</strong> has been created for the following asset:
             </p>
 
             <ul style="list-style: none; padding: 0; font-size: 16px; color: #000; margin-top: 25px;">
@@ -24,7 +23,7 @@
             </ul>
 
             <p style="margin-top: 30px;">
-                Please ensure all necessary preparations are made for timely maintenance.
+                Please review the task details and ensure the required preparations are made before the scheduled date.
             </p>
 
             <a href="#" style="

@@ -1,4 +1,4 @@
-<x-email-layout :app-details-url="$appDetailsUrl" title="Asset Insurance Expiry Alert">
+<x-email-layout :app-details-url="$appDetailsUrl" title="Manufacturer Based Alert">
 
         <!-- Main Content -->
         <div style="padding: 60px; text-align: left; background-color: #ffffff; border: 1px solid #e0e0e0; border-radius: 6px; margin: 10px 0;">
@@ -7,7 +7,7 @@
             </h2>
 
             <p style="font-size: 16px; color: #000;">
-                A <strong>manufacturer-recommended maintenance task</strong> for the following asset is scheduled:
+                A <strong>manufacturer-recommended maintenance</strong> task for the following asset is scheduled:
             </p>
 
             <ul style="list-style: none; padding: 0; font-size: 16px; color: #000; margin-top: 25px;">

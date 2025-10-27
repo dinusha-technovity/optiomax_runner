@@ -1,4 +1,4 @@
-<x-email-layout :app-details-url="$appDetailsUrl" title="Temporary Password Email">
+<x-email-layout :app-details-url="$appDetailsUrl" title="Portal User Invitation">
 
         <!-- Main Content -->
         <div style="padding: 60px; text-align: center; background-color: #ffffff; border: 1px solid #e0e0e0; border-radius: 6px; margin: 10px 0;">
