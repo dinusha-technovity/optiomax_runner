@@ -12,8 +12,10 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('tenants', function (Blueprint $table) {
-            $table->string('optimesh_passport_client_id')->nullable();
-            $table->string('optimesh_passport_client_secret')->nullable();
+            $table->string('passport_client_id')->nullable();
+            $table->string('passport_client_secret')->nullable();
+            $table->string('optiomesh_public_api_key')->nullable()->unique();
+            $table->jsonb('optiomesh_widget_domains')->nullable();
         });
     }
 
@@ -23,8 +25,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('tenants', function (Blueprint $table) {
-            $table->dropColumn('optimesh_passport_client_id');
-            $table->dropColumn('optimesh_passport_client_secret');
+            $table->dropColumn(['passport_client_id', 'passport_client_secret', 'optiomesh_public_api_key', 'optiomesh_widget_domains']);
         });
     }
 };

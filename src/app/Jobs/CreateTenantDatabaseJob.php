@@ -196,6 +196,8 @@ class CreateTenantDatabaseJob implements ShouldQueue
             'secret' => Str::random(40),
         ]);
 
+        $publicKey = 'pk_' . Str::random(32);
+
         return tenants::create([
             'tenant_name' => $validatedUser['companyname'],
             'address' => $validatedUser['companyaddress'],
@@ -216,8 +218,9 @@ class CreateTenantDatabaseJob implements ShouldQueue
             'stripe_subscription_id' => null, // Will be set when Stripe subscription is created
             'stripe_payment_method_id' => $validatedUser['paymentMethodId'] ?? null,
             'payment_status' => 'active',
-            'optimesh_passport_client_id' => $passportClient->id,
-            'optimesh_passport_client_secret' => $passportClient->secret,
+            'passport_client_id' => $passportClient->id,
+            'passport_client_secret' => $passportClient->secret,
+            'optiomesh_public_api_key' => $publicKey,
         ]);
     }
 

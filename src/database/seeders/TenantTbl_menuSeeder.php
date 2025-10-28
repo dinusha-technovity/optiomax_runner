@@ -32,7 +32,7 @@ class TenantTbl_menuSeeder extends Seeder
         $workOrderPermissionID = DB::table('permissions')->where('name', 'WorkOrders')->value('id');
 
         $currentTime = Carbon::now();
-
+ 
         DB::table('menu_list')->truncate(); //remove existing data and appending new
         DB::table('menu_list')->insert([
             [
