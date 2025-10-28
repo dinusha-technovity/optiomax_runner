@@ -23,6 +23,11 @@ class tenant_configuration extends Model
         'system_user_password',
         'deleted_at',
         'isactive',
-        'tenant_id'
+        'tenant_id',
+        'configuration_details'
+    ];
+
+    protected $casts = [
+        'configuration_details' => 'array',
     ];
 }

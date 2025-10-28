@@ -56,6 +56,8 @@ class TenantMails extends Mailable
                 'user_name' => $this->user_name,
                 'password' => $this->password,
                 'appDetailsUrl' => $this->moreDetailsUrl,
+                'supportEmail' => env('SUPPORT_EMAIL', 'support@optiomax.com'),
+                'supportContact' => env('SUPPORT_CONTACT', '+1234567890'),
             ]);
         }
         elseif ($this->emailType === "USER_PASSWORD_RESET") {
@@ -76,6 +78,8 @@ class TenantMails extends Mailable
                 'user_name' => $this->user_name,
                 'password' => $this->password,
                 'appDetailsUrl' => $this->moreDetailsUrl,
+                'supportEmail' => env('SUPPORT_EMAIL', 'support@optiomax.com'),
+                'supportContact' => env('SUPPORT_CONTACT', '+1234567890'),
             ]);
         }
     }
