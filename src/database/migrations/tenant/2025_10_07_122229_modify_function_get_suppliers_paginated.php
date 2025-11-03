@@ -5,32 +5,35 @@ use Illuminate\Support\Facades\DB;
 
 return new class extends Migration
 {
+    /**
+     * Run the migrations.
+     */
     public function up(): void
     {
-        DB::unprepared(<<<SQL
+        // 1. Drop every existing overload of get_suppliers
+        DB::unprepared(<<<'SQL'
+            DO $$
+            DECLARE
+                r RECORD;
+            BEGIN
+                FOR r IN
+                    SELECT oid::regprocedure::text AS func_signature
+                    FROM pg_proc
+                    WHERE proname = 'get_suppliers'
+                LOOP
+                    EXECUTE format('DROP FUNCTION %s CASCADE;', r.func_signature);
+                END LOOP;
+            END$$;
 
-        DO $$
-        DECLARE
-            r RECORD;
-        BEGIN
-            FOR r IN
-                SELECT oid::regprocedure::text AS func_signature
-                FROM pg_proc
-                WHERE proname = 'get_suppliers'
-            LOOP
-                EXECUTE format('DROP FUNCTION %s CASCADE;', r.func_signature);
-            END LOOP;
-        END$$;
-
-        CREATE OR REPLACE FUNCTION get_suppliers(
-            p_tenant_id BIGINT,
-            p_supplier_id INT DEFAULT NULL,
-            p_page_no INT DEFAULT 1,
-            p_page_size INT DEFAULT 10,
-            p_search TEXT DEFAULT NULL,
-            p_status TEXT DEFAULT NULL,
-            p_prefetch_mode TEXT DEFAULT 'both',  -- options: 'none', 'after', 'both'
-            p_sort_by TEXT DEFAULT NULL
+            CREATE OR REPLACE FUNCTION get_suppliers(
+                p_tenant_id BIGINT,
+                p_supplier_id INT DEFAULT NULL,
+                p_page_no INT DEFAULT 1,
+                p_page_size INT DEFAULT 10,
+                p_search TEXT DEFAULT NULL,
+                p_status TEXT DEFAULT NULL,
+                p_prefetch_mode TEXT DEFAULT 'both',  -- options: 'none', 'after', 'both'
+                p_sort_by TEXT DEFAULT NULL
         )
         RETURNS JSON
         LANGUAGE plpgsql
@@ -38,13 +41,16 @@ return new class extends Migration
         DECLARE
             supplier_count INT;
             v_total_pages INT;
-            v_data_prev JSON;
-            v_data_curr JSON;
-            v_data_next JSON;
+            v_data_prev JSON := '[]'::json;
+            v_data_curr JSON := '[]'::json;
+            v_data_next JSON := '[]'::json;
             v_offset_prev INT;
             v_offset_curr INT;
             v_offset_next INT;
             v_order_clause TEXT := 'ORDER BY s.id DESC'; -- default sorting
+
+            -- Temporary variables for dynamic SQL
+            inner_sql TEXT;
         BEGIN
             -- Determine order by clause
             CASE LOWER(TRIM(p_sort_by))
@@ -102,11 +108,68 @@ return new class extends Migration
             -- Calculate offsets
             v_offset_curr := (p_page_no - 1) * p_page_size;
             v_offset_prev := GREATEST(v_offset_curr - p_page_size, 0);
-            v_offset_next := (p_page_no) * p_page_size;
+            v_offset_next := p_page_no * p_page_size;
 
-            -- Current page data
-            EXECUTE format($sql$
-                SELECT json_agg(row_to_json(t)) FROM (
+            -- Build inner query for current page
+            inner_sql := format('
+                SELECT
+                    s.id,
+                    s.name,
+                    s.contact_no,
+                    s.address,
+                    s.description,
+                    s.supplier_type,
+                    s.supplier_reg_no,
+                    s.supplier_reg_status,
+                    s.supplier_asset_classes,
+                    s.supplier_rating,
+                    s.supplier_business_name,
+                    s.supplier_business_register_no,
+                    s.supplier_primary_email,
+                    s.supplier_secondary_email,
+                    s.supplier_br_attachment,
+                    s.supplier_website,
+                    s.supplier_tel_no,
+                    s.contact_no_code,
+                    s.supplier_mobile,
+                    s.mobile_no_code,
+                    s.supplier_fax,
+                    s.supplier_city,
+                    s.supplier_location_latitude,
+                    s.supplier_location_longitude,
+                    s.email,
+                    s.asset_categories
+                FROM suppliers s
+                WHERE s.tenant_id = %L
+                AND s.deleted_at IS NULL
+                AND s.isactive = TRUE
+                AND (%L IS NULL OR s.id = %L)
+                AND (%L IS NULL OR s.supplier_reg_status = %L)
+                AND (
+                        %L IS NULL OR
+                        s.name ILIKE ''%%'' || %L || ''%%'' OR
+                        s.supplier_primary_email ILIKE ''%%'' || %L || ''%%'' OR
+                        s.supplier_secondary_email ILIKE ''%%'' || %L || ''%%'' OR
+                        s.supplier_website ILIKE ''%%'' || %L || ''%%''
+                    )
+                %s
+                LIMIT %s OFFSET %s
+            ',
+                p_tenant_id, p_supplier_id, p_supplier_id, p_status, p_status,
+                p_search, p_search, p_search, p_search, p_search,
+                v_order_clause, p_page_size, v_offset_curr
+            );
+
+            EXECUTE 'SELECT json_agg(row_to_json(t)) FROM (' || inner_sql || ') t'
+            INTO v_data_curr;
+
+            v_data_curr := COALESCE(v_data_curr, '[]'::json);
+
+            -------------------------------------------------------------------
+            -- PREVIOUS PAGE (if needed)
+            -------------------------------------------------------------------
+            IF p_prefetch_mode = 'both' AND p_page_no > 1 THEN
+                inner_sql := format('
                     SELECT
                         s.id,
                         s.name,
@@ -142,52 +205,87 @@ return new class extends Migration
                     AND (%L IS NULL OR s.supplier_reg_status = %L)
                     AND (
                             %L IS NULL OR
-                            s.name ILIKE '%%' || %L || '%%' OR
-                            s.supplier_primary_email ILIKE '%%' || %L || '%%' OR
-                            s.supplier_secondary_email ILIKE '%%' || %L || '%%' OR
-                            s.supplier_website ILIKE '%%' || %L || '%%'
+                            s.name ILIKE ''%%'' || %L || ''%%'' OR
+                            s.supplier_primary_email ILIKE ''%%'' || %L || ''%%'' OR
+                            s.supplier_secondary_email ILIKE ''%%'' || %L || ''%%'' OR
+                            s.supplier_website ILIKE ''%%'' || %L || ''%%''
                         )
                     %s
                     LIMIT %s OFFSET %s
-                ) t
-            $sql$, p_tenant_id, p_supplier_id, p_supplier_id, p_status, p_status, p_search, p_search, p_search, p_search, p_search, v_order_clause, p_page_size, v_offset_curr)
-            INTO v_data_curr;
+                ',
+                    p_tenant_id, p_supplier_id, p_supplier_id, p_status, p_status,
+                    p_search, p_search, p_search, p_search, p_search,
+                    v_order_clause, p_page_size, v_offset_prev
+                );
 
-            -- Prefetch previous page
-            IF p_prefetch_mode IN ('both') AND p_page_no > 1 THEN
-                EXECUTE format($sql$
-                    SELECT json_agg(row_to_json(t)) FROM (
-                        SELECT
-                            s.*
-                        FROM suppliers s
-                        WHERE s.tenant_id = %L
-                        AND s.deleted_at IS NULL
-                        AND s.isactive = TRUE
-                        %s
-                        LIMIT %s OFFSET %s
-                    ) t
-                $sql$, p_tenant_id, v_order_clause, p_page_size, v_offset_prev)
+                EXECUTE 'SELECT json_agg(row_to_json(t)) FROM (' || inner_sql || ') t'
                 INTO v_data_prev;
+
+                v_data_prev := COALESCE(v_data_prev, '[]'::json);
             END IF;
 
-            -- Prefetch next page
+            -------------------------------------------------------------------
+            -- NEXT PAGE (if needed)
+            -------------------------------------------------------------------
             IF p_prefetch_mode IN ('both', 'after') AND p_page_no < v_total_pages THEN
-                EXECUTE format($sql$
-                    SELECT json_agg(row_to_json(t)) FROM (
-                        SELECT
-                            s.*
-                        FROM suppliers s
-                        WHERE s.tenant_id = %L
-                        AND s.deleted_at IS NULL
-                        AND s.isactive = TRUE
-                        %s
-                        LIMIT %s OFFSET %s
-                    ) t
-                $sql$, p_tenant_id, v_order_clause, p_page_size, v_offset_next)
+                inner_sql := format('
+                    SELECT
+                        s.id,
+                        s.name,
+                        s.contact_no,
+                        s.address,
+                        s.description,
+                        s.supplier_type,
+                        s.supplier_reg_no,
+                        s.supplier_reg_status,
+                        s.supplier_asset_classes,
+                        s.supplier_rating,
+                        s.supplier_business_name,
+                        s.supplier_business_register_no,
+                        s.supplier_primary_email,
+                        s.supplier_secondary_email,
+                        s.supplier_br_attachment,
+                        s.supplier_website,
+                        s.supplier_tel_no,
+                        s.contact_no_code,
+                        s.supplier_mobile,
+                        s.mobile_no_code,
+                        s.supplier_fax,
+                        s.supplier_city,
+                        s.supplier_location_latitude,
+                        s.supplier_location_longitude,
+                        s.email,
+                        s.asset_categories
+                    FROM suppliers s
+                    WHERE s.tenant_id = %L
+                    AND s.deleted_at IS NULL
+                    AND s.isactive = TRUE
+                    AND (%L IS NULL OR s.id = %L)
+                    AND (%L IS NULL OR s.supplier_reg_status = %L)
+                    AND (
+                            %L IS NULL OR
+                            s.name ILIKE ''%%'' || %L || ''%%'' OR
+                            s.supplier_primary_email ILIKE ''%%'' || %L || ''%%'' OR
+                            s.supplier_secondary_email ILIKE ''%%'' || %L || ''%%'' OR
+                            s.supplier_website ILIKE ''%%'' || %L || ''%%''
+                        )
+                    %s
+                    LIMIT %s OFFSET %s
+                ',
+                    p_tenant_id, p_supplier_id, p_supplier_id, p_status, p_status,
+                    p_search, p_search, p_search, p_search, p_search,
+                    v_order_clause, p_page_size, v_offset_next
+                );
+
+                EXECUTE 'SELECT json_agg(row_to_json(t)) FROM (' || inner_sql || ') t'
                 INTO v_data_next;
+
+                v_data_next := COALESCE(v_data_next, '[]'::json);
             END IF;
 
-            -- Final JSON output
+            -------------------------------------------------------------------
+            -- FINAL JSON OUTPUT
+            -------------------------------------------------------------------
             RETURN json_build_object(
                 'status', 'SUCCESS',
                 'message', 'Suppliers fetched successfully',
@@ -200,9 +298,9 @@ return new class extends Migration
                     'sort_by', p_sort_by
                 ),
                 'data', json_build_object(
-                    'previous', COALESCE(v_data_prev, '[]'::json),
-                    'current', COALESCE(v_data_curr, '[]'::json),
-                    'next', COALESCE(v_data_next, '[]'::json)
+                    'previous', v_data_prev,
+                    'current', v_data_curr,
+                    'next', v_data_next
                 )
             );
         END;
@@ -210,8 +308,24 @@ return new class extends Migration
         SQL);
     }
 
+    /**
+     * Reverse the migrations.
+     */
     public function down(): void
     {
-        DB::unprepared('DROP FUNCTION IF EXISTS get_suppliers');
+        DB::unprepared(<<<'SQL'
+            DO $$
+            DECLARE
+                r RECORD;
+            BEGIN
+                FOR r IN
+                    SELECT oid::regprocedure::text AS func_signature
+                    FROM pg_proc
+                    WHERE proname = 'get_suppliers'
+                LOOP
+                    EXECUTE format('DROP FUNCTION %s CASCADE;', r.func_signature);
+                END LOOP;
+            END$$;
+        SQL);
     }
 };
