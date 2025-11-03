@@ -107,7 +107,7 @@ class TenantPermissionSeeder extends Seeder
                 'name' => 'User Accounts',
                 'description' => 'test',
                 'parent_id' => 1,
-                'menulink' => '/users',
+                'menulink' => '/user_accounts',
                 'icon' => null,
                 'isconfiguration' => true,
                 'ismenu_list' => true,
