@@ -219,7 +219,7 @@ return new class extends Migration
                 'success', TRUE
             );
         END;
-        $$ LANGUAGE plpgsql;
+        $$
         
         SQL);
     }
