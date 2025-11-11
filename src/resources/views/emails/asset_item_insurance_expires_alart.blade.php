@@ -1,4 +1,4 @@
-<x-email-layout :app-details-url="$appDetailsUrl" title="Asset Insurance Expiry Alert">
+<x-email-layout :app-details-url="$appDetailsUrl" title="Asset Item Insurance Expiration Alert">
 
         <!-- Main Content -->
         <div style="padding: 60px; text-align: left; background-color: #ffffff; border: 1px solid #e0e0e0; border-radius: 6px; margin: 10px 0;">
