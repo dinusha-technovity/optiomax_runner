@@ -21,7 +21,7 @@ class TenantPermissionSeeder extends Seeder
             // 1
             [
                 'name' => 'User Management',
-                'description' => 'test',
+                'description' => 'Manage users, roles and permissions',
                 'parent_id' => null,
                 'menulink' => '#',  
                 'icon' => 'MdManageAccounts',
@@ -35,7 +35,7 @@ class TenantPermissionSeeder extends Seeder
             // 2
             [
                 'name' => 'User Roles',
-                'description' => 'test',
+                'description' => 'Manage user roles and their permissions',
                 'parent_id' => 1,
                 'menulink' => '/Roles',
                 'icon' => null,
@@ -49,7 +49,7 @@ class TenantPermissionSeeder extends Seeder
             // 3
             [
                 'name' => 'Create Role',
-                'description' => 'test',
+                'description' => 'Create new user roles',
                 'parent_id' => 2,
                 'menulink' => '#',
                 'icon' => null,
@@ -63,7 +63,7 @@ class TenantPermissionSeeder extends Seeder
             // 4
             [
                 'name' => 'Edit Role',
-                'description' => 'test',
+                'description' => 'Edit existing user roles',
                 'parent_id' => 2,
                 'menulink' => '#',
                 'icon' => null,
@@ -77,7 +77,7 @@ class TenantPermissionSeeder extends Seeder
             // 5
             [
                 'name' => 'Delete Role',
-                'description' => 'test',
+                'description' => 'Delete user roles',
                 'parent_id' => 2,
                 'menulink' => '#',
                 'icon' => null,
@@ -91,7 +91,7 @@ class TenantPermissionSeeder extends Seeder
             // 6
             [
                 'name' => 'Give Permissions to Role',
-                'description' => 'test',
+                'description' => 'Assign permissions to roles',
                 'parent_id' => 2,
                 'menulink' => '#',
                 'icon' => null,
@@ -105,7 +105,7 @@ class TenantPermissionSeeder extends Seeder
             // 7
             [
                 'name' => 'User Accounts',
-                'description' => 'test',
+                'description' => 'Manage user accounts',
                 'parent_id' => 1,
                 'menulink' => '/user_accounts',
                 'icon' => null,
@@ -119,7 +119,7 @@ class TenantPermissionSeeder extends Seeder
             // 8
             [
                 'name' => 'Create User',
-                'description' => 'test',
+                'description' => 'Create new user accounts',
                 'parent_id' => 7,
                 'menulink' => '#',
                 'icon' => null,
@@ -133,7 +133,7 @@ class TenantPermissionSeeder extends Seeder
             // 9
             [
                 'name' => 'Edit User',
-                'description' => 'test',
+                'description' => 'Edit user account details',
                 'parent_id' => 7,
                 'menulink' => '#',
                 'icon' => null,
@@ -147,7 +147,7 @@ class TenantPermissionSeeder extends Seeder
             // 10
             [
                 'name' => 'Delete User',
-                'description' => 'test',
+                'description' => 'Delete user accounts',
                 'parent_id' => 7,
                 'menulink' => '#',
                 'icon' => null,
@@ -161,7 +161,7 @@ class TenantPermissionSeeder extends Seeder
             // 11
             [
                 'name' => 'User Status Change',
-                'description' => 'test',
+                'description' => 'Activate or deactivate users',
                 'parent_id' => 7,
                 'menulink' => '#',
                 'icon' => null,
@@ -175,7 +175,7 @@ class TenantPermissionSeeder extends Seeder
             // 12
             [
                 'name' => 'User Password Reset',
-                'description' => 'test',
+                'description' => 'Reset user passwords',
                 'parent_id' => 7,
                 'menulink' => '#',
                 'icon' => null,
@@ -189,7 +189,7 @@ class TenantPermissionSeeder extends Seeder
             // 13
             [
                 'name' => 'Master Configuration',
-                'description' => 'test',
+                'description' => 'Configure system masters',
                 'parent_id' => null,
                 'menulink' => '#',
                 'icon' => 'Settings2',
@@ -203,7 +203,7 @@ class TenantPermissionSeeder extends Seeder
             // 14
             [
                 'name' => 'Manage Suppliers',
-                'description' => 'test',
+                'description' => 'Manage supplier details',
                 'parent_id' => 13,
                 'menulink' => '/manage_suppliers',
                 'icon' => null,
@@ -217,7 +217,7 @@ class TenantPermissionSeeder extends Seeder
             // 15
             [
                 'name' => 'Register New Supplier',
-                'description' => 'test',
+                'description' => 'Register new suppliers',
                 'parent_id' => 14,
                 'menulink' => '#',
                 'icon' => null,
@@ -231,7 +231,7 @@ class TenantPermissionSeeder extends Seeder
             // 16
             [
                 'name' => 'Edit Supplier Details',
-                'description' => 'test',
+                'description' => 'Edit supplier details',
                 'parent_id' => 14,
                 'menulink' => '#',
                 'icon' => null,
@@ -245,7 +245,7 @@ class TenantPermissionSeeder extends Seeder
             // 17
             [
                 'name' => 'Delete Supplier',
-                'description' => 'test',
+                'description' => 'Delete suppliers',
                 'parent_id' => 14,
                 'menulink' => '#',
                 'icon' => null,
@@ -259,7 +259,7 @@ class TenantPermissionSeeder extends Seeder
             // 18
             [
                 'name' => 'Supplier Invitation Send',
-                'description' => 'test',
+                'description' => 'Send invitations to suppliers',
                 'parent_id' => 14,
                 'menulink' => '#',
                 'icon' => null,
@@ -273,7 +273,7 @@ class TenantPermissionSeeder extends Seeder
             // 19
             [
                 'name' => 'Asset Categories',
-                'description' => 'test',
+                'description' => 'Manage asset categories',
                 'parent_id' => 126,
                 'menulink' => '/asset_categories',
                 'icon' => null,
@@ -287,7 +287,7 @@ class TenantPermissionSeeder extends Seeder
             // 20
             [
                 'name' => 'Create Asset Categories',
-                'description' => 'test',
+                'description' => 'Create new asset category(ies)',
                 'parent_id' => 19,
                 'menulink' => '#',
                 'icon' => null,
@@ -301,7 +301,7 @@ class TenantPermissionSeeder extends Seeder
             // 21
             [
                 'name' => 'Edit Asset Categories',
-                'description' => 'test',
+                'description' => 'Edit asset category details',
                 'parent_id' => 19,
                 'menulink' => '#',
                 'icon' => null,
@@ -315,7 +315,7 @@ class TenantPermissionSeeder extends Seeder
             // 22
             [
                 'name' => 'Delete Asset Categories',
-                'description' => 'test',
+                'description' => 'Delete asset categories',
                 'parent_id' => 19,
                 'menulink' => '#',
                 'icon' => null,
@@ -329,7 +329,7 @@ class TenantPermissionSeeder extends Seeder
             // 23
             [
                 'name' => 'Update Reading Parameters',
-                'description' => 'test',
+                'description' => 'Update reading parameters',
                 'parent_id' => 19,
                 'menulink' => '#',
                 'icon' => null,
@@ -343,7 +343,7 @@ class TenantPermissionSeeder extends Seeder
             // 24
             [
                 'name' => 'Asset Sub Categories',
-                'description' => 'test',
+                'description' => 'Manage asset sub categories',
                 'parent_id' => 126,
                 'menulink' => '/asset_sub_categories',
                 'icon' => null,
@@ -357,7 +357,7 @@ class TenantPermissionSeeder extends Seeder
             // 25
             [
                 'name' => 'Create Asset Sub Categories',
-                'description' => 'test',
+                'description' => 'Create new asset sub categories',
                 'parent_id' => 24,
                 'menulink' => '#',
                 'icon' => null,
@@ -371,7 +371,7 @@ class TenantPermissionSeeder extends Seeder
             // 26
             [
                 'name' => 'Edit Asset Sub Categories',
-                'description' => 'test',
+                'description' => 'Edit asset sub category details',
                 'parent_id' => 24,
                 'menulink' => '#',
                 'icon' => null,
@@ -385,7 +385,7 @@ class TenantPermissionSeeder extends Seeder
             // 27
             [
                 'name' => 'Delete Asset Sub Categories',
-                'description' => 'test',
+                'description' => 'Delete asset sub categories',
                 'parent_id' => 24,
                 'menulink' => '#',
                 'icon' => null,
@@ -399,7 +399,7 @@ class TenantPermissionSeeder extends Seeder
             // 28
             [
                 'name' => 'Update Sub Categories Reading Parameters',
-                'description' => 'test',
+                'description' => 'Update sub category reading parameters',
                 'parent_id' => 24,
                 'menulink' => '#',
                 'icon' => null,
@@ -413,7 +413,7 @@ class TenantPermissionSeeder extends Seeder
             // 29
             [
                 'name' => 'Build Organization',
-                'description' => 'test',
+                'description' => 'Build organization structure',
                 'parent_id' => 13,
                 'menulink' => '/organization',
                 'icon' => null,
@@ -427,7 +427,7 @@ class TenantPermissionSeeder extends Seeder
             // 30
             [
                 'name' => 'Create Organization Node',
-                'description' => 'test',
+                'description' => 'Create organization nodes',
                 'parent_id' => 29,
                 'menulink' => '#',
                 'icon' => null,
@@ -441,7 +441,7 @@ class TenantPermissionSeeder extends Seeder
             // 31
             [
                 'name' => 'Edit Organization Node',
-                'description' => 'test',
+                'description' => 'Edit organization node details',
                 'parent_id' => 30,
                 'menulink' => '#',
                 'icon' => null,
@@ -455,7 +455,7 @@ class TenantPermissionSeeder extends Seeder
             // 32
             [
                 'name' => 'Delete Organization Node',
-                'description' => 'test',
+                'description' => 'Delete organization nodes',
                 'parent_id' => 30,
                 'menulink' => '#',
                 'icon' => null,
@@ -469,7 +469,7 @@ class TenantPermissionSeeder extends Seeder
             // 33
             [
                 'name' => 'Build Workflow',
-                'description' => 'test',
+                'description' => 'Build workflow processes',
                 'parent_id' => 13,
                 'menulink' => '/workflow',
                 'icon' => null,
@@ -483,7 +483,7 @@ class TenantPermissionSeeder extends Seeder
             // 34
             [
                 'name' => 'Create Workflow',
-                'description' => 'test',
+                'description' => 'Create new workflows',
                 'parent_id' => 33,
                 'menulink' => '#',
                 'icon' => null,
@@ -497,7 +497,7 @@ class TenantPermissionSeeder extends Seeder
             // 35
             [
                 'name' => 'Edit Workflow',
-                'description' => 'test',
+                'description' => 'Edit workflow details',
                 'parent_id' => 33,
                 'menulink' => '#',
                 'icon' => null,
@@ -511,7 +511,7 @@ class TenantPermissionSeeder extends Seeder
             // 36
             [
                 'name' => 'Delete Workflow',
-                'description' => 'test',
+                'description' => 'Delete workflows',
                 'parent_id' => 33,
                 'menulink' => '#',
                 'icon' => null,
@@ -525,7 +525,7 @@ class TenantPermissionSeeder extends Seeder
             // 37
             [
                 'name' => 'Config Workflow',
-                'description' => 'test',
+                'description' => 'Configure workflow settings',
                 'parent_id' => 33,
                 'menulink' => '#',
                 'icon' => null,
@@ -539,7 +539,7 @@ class TenantPermissionSeeder extends Seeder
             // 38
             [
                 'name' => 'Add Workflow Node',
-                'description' => 'test',
+                'description' => 'Add nodes to workflows',
                 'parent_id' => 37,
                 'menulink' => '#',
                 'icon' => null,
@@ -553,7 +553,7 @@ class TenantPermissionSeeder extends Seeder
             // 39
             [
                 'name' => 'Edit Workflow Node',
-                'description' => 'test',
+                'description' => 'Edit workflow node details',
                 'parent_id' => 37,
                 'menulink' => '#',
                 'icon' => null,
@@ -567,7 +567,7 @@ class TenantPermissionSeeder extends Seeder
             // 40
             [
                 'name' => 'Delete Workflow Node',
-                'description' => 'test',
+                'description' => 'Delete workflow nodes',
                 'parent_id' => 37,
                 'menulink' => '#',
                 'icon' => null,
@@ -581,7 +581,7 @@ class TenantPermissionSeeder extends Seeder
             // 41
             [
                 'name' => 'Publish Workflow',
-                'description' => 'test',
+                'description' => 'Publish workflows',
                 'parent_id' => 37,
                 'menulink' => '#',
                 'icon' => null,
@@ -595,7 +595,7 @@ class TenantPermissionSeeder extends Seeder
             // 42
             [
                 'name' => 'Item Master',
-                'description' => 'test',
+                'description' => 'Manage item master records',
                 'parent_id' => 13,
                 'menulink' => '/item_master',
                 'icon' => null,
@@ -609,7 +609,7 @@ class TenantPermissionSeeder extends Seeder
             // 43
             [
                 'name' => 'Add New Item',
-                'description' => 'test',
+                'description' => 'Add new items to master',
                 'parent_id' => 42,
                 'menulink' => '#',
                 'icon' => null,
@@ -623,7 +623,7 @@ class TenantPermissionSeeder extends Seeder
             // 44
             [
                 'name' => 'Edit Item Details',
-                'description' => 'test',
+                'description' => 'Update item details',
                 'parent_id' => 42,
                 'menulink' => '#',
                 'icon' => null,
@@ -637,7 +637,7 @@ class TenantPermissionSeeder extends Seeder
             // 45
             [
                 'name' => 'Delete Item',
-                'description' => 'test',
+                'description' => 'Delete items from master',
                 'parent_id' => 42,
                 'menulink' => '#',
                 'icon' => null,
@@ -651,7 +651,7 @@ class TenantPermissionSeeder extends Seeder
             // 46
             [
                 'name' => 'Procurement Staff',
-                'description' => 'test',
+                'description' => 'Manage procurement staff',
                 'parent_id' => 13,
                 'menulink' => '/procurement_staff',
                 'icon' => null,
@@ -665,7 +665,7 @@ class TenantPermissionSeeder extends Seeder
             // 47
             [
                 'name' => 'Create Procurement Staff',
-                'description' => 'test',
+                'description' => 'Create new procurement staff',
                 'parent_id' => 46,
                 'menulink' => '#',
                 'icon' => null,
@@ -679,7 +679,7 @@ class TenantPermissionSeeder extends Seeder
             // 48
             [
                 'name' => 'Edit Procurement Staff',
-                'description' => 'test',
+                'description' => 'Edit procurement staff details',
                 'parent_id' => 46,
                 'menulink' => '#',
                 'icon' => null,
@@ -693,7 +693,7 @@ class TenantPermissionSeeder extends Seeder
             // 49
             [
                 'name' => 'Delete Procurement Staff',
-                'description' => 'test',
+                'description' => 'Delete procurement staff',
                 'parent_id' => 46,
                 'menulink' => '#',
                 'icon' => null,
@@ -707,7 +707,7 @@ class TenantPermissionSeeder extends Seeder
             // 50
             [
                 'name' => 'Asset Management',
-                'description' => 'test',
+                'description' => 'Manage organizational assets',
                 'parent_id' => null,
                 'menulink' => '#',
                 'icon' => 'TbSettingsDollar',
@@ -721,7 +721,7 @@ class TenantPermissionSeeder extends Seeder
             // 51
             [
                 'name' => 'Asset Requisitions',
-                'description' => 'test',
+                'description' => 'Manage asset requisitions',
                 'parent_id' => 50,
                 'menulink' => '/asset_requisitions',
                 'icon' => null,
@@ -735,7 +735,7 @@ class TenantPermissionSeeder extends Seeder
             // 52
             [
                 'name' => 'Create Asset Requisitions',
-                'description' => 'test',
+                'description' => 'Create new asset requisitions',
                 'parent_id' => 51,
                 'menulink' => '#',
                 'icon' => null,
@@ -749,7 +749,7 @@ class TenantPermissionSeeder extends Seeder
             // 53
             [
                 'name' => 'Asset Groups',
-                'description' => 'test',
+                'description' => 'Manage asset groups',
                 'parent_id' => 126,
                 'menulink' => '/asset_groups',
                 'icon' => null,
@@ -763,7 +763,7 @@ class TenantPermissionSeeder extends Seeder
             // 54
             [
                 'name' => 'Create Asset Group',
-                'description' => 'test',
+                'description' => 'Create new asset groups',
                 'parent_id' => 53,
                 'menulink' => '#',
                 'icon' => null,
@@ -777,7 +777,7 @@ class TenantPermissionSeeder extends Seeder
             // 55
             [
                 'name' => 'View Asset Group Details',
-                'description' => 'test',
+                'description' => 'View asset group information',
                 'parent_id' => 53,
                 'menulink' => '#',
                 'icon' => null,
@@ -791,7 +791,7 @@ class TenantPermissionSeeder extends Seeder
             // 56
             [
                 'name' => 'Edit Asset Group Details',
-                'description' => 'test',
+                'description' => 'Edit asset group information',
                 'parent_id' => 53,
                 'menulink' => '#',
                 'icon' => null,
@@ -805,7 +805,7 @@ class TenantPermissionSeeder extends Seeder
             // 57
             [
                 'name' => 'Delete Asset Group',
-                'description' => 'test',
+                'description' => 'Delete asset groups',
                 'parent_id' => 53,
                 'menulink' => '#',
                 'icon' => null,
@@ -819,7 +819,7 @@ class TenantPermissionSeeder extends Seeder
             // 58
             [
                 'name' => 'Asset Group Description Tags',
-                'description' => 'test',
+                'description' => 'Manage asset group description tags',
                 'parent_id' => 53,
                 'menulink' => '#',
                 'icon' => null,
@@ -833,7 +833,7 @@ class TenantPermissionSeeder extends Seeder
             // 59
             [
                 'name' => 'Asset Group Reading Parameters',
-                'description' => 'test',
+                'description' => 'Manage group reading parameters',
                 'parent_id' => 53,
                 'menulink' => '#',
                 'icon' => null,
@@ -847,7 +847,7 @@ class TenantPermissionSeeder extends Seeder
             // 60
             [
                 'name' => 'Asset Group Maintainers Schedule',
-                'description' => 'test',
+                'description' => 'Manage group maintenance schedules',
                 'parent_id' => 53,
                 'menulink' => '#',
                 'icon' => null,
@@ -861,7 +861,7 @@ class TenantPermissionSeeder extends Seeder
             // 61
             [
                 'name' => 'Asset Group Manufacturer Recommendations Maintainers Schedule',
-                'description' => 'test',
+                'description' => 'View manufacturer recommended schedules',
                 'parent_id' => 60,
                 'menulink' => '#',
                 'icon' => null,
@@ -875,7 +875,7 @@ class TenantPermissionSeeder extends Seeder
             // 62
             [
                 'name' => 'Add Asset Group Manufacturer Recommendations Schedule',
-                'description' => 'test',
+                'description' => 'Add manufacturer schedules',
                 'parent_id' => 61,
                 'menulink' => '#',
                 'icon' => null,
@@ -889,7 +889,7 @@ class TenantPermissionSeeder extends Seeder
             // 63
             [
                 'name' => 'Edit Asset Group Manufacturer Recommendations Schedule',
-                'description' => 'test',
+                'description' => 'Edit manufacturer schedules',
                 'parent_id' => 61,
                 'menulink' => '#',
                 'icon' => null,
@@ -903,7 +903,7 @@ class TenantPermissionSeeder extends Seeder
             // 64
             [
                 'name' => 'Delete Asset Group Manufacturer Recommendations Schedule',
-                'description' => 'test',
+                'description' => 'Delete manufacturer schedules',
                 'parent_id' => 61,
                 'menulink' => '#',
                 'icon' => null,
@@ -917,7 +917,7 @@ class TenantPermissionSeeder extends Seeder
             // 65
             [
                 'name' => 'Asset Group Usage Base Maintainers Schedule',
-                'description' => 'test',
+                'description' => 'View usage-based schedules',
                 'parent_id' => 60,
                 'menulink' => '#',
                 'icon' => null,
@@ -931,7 +931,7 @@ class TenantPermissionSeeder extends Seeder
             // 66
             [
                 'name' => 'Add Asset Group Usage Base Schedule',
-                'description' => 'test',
+                'description' => 'Add usage-based schedules',
                 'parent_id' => 65,
                 'menulink' => '#',
                 'icon' => null,
@@ -945,7 +945,7 @@ class TenantPermissionSeeder extends Seeder
             // 67
             [
                 'name' => 'Edit Asset Group Usage Base Schedule',
-                'description' => 'test',
+                'description' => 'Edit usage-based schedules',
                 'parent_id' => 65,
                 'menulink' => '#',
                 'icon' => null,
@@ -959,7 +959,7 @@ class TenantPermissionSeeder extends Seeder
             // 68
             [
                 'name' => 'Delete Asset Group Usage Based Schedule',
-                'description' => 'test',
+                'description' => 'Delete usage-based schedules',
                 'parent_id' => 65,
                 'menulink' => '#',
                 'icon' => null,
@@ -973,7 +973,7 @@ class TenantPermissionSeeder extends Seeder
             // 69
             [
                 'name' => 'Asset Group Critically Based Maintainers Schedule',
-                'description' => 'test',
+                'description' => 'View criticality-based schedules',
                 'parent_id' => 60,
                 'menulink' => '#',
                 'icon' => null,
@@ -987,7 +987,7 @@ class TenantPermissionSeeder extends Seeder
             // 70
             [
                 'name' => 'Add Asset Group Critically Based Schedule',
-                'description' => 'test',
+                'description' => 'Add criticality-based schedules',
                 'parent_id' => 69,
                 'menulink' => '#',
                 'icon' => null,
@@ -1001,7 +1001,7 @@ class TenantPermissionSeeder extends Seeder
             // 71
             [
                 'name' => 'Edit Asset Group Critically Based Schedule',
-                'description' => 'test',
+                'description' => 'Edit criticality-based schedules',
                 'parent_id' => 69,
                 'menulink' => '#',
                 'icon' => null,
@@ -1015,7 +1015,7 @@ class TenantPermissionSeeder extends Seeder
             // 72
             [
                 'name' => 'Delete Asset Group Critically Based Schedule',
-                'description' => 'test',
+                'description' => 'Delete criticality-based schedules',
                 'parent_id' => 69,
                 'menulink' => '#',
                 'icon' => null,
@@ -1029,7 +1029,7 @@ class TenantPermissionSeeder extends Seeder
             // 73
             [
                 'name' => 'Asset Group Maintenance Task Schedule',
-                'description' => 'test',
+                'description' => 'View maintenance task schedules',
                 'parent_id' => 60,
                 'menulink' => '#',
                 'icon' => null,
@@ -1043,7 +1043,7 @@ class TenantPermissionSeeder extends Seeder
             // 74
             [
                 'name' => 'Add Asset Group Maintenance Task Schedule',
-                'description' => 'test',
+                'description' => 'Add maintenance task schedules',
                 'parent_id' => 73,
                 'menulink' => '#',
                 'icon' => null,
@@ -1057,7 +1057,7 @@ class TenantPermissionSeeder extends Seeder
             // 75
             [
                 'name' => 'Edit Asset Group Maintenance Task Schedule',
-                'description' => 'test',
+                'description' => 'Edit maintenance task schedules',
                 'parent_id' => 73,
                 'menulink' => '#',
                 'icon' => null,
@@ -1071,7 +1071,7 @@ class TenantPermissionSeeder extends Seeder
             // 76
             [
                 'name' => 'Delete Asset Group Maintenance Task Schedule',
-                'description' => 'test',
+                'description' => 'Delete maintenance task schedules',
                 'parent_id' => 73,
                 'menulink' => '#',
                 'icon' => null,
@@ -1085,7 +1085,7 @@ class TenantPermissionSeeder extends Seeder
             // 77
             [
                 'name' => 'Asset Master',
-                'description' => 'test',
+                'description' => 'Manage asset master records',
                 'parent_id' => 126,
                 'menulink' => '/asset_master',
                 'icon' => null,
@@ -1099,7 +1099,7 @@ class TenantPermissionSeeder extends Seeder
             // 78
             [
                 'name' => 'Register Asset Master',
-                'description' => 'test',
+                'description' => 'Register new assets',
                 'parent_id' => 77,
                 'menulink' => '#',
                 'icon' => null,
@@ -1113,7 +1113,7 @@ class TenantPermissionSeeder extends Seeder
             // 79
             [
                 'name' => 'Edit Asset Master',
-                'description' => 'test',
+                'description' => 'Edit asset master details',
                 'parent_id' => 77,
                 'menulink' => '#',
                 'icon' => null,
@@ -1127,7 +1127,7 @@ class TenantPermissionSeeder extends Seeder
             // 80
             [
                 'name' => 'Delete Asset Master',
-                'description' => 'test',
+                'description' => 'Delete asset masters',
                 'parent_id' => 77,
                 'menulink' => '#',
                 'icon' => null,
@@ -1141,7 +1141,7 @@ class TenantPermissionSeeder extends Seeder
             // 81
             [
                 'name' => 'Asset Master Maintainers Schedule',
-                'description' => 'test',
+                'description' => 'Manage asset maintenance schedules',
                 'parent_id' => 77,
                 'menulink' => '#',
                 'icon' => null,
@@ -1155,7 +1155,7 @@ class TenantPermissionSeeder extends Seeder
             // 82
             [
                 'name' => 'Asset Master Manufacturer Recommendations Maintainers Schedule',
-                'description' => 'test',
+                'description' => 'View manufacturer schedules',
                 'parent_id' => 81,
                 'menulink' => '#',
                 'icon' => null,
@@ -1169,7 +1169,7 @@ class TenantPermissionSeeder extends Seeder
             // 83
             [
                 'name' => 'Add Asset Master Manufacturer Recommendations Schedule',
-                'description' => 'test',
+                'description' => 'Add manufacturer schedules',
                 'parent_id' => 82,
                 'menulink' => '#',
                 'icon' => null,
@@ -1183,7 +1183,7 @@ class TenantPermissionSeeder extends Seeder
             // 84
             [
                 'name' => 'Edit Asset Master Manufacturer Recommendations Schedule',
-                'description' => 'test',
+                'description' => 'Edit manufacturer schedules',
                 'parent_id' => 82,
                 'menulink' => '#',
                 'icon' => null,
@@ -1197,7 +1197,7 @@ class TenantPermissionSeeder extends Seeder
             // 85
             [
                 'name' => 'Delete Asset Master Manufacturer Recommendations Schedule',
-                'description' => 'test',
+                'description' => 'Delete manufacturer schedules',
                 'parent_id' => 82,
                 'menulink' => '#',
                 'icon' => null,
@@ -1211,7 +1211,7 @@ class TenantPermissionSeeder extends Seeder
             // 86
             [
                 'name' => 'Asset Master Usage Base Maintainers Schedule',
-                'description' => 'test',
+                'description' => 'View usage-based schedules',
                 'parent_id' => 77,
                 'menulink' => '#',
                 'icon' => null,
@@ -1225,7 +1225,7 @@ class TenantPermissionSeeder extends Seeder
             // 87
             [
                 'name' => 'Add Asset Master Usage Base Schedule',
-                'description' => 'test',
+                'description' => 'Add usage-based schedules',
                 'parent_id' => 86,
                 'menulink' => '#',
                 'icon' => null,
@@ -1239,7 +1239,7 @@ class TenantPermissionSeeder extends Seeder
             // 88
             [
                 'name' => 'Edit Asset Master Usage Base Schedule',
-                'description' => 'test',
+                'description' => 'Edit usage-based schedules',
                 'parent_id' => 86,
                 'menulink' => '#',
                 'icon' => null,
@@ -1253,7 +1253,7 @@ class TenantPermissionSeeder extends Seeder
             // 89
             [
                 'name' => 'Delete Asset Master Usage Based Schedule',
-                'description' => 'test',
+                'description' => 'Delete usage-based schedules',
                 'parent_id' => 86,
                 'menulink' => '#',
                 'icon' => null,
@@ -1267,7 +1267,7 @@ class TenantPermissionSeeder extends Seeder
             // 90
             [
                 'name' => 'Asset Master Critically Based Maintainers Schedule',
-                'description' => 'test',
+                'description' => 'View criticality-based schedules',
                 'parent_id' => 77,
                 'menulink' => '#',
                 'icon' => null,
@@ -1281,7 +1281,7 @@ class TenantPermissionSeeder extends Seeder
             // 91
             [
                 'name' => 'Add Asset Master Critically Based Schedule',
-                'description' => 'test',
+                'description' => 'Add criticality-based schedules',
                 'parent_id' => 90,
                 'menulink' => '#',
                 'icon' => null,
@@ -1295,7 +1295,7 @@ class TenantPermissionSeeder extends Seeder
             // 92
             [
                 'name' => 'Edit Asset Master Critically Based Schedule',
-                'description' => 'test',
+                'description' => 'Edit criticality-based schedules',
                 'parent_id' => 90,
                 'menulink' => '#',
                 'icon' => null,
@@ -1309,7 +1309,7 @@ class TenantPermissionSeeder extends Seeder
             // 93
             [
                 'name' => 'Delete Asset Master Critically Based Schedule',
-                'description' => 'test',
+                'description' => 'Delete criticality-based schedules',
                 'parent_id' => 90,
                 'menulink' => '#',
                 'icon' => null,
@@ -1323,7 +1323,7 @@ class TenantPermissionSeeder extends Seeder
             // 94
             [
                 'name' => 'Asset Master Maintenance Task Schedule',
-                'description' => 'test',
+                'description' => 'View maintenance task schedules',
                 'parent_id' => 77,
                 'menulink' => '#',
                 'icon' => null,
@@ -1337,7 +1337,7 @@ class TenantPermissionSeeder extends Seeder
             // 95
             [
                 'name' => 'Add Asset Master Maintenance Task Schedule',
-                'description' => 'test',
+                'description' => 'Add maintenance task schedules',
                 'parent_id' => 94,
                 'menulink' => '#',
                 'icon' => null,
@@ -1351,7 +1351,7 @@ class TenantPermissionSeeder extends Seeder
             // 96
             [
                 'name' => 'Edit Asset Master Maintenance Task Schedule',
-                'description' => 'test',
+                'description' => 'Edit maintenance task schedules',
                 'parent_id' => 94,
                 'menulink' => '#',
                 'icon' => null,
@@ -1365,7 +1365,7 @@ class TenantPermissionSeeder extends Seeder
             // 97
             [
                 'name' => 'Delete Asset Master Maintenance Task Schedule',
-                'description' => 'test',
+                'description' => 'Delete maintenance task schedules',
                 'parent_id' => 94,
                 'menulink' => '#',
                 'icon' => null,
@@ -1379,7 +1379,7 @@ class TenantPermissionSeeder extends Seeder
             // 98
             [
                 'name' => 'My Assets',
-                'description' => 'test',
+                'description' => 'View and manage assigned assets',
                 'parent_id' => 50,
                 'menulink' => '/my_assets',
                 'icon' => null,
@@ -1393,7 +1393,7 @@ class TenantPermissionSeeder extends Seeder
             // 99
             [
                 'name' => 'View My Assets Details',
-                'description' => 'test',
+                'description' => 'View detailed asset information',
                 'parent_id' => 98,
                 'menulink' => '#',
                 'icon' => null,
@@ -1407,7 +1407,7 @@ class TenantPermissionSeeder extends Seeder
             // 100
             [
                 'name' => 'Add My Assets Readings',
-                'description' => 'test',
+                'description' => 'Add asset readings',
                 'parent_id' => 98,
                 'menulink' => '#',
                 'icon' => null,
@@ -1421,7 +1421,7 @@ class TenantPermissionSeeder extends Seeder
             // 101
             [
                 'name' => 'Work Orders',
-                'description' => 'test',
+                'description' => 'Manage work orders',
                 'parent_id' => 50,
                 'menulink' => '/workorders',
                 'icon' => null,
@@ -1435,7 +1435,7 @@ class TenantPermissionSeeder extends Seeder
             // 102
             [
                 'name' => 'Add New Work Order',
-                'description' => 'test',
+                'description' => 'Create new work orders',
                 'parent_id' => 101,
                 'menulink' => '#',
                 'icon' => null,
@@ -1449,7 +1449,7 @@ class TenantPermissionSeeder extends Seeder
             // 103
             [
                 'name' => 'Edit Work Order',
-                'description' => 'test',
+                'description' => 'Edit work order details',
                 'parent_id' => 101,
                 'menulink' => '#',
                 'icon' => null,
@@ -1463,7 +1463,7 @@ class TenantPermissionSeeder extends Seeder
             // 104
             [
                 'name' => 'Delete Work Order',
-                'description' => 'test',
+                'description' => 'Delete work orders',
                 'parent_id' => 101,
                 'menulink' => '#',
                 'icon' => null,
@@ -1477,7 +1477,7 @@ class TenantPermissionSeeder extends Seeder
             // 105
             [
                 'name' => 'Update Work Order Status',
-                'description' => 'test',
+                'description' => 'Update work order status',
                 'parent_id' => 101,
                 'menulink' => '#',
                 'icon' => null,
@@ -1491,7 +1491,7 @@ class TenantPermissionSeeder extends Seeder
             // 106
             [
                 'name' => 'Procurement Management',
-                'description' => 'test',
+                'description' => 'Manage procurement processes',
                 'parent_id' => null,
                 'menulink' => '#',
                 'icon' => 'FileSpreadsheet',
@@ -1505,7 +1505,7 @@ class TenantPermissionSeeder extends Seeder
             // 107
             [
                 'name' => 'Procurement Submissions',
-                'description' => 'test',
+                'description' => 'Manage procurement submissions',
                 'parent_id' => 106,
                 'menulink' => '/procurement_submissions',
                 'icon' => null,
@@ -1519,7 +1519,7 @@ class TenantPermissionSeeder extends Seeder
             // 108
             [
                 'name' => 'Procurement Submission',
-                'description' => 'test',
+                'description' => 'Submit procurement requests',
                 'parent_id' => 107,
                 'menulink' => '#',
                 'icon' => null,
@@ -1533,7 +1533,7 @@ class TenantPermissionSeeder extends Seeder
             // 109
             [
                 'name' => 'View Received Quotation',
-                'description' => 'test',
+                'description' => 'View supplier quotations',
                 'parent_id' => 107,
                 'menulink' => '#',
                 'icon' => null,
@@ -1547,7 +1547,7 @@ class TenantPermissionSeeder extends Seeder
             // 110
             [
                 'name' => 'Proceed Procurement',
-                'description' => 'test',
+                'description' => 'Process procurement',
                 'parent_id' => 107,
                 'menulink' => '#',
                 'icon' => null,
@@ -1561,7 +1561,7 @@ class TenantPermissionSeeder extends Seeder
             // 111
             [
                 'name' => 'Supplier Quotations',
-                'description' => 'test',
+                'description' => 'Manage supplier quotations',
                 'parent_id' => 106,
                 'menulink' => '/supplier_quotations',
                 'icon' => null,
@@ -1575,7 +1575,7 @@ class TenantPermissionSeeder extends Seeder
             // 112
             [
                 'name' => 'Add Supplier Quotation',
-                'description' => 'test',
+                'description' => 'Add new supplier quotations',
                 'parent_id' => 111,
                 'menulink' => '#',
                 'icon' => null,
@@ -1589,7 +1589,7 @@ class TenantPermissionSeeder extends Seeder
             // 113
             [
                 'name' => 'View Added Supplier Quotation',
-                'description' => 'test',
+                'description' => 'View added quotations',
                 'parent_id' => 111,
                 'menulink' => '#',
                 'icon' => null,
@@ -1603,7 +1603,7 @@ class TenantPermissionSeeder extends Seeder
             // 114
             [
                 'name' => 'View Supplier Quotation Details',
-                'description' => 'test',
+                'description' => 'View quotation details',
                 'parent_id' => 113,
                 'menulink' => '#',
                 'icon' => null,
@@ -1617,7 +1617,7 @@ class TenantPermissionSeeder extends Seeder
             // 115
             [
                 'name' => 'Edit Supplier Quotation',
-                'description' => 'test',
+                'description' => 'Edit supplier quotations',
                 'parent_id' => 113,
                 'menulink' => '#',
                 'icon' => null,
@@ -1631,7 +1631,7 @@ class TenantPermissionSeeder extends Seeder
             // 116
             [
                 'name' => 'Delete Supplier Quotation',
-                'description' => 'test',
+                'description' => 'Delete supplier quotations',
                 'parent_id' => 113,
                 'menulink' => '#',
                 'icon' => null,
@@ -1645,7 +1645,7 @@ class TenantPermissionSeeder extends Seeder
             // 117
             [
                 'name' => 'Supplier Quotation Adding Complete',
-                'description' => 'test',
+                'description' => 'Complete quotation submission',
                 'parent_id' => 111,
                 'menulink' => '#',
                 'icon' => null,
@@ -1659,7 +1659,7 @@ class TenantPermissionSeeder extends Seeder
             // 118
             [
                 'name' => 'Edit Selected Item Qty',
-                'description' => 'test',
+                'description' => 'Edit item quantities',
                 'parent_id' => 108,
                 'menulink' => '#',
                 'icon' => null,
@@ -1673,7 +1673,7 @@ class TenantPermissionSeeder extends Seeder
             // 119
             [
                 'name' => 'Edit Selected Item Budget',
-                'description' => 'test',
+                'description' => 'Edit item budget',
                 'parent_id' => 108,
                 'menulink' => '#',
                 'icon' => null,
@@ -1687,7 +1687,7 @@ class TenantPermissionSeeder extends Seeder
             // 120
             [
                 'name' => 'Incidents',
-                'description' => 'test',
+                'description' => 'Manage asset incidents',
                 'parent_id' => 50,
                 'menulink' => '/incidents',
                 'icon' => null,
@@ -1701,7 +1701,7 @@ class TenantPermissionSeeder extends Seeder
             // 121
             [
                 'name' => 'New Incident',
-                'description' => 'test',
+                'description' => 'Create new incidents',
                 'parent_id' => 120,
                 'menulink' => '#',
                 'icon' => null,
@@ -1715,7 +1715,7 @@ class TenantPermissionSeeder extends Seeder
             // 122
             [
                 'name' => 'View Incident',
-                'description' => 'test',
+                'description' => 'View incident details',
                 'parent_id' => 120,
                 'menulink' => '#',
                 'icon' => null,
@@ -1729,7 +1729,7 @@ class TenantPermissionSeeder extends Seeder
             // 123
             [
                 'name' => 'Edit Incident',
-                'description' => 'test',
+                'description' => 'Edit incident information',
                 'parent_id' => 120,
                 'menulink' => '#',
                 'icon' => null,
@@ -1743,7 +1743,7 @@ class TenantPermissionSeeder extends Seeder
             // 124
             [
                 'name' => 'Delete Incident',
-                'description' => 'test',
+                'description' => 'Delete incidents',
                 'parent_id' => 120,
                 'menulink' => '#',
                 'icon' => null,
@@ -1757,7 +1757,7 @@ class TenantPermissionSeeder extends Seeder
             // 125
             [
                 'name' => 'View Asset Categories',
-                'description' => 'test',
+                'description' => 'View category details',
                 'parent_id' => 19,
                 'menulink' => '#',
                 'icon' => null,
@@ -1771,7 +1771,7 @@ class TenantPermissionSeeder extends Seeder
             // 126
             [
                 'name' => 'Asset',
-                'description' => 'test',
+                'description' => 'Asset configuration and management',
                 'parent_id' => null,
                 'menulink' => '#',
                 'icon' => 'Package2',
@@ -1785,7 +1785,7 @@ class TenantPermissionSeeder extends Seeder
              // 127
             [
                 'name' => 'Maintenance',
-                'description' => 'test',
+                'description' => 'Maintenance management',
                 'parent_id' => null,
                 'menulink' => '#',
                 'icon' => 'Wrench',
@@ -1799,7 +1799,7 @@ class TenantPermissionSeeder extends Seeder
             // 128
             [
                 'name' => 'Maintenance Team',
-                'description' => 'test',
+                'description' => 'Manage maintenance teams',
                 'parent_id' => 127,
                 'menulink' => '/maintenance_teams',
                 'icon' => null,
@@ -1813,7 +1813,7 @@ class TenantPermissionSeeder extends Seeder
             // 129
             [
                 'name' => 'Register Maintenance Team',
-                'description' => 'test',
+                'description' => 'Register new maintenance teams',
                 'parent_id' => 128,
                 'menulink' => '#',
                 'icon' => null,
@@ -1827,7 +1827,7 @@ class TenantPermissionSeeder extends Seeder
             // 130
             [
                 'name' => 'Edit Maintenance Team',
-                'description' => 'test',
+                'description' => 'Edit team information',
                 'parent_id' => 128,
                 'menulink' => '#',
                 'icon' => null,
@@ -1841,7 +1841,7 @@ class TenantPermissionSeeder extends Seeder
             // 131
             [
                 'name' => 'Delete Maintenance Team',
-                'description' => 'test',
+                'description' => 'Delete maintenance teams',
                 'parent_id' => 128,
                 'menulink' => '#',
                 'icon' => null,
@@ -1855,7 +1855,7 @@ class TenantPermissionSeeder extends Seeder
             // 132
             [
                 'name' => 'Purchasing',
-                'description' => 'test',
+                'description' => 'Purchasing operations',
                 'parent_id' => null,
                 'menulink' => '#',
                 'icon' => 'FiShoppingCart',
@@ -1869,7 +1869,7 @@ class TenantPermissionSeeder extends Seeder
             // 133
             [
                 'name' => 'Goods Received Note',
-                'description' => 'test',
+                'description' => 'Manage goods received notes',
                 'parent_id' => 132,
                 'menulink' => '/goods_received_note',
                 'icon' => null,
@@ -1883,7 +1883,7 @@ class TenantPermissionSeeder extends Seeder
             // 134
             [
                 'name' => 'Create Goods Received Note',
-                'description' => 'test',
+                'description' => 'Create new GRN',
                 'parent_id' => 133,
                 'menulink' => '#',
                 'icon' => null,
@@ -1897,7 +1897,7 @@ class TenantPermissionSeeder extends Seeder
             // 135
             [
                 'name' => 'View Goods Received Note',
-                'description' => 'test',
+                'description' => 'View GRN details',
                 'parent_id' => 133,
                 'menulink' => '#',
                 'icon' => null,
@@ -1911,7 +1911,7 @@ class TenantPermissionSeeder extends Seeder
             // 136
             [
                 'name' => 'Cancel Goods Received Note',
-                'description' => 'test',
+                'description' => 'Cancel goods received notes',
                 'parent_id' => 133,
                 'menulink' => '#',
                 'icon' => null,
@@ -1925,7 +1925,7 @@ class TenantPermissionSeeder extends Seeder
             // 137
             [
                 'name' => 'Export Goods Received Note',
-                'description' => 'test',
+                'description' => 'Export GRN data',
                 'parent_id' => 133,
                 'menulink' => '#',
                 'icon' => null,
@@ -1939,7 +1939,7 @@ class TenantPermissionSeeder extends Seeder
             // 138
             [
                 'name' => 'System Configuration',
-                'description' => 'test',
+                'description' => 'Configure system settings',
                 'parent_id' => null,
                 'menulink' => '/system_configurations',
                 'icon' => 'GrDocumentConfig',
@@ -1953,7 +1953,7 @@ class TenantPermissionSeeder extends Seeder
             // 139
             [
                 'name' => 'Asset Availability',
-                'description' => 'test',
+                'description' => 'Manage asset availability',
                 'parent_id' => 50,
                 'menulink' => '/asset_availability',
                 'icon' => null,
@@ -1967,7 +1967,7 @@ class TenantPermissionSeeder extends Seeder
             // 140
             [
                 'name' => 'Schedule Assets',
-                'description' => 'test',
+                'description' => 'Schedule asset availability',
                 'parent_id' => 139,
                 'menulink' => '#',
                 'icon' => null,
@@ -1981,7 +1981,7 @@ class TenantPermissionSeeder extends Seeder
             // 141
             [
                 'name' => 'Availability Schedule',
-                'description' => 'test',
+                'description' => 'Manage availability schedules',
                 'parent_id' => 140,
                 'menulink' => '#',
                 'icon' => null,
@@ -1995,7 +1995,7 @@ class TenantPermissionSeeder extends Seeder
             // 142
             [
                 'name' => 'Create Availability Schedule',
-                'description' => 'test',
+                'description' => 'Create new availability schedule',
                 'parent_id' => 141,
                 'menulink' => '#',
                 'icon' => null,
@@ -2009,7 +2009,7 @@ class TenantPermissionSeeder extends Seeder
             // 143
             [
                 'name' => 'Edit Availability Schedule',
-                'description' => 'test',
+                'description' => 'Edit schedule details',
                 'parent_id' => 141,
                 'menulink' => '#',
                 'icon' => null,
@@ -2023,7 +2023,7 @@ class TenantPermissionSeeder extends Seeder
             // 144
             [
                 'name' => 'Delete Availability Schedule',
-                'description' => 'test',
+                'description' => 'Delete availability schedules',
                 'parent_id' => 141,
                 'menulink' => '#',
                 'icon' => null,
@@ -2037,7 +2037,7 @@ class TenantPermissionSeeder extends Seeder
             // 145
             [
                 'name' => 'View Availability Schedule',
-                'description' => 'test',
+                'description' => 'View schedule details',
                 'parent_id' => 141,
                 'menulink' => '#',
                 'icon' => null,
@@ -2051,7 +2051,7 @@ class TenantPermissionSeeder extends Seeder
             // 146
             [
                 'name' => 'Publish/Unpublish Availability Schedule',
-                'description' => 'test',
+                'description' => 'Publish or unpublish schedules',
                 'parent_id' => 141,
                 'menulink' => '#',
                 'icon' => null,
@@ -2065,7 +2065,7 @@ class TenantPermissionSeeder extends Seeder
             // 147
             [
                 'name' => 'Blockout Schedule',
-                'description' => 'test',
+                'description' => 'Manage blockout schedules',
                 'parent_id' => 140,
                 'menulink' => '#',
                 'icon' => null,
@@ -2079,7 +2079,7 @@ class TenantPermissionSeeder extends Seeder
             // 148
             [
                 'name' => 'Create Blockout Schedule',
-                'description' => 'test',
+                'description' => 'Create new blockout schedule(s)',
                 'parent_id' => 147,
                 'menulink' => '#',
                 'icon' => null,
@@ -2093,7 +2093,7 @@ class TenantPermissionSeeder extends Seeder
             // 149
             [
                 'name' => 'Edit Blockout Schedule',
-                'description' => 'test',
+                'description' => 'Edit blockout schedule details',
                 'parent_id' => 147,
                 'menulink' => '#',
                 'icon' => null,
@@ -2107,7 +2107,7 @@ class TenantPermissionSeeder extends Seeder
             // 150
             [
                 'name' => 'Delete Blockout Schedule',
-                'description' => 'test',
+                'description' => 'Delete blockout schedules',
                 'parent_id' => 147,
                 'menulink' => '#',
                 'icon' => null,
@@ -2121,7 +2121,7 @@ class TenantPermissionSeeder extends Seeder
             // 151
             [
                 'name' => 'View Blockout Schedule',
-                'description' => 'test',
+                'description' => 'View blockout schedule details',
                 'parent_id' => 147,
                 'menulink' => '#',
                 'icon' => null,
@@ -2135,7 +2135,7 @@ class TenantPermissionSeeder extends Seeder
             // 152
             [
                 'name' => 'Publish/Unpublish Blockout Schedule',
-                'description' => 'test',
+                'description' => 'Publish or unpublish blockout schedules',
                 'parent_id' => 147,
                 'menulink' => '#',
                 'icon' => null,
@@ -2149,7 +2149,7 @@ class TenantPermissionSeeder extends Seeder
             // 153
             [
                 'name' => 'View Assets Details',
-                'description' => 'test',
+                'description' => 'Access asset details',
                 'parent_id' => 139,
                 'menulink' => '#',
                 'icon' => null,
@@ -2163,7 +2163,7 @@ class TenantPermissionSeeder extends Seeder
             // 154
             [
                 'name' => 'My Bookings',
-                'description' => 'test',
+                'description' => 'View my asset bookings',
                 'parent_id' => 50,
                 'menulink' => '/my_bookings',
                 'icon' => null,
@@ -2177,7 +2177,7 @@ class TenantPermissionSeeder extends Seeder
             // 155
             [
                 'name' => 'Assets Availability and Booking',
-                'description' => 'test',
+                'description' => 'Manage asset availability and bookings',
                 'parent_id' => null,
                 'menulink' => '#',
                 'icon' => 'CalendarCheck',
@@ -2191,7 +2191,7 @@ class TenantPermissionSeeder extends Seeder
             // 156
             [
                 'name' => 'Assets Availability terms type',
-                'description' => 'test',
+                'description' => 'Manage availability terms types',
                 'parent_id' => 155,
                 'menulink' => '/assets_availability_terms_type',
                 'icon' => null,
@@ -2205,7 +2205,7 @@ class TenantPermissionSeeder extends Seeder
             // 157
             [
                 'name' => 'Create Terms Type',
-                'description' => 'test',
+                'description' => 'Create new terms type(s)',
                 'parent_id' => 156,
                 'menulink' => '#',
                 'icon' => null,
@@ -2219,7 +2219,7 @@ class TenantPermissionSeeder extends Seeder
             // 158
             [
                 'name' => 'Delete Terms Type',
-                'description' => 'test',
+                'description' => 'Delete terms types',
                 'parent_id' => 156,
                 'menulink' => '#',
                 'icon' => null,
@@ -2233,7 +2233,7 @@ class TenantPermissionSeeder extends Seeder
             // 159
             [
                 'name' => 'View Terms Type',
-                'description' => 'test',
+                'description' => 'View terms type details',
                 'parent_id' => 156,
                 'menulink' => '#',
                 'icon' => null,
@@ -2247,7 +2247,7 @@ class TenantPermissionSeeder extends Seeder
             // 160
             [
                 'name' => 'Edit Terms Type',
-                'description' => 'test',
+                'description' => 'Edit terms type details',
                 'parent_id' => 156,
                 'menulink' => '#',
                 'icon' => null,
@@ -2261,7 +2261,7 @@ class TenantPermissionSeeder extends Seeder
             // 161
             [
                 'name' => 'Manage Customers',
-                'description' => 'test',
+                'description' => 'Manage customer details',
                 'parent_id' => 155,
                 'menulink' => '/manage_customers',
                 'icon' => null,
@@ -2276,7 +2276,7 @@ class TenantPermissionSeeder extends Seeder
             // 162
             [
                 'name' => 'Create Customer',
-                'description' => 'test',
+                'description' => 'Create new customer(s)',
                 'parent_id' => 161,
                 'menulink' => '#',
                 'icon' => null,
@@ -2291,7 +2291,7 @@ class TenantPermissionSeeder extends Seeder
              // 163
             [
                 'name' => 'Edit Customer',
-                'description' => 'test',
+                'description' => 'Edit customer details',
                 'parent_id' => 161,
                 'menulink' => '#',
                 'icon' => null,
@@ -2306,7 +2306,7 @@ class TenantPermissionSeeder extends Seeder
              // 164
             [
                 'name' => 'Delete Customer',
-                'description' => 'test',
+                'description' => 'Delete customers',
                 'parent_id' => 161,
                 'menulink' => '#',
                 'icon' => null,
@@ -2321,7 +2321,7 @@ class TenantPermissionSeeder extends Seeder
               // 165
             [
                 'name' => 'View Customer',
-                'description' => 'test',
+                'description' => 'View customer details',
                 'parent_id' => 161,
                 'menulink' => '#',
                 'icon' => null,
@@ -2335,7 +2335,7 @@ class TenantPermissionSeeder extends Seeder
             // 166
             [
                 'name' => 'External Asset Reservation',
-                'description' => 'test',
+                'description' => 'Manage external asset reservations',
                 'parent_id' => 50,
                 'menulink' => '/external_asset_reservation',
                 'icon' => null,
@@ -2349,7 +2349,7 @@ class TenantPermissionSeeder extends Seeder
              // 167
             [
                 'name' => 'Purchasing Orders',
-                'description' => 'test',
+                'description' => 'Manage purchasing orders',
                 'parent_id' => 132,
                 'menulink' => '/purchasing_orders',
                 'icon' => null,
@@ -2364,8 +2364,8 @@ class TenantPermissionSeeder extends Seeder
             // 168
             [
                 'name' => 'Create Purchasing Orders',
-                'description' => 'test',
-                'parent_id' => 132,
+                'description' => 'Create new purchasing order(s)',
+                'parent_id' => 167,
                 'menulink' => '#',
                 'icon' => null,
                 'isconfiguration' => false,
@@ -2377,11 +2377,10 @@ class TenantPermissionSeeder extends Seeder
             ],
 
             // 169
-
             [
                 'name' => 'View Purchasing Orders',
-                'description' => 'test',
-                'parent_id' => 132,
+                'description' => 'View purchasing order details',
+                'parent_id' => 167,
                 'menulink' => '#',
                 'icon' => null,
                 'isconfiguration' => false,
@@ -2392,64 +2391,21 @@ class TenantPermissionSeeder extends Seeder
                 'updated_at' => $currentTime
             ],
 
-            // 170
-            [
-                'name' => 'Delete Purchasing Orders',
-                'description' => 'test',
-                'parent_id' => 132,
-                'menulink' => '#',
-                'icon' => null,
-                'isconfiguration' => false,
-                'ismenu_list' => false,
-                'menu_order' => 5,
-                'isactive' => true,
-                'created_at' => $currentTime,
-                'updated_at' => $currentTime
-            ],
-            // 171
-            [
-                'name' => 'Edit Purchasing Orders',
-                'description' => 'test',
-                'parent_id' => 132,
-                'menulink' => '#',
-                'icon' => null,
-                'isconfiguration' => false,
-                'ismenu_list' => false,
-                'menu_order' => 6,
-                'isactive' => true,
-                'created_at' => $currentTime,
-                'updated_at' => $currentTime
-            ],
+             // 170
+            // [
+            //     'name' => 'Approval Purchasing Orders',
+            //     'description' => 'Approve purchasing orders',
+            //     'parent_id' => 167,
+            //     'menulink' => '#',
+            //     'icon' => null,
+            //     'isconfiguration' => false,
+            //     'ismenu_list' => false,
+            //     'menu_order' => 7,
+            //     'isactive' => true,
+            //     'created_at' => $currentTime,
+            //     'updated_at' => $currentTime
+            // ],
 
-             // 172
-            [
-                'name' => 'Approval Purchasing Orders',
-                'description' => 'test',
-                'parent_id' => 132,
-                'menulink' => '#',
-                'icon' => null,
-                'isconfiguration' => false,
-                'ismenu_list' => false,
-                'menu_order' => 7,
-                'isactive' => true,
-                'created_at' => $currentTime,
-                'updated_at' => $currentTime
-            ],
-
-             // 173
-            [
-                'name' => 'Manage Purchasing Orders',
-                'description' => 'test',
-                'parent_id' => 132,
-                'menulink' => '#',
-                'icon' => null,
-                'isconfiguration' => false,
-                'ismenu_list' => false,
-                'menu_order' => 8,
-                'isactive' => true,
-                'created_at' => $currentTime,
-                'updated_at' => $currentTime
-            ],
         ];
 
         // Seed multiple permission
