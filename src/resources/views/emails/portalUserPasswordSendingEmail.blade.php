@@ -17,8 +17,8 @@
             <p style="margin: 9px 0; color: #000; font-size: 15px; line-height: 20px;">For your security, we recommend changing this password immediately after logging in.</p>
 
             <p style="margin: 9px 0; color: #000; font-size: 15px; line-height: 20px;">If you did not request this or need assistance, please contact our support team at 
-                <a href="mailto:{{ $supportEmail }}" style="color: #1677FF; text-decoration: none;">{{ $supportEmail }}</a> or 
-            <a href="tel:{{ $supportContact }}" style="color: #1677FF; text-decoration: none;">{{ $supportContact }}</a>.
+                <a href="mailto:{{ $supportEmail ?? 'support@optiomax.com' }}" style="color: #1677FF; text-decoration: none;">{{ $supportEmail ?? 'support@optiomax.com' }}</a> or 
+                <a href="tel:{{ $supportContact ?? '+1-800-123-4567' }}" style="color: #1677FF; text-decoration: none;">{{ $supportContact ?? '+1-800-123-4567' }}</a>.
             </p>
 
             <table style="width: 100%; font-family: Arial, sans-serif;">

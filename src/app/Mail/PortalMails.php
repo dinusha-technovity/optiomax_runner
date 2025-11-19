@@ -21,11 +21,13 @@ class PortalMails extends Mailable
     public $moreDetailsUrl;
     public $emailType;
     public $moreInfo;
+    public $supportEmail;
+    public $supportContact;
 
     /**
      * Create a new message instance.
      */
-    public function __construct($user_name, $inviterName, $email, $password, $signupUrl, $moreDetailsUrl, $moreInfo, $emailType)
+    public function __construct($user_name, $inviterName, $email, $password, $signupUrl, $moreDetailsUrl, $moreInfo, $emailType, $supportEmail = null, $supportContact = null)
     {
         $this->user_name = $user_name;
         $this->inviterName = $inviterName;
@@ -35,6 +37,8 @@ class PortalMails extends Mailable
         $this->moreDetailsUrl = $moreDetailsUrl;
         $this->moreInfo =$moreInfo;
         $this->emailType = $emailType;
+        $this->supportEmail = $supportEmail;
+        $this->supportContact = $supportContact;
     }
 
     public function build()
@@ -48,6 +52,8 @@ class PortalMails extends Mailable
                 'inviterName' => $this->inviterName,
                 'signupUrl' => $this->signupUrl,
                 'appDetailsUrl' => $this->moreDetailsUrl,
+                'supportEmail' => env('SUPPORT_EMAIL', 'support@optiomax.com'),
+                'supportContact' => env('SUPPORT_CONTACT', '+1234567890'),
             ]);
         }
         elseif ($this->emailType === "PORTAL_USER_INVITATION_PASSWORD") {
@@ -58,6 +64,8 @@ class PortalMails extends Mailable
                 'user_name' => $this->user_name,
                 'password' => $this->password,
                 'appDetailsUrl' => $this->moreDetailsUrl,
+                'supportEmail' => env('SUPPORT_EMAIL', 'support@optiomax.com'),
+                'supportContact' => env('SUPPORT_CONTACT', '+1234567890'),
             ]);
         }
         elseif ($this->emailType === "PORTAL_USER_PASSWORD_CHANGE") {
@@ -88,6 +96,8 @@ class PortalMails extends Mailable
                 'user_name' => $this->user_name,
                 'password'=>$this->password,
                 'appDetailsUrl' => $this->moreDetailsUrl,
+                'supportEmail' => env('SUPPORT_EMAIL', 'support@optiomax.com'),
+                'supportContact' => env('SUPPORT_CONTACT', '+1234567890'),
                 
             ]);
         }
