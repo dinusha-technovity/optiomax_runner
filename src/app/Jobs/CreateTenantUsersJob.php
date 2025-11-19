@@ -162,11 +162,25 @@ class CreateTenantUsersJob implements ShouldQueue
                 app()->singleton('selectedTenantId', fn() => $tenant->id);
                 Artisan::call('db:seed', ['--class' => 'TenantModelHasRolesSeeder']);
 
+                // Prepare tenant personal data as object
+                $configurationDetails = [
+                    'tenant_name' => $tenant->tenant_name,
+                    'address' => $tenant->address,
+                    'contact_no' => $tenant->contact_no,
+                    'contact_no_code' => $tenant->contact_no_code,
+                    'email' => $tenant->email,
+                    'website' => $tenant->website,
+                    'zip_code' => $tenant->zip_code,
+                    'city' => $tenant->city,
+                    'country' => $tenant->country,
+                ];
+
                 // Create tenant_configuration in main database
                 tenant_configuration::create([
                     'system_user_email' => $systemUserEmail,
                     'system_user_password' => $systemPassword,
-                    'tenant_id' => $tenant->id
+                    'tenant_id' => $tenant->id,
+                    'configuration_details' => $configurationDetails
                 ]);
                 
                 // Switch back to main database

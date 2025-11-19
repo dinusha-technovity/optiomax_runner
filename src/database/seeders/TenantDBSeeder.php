@@ -62,5 +62,6 @@ class TenantDBSeeder extends Seeder
         $this->call(AssetMaintenancePriorityLevelsSeeder::class);
         $this->call(AssetBookingPurposeOrUseCaseTypeSeeder::class);
         $this->call(CustomerTypeSeeder::class);
+        $this->call(TaxMasterSeeder::class);
     }
 }
