@@ -64,12 +64,6 @@ class SendTenantEmailsJob implements ShouldQueue
                 foreach ($userDetails['invited_users'] as $user) {
                     Log::info("Processing user for emails: " . json_encode($user));
                     
-                    // Send app invitation emails
-                    if (isset($user['is_app_user']) && $user['is_app_user']) {
-                        $this->sendAppInvitationEmail($user, $user['password'], $tenantUser->name);
-                        $emailsSent++;
-                    }
-
                     // Send portal invitation emails for owners (but not to the tenant owner themselves)
                     if (isset($user['is_owner']) && $user['is_owner'] && isset($user['portal_password'])) {
                         // Don't send portal invitation to the tenant owner (they already have credentials)
@@ -77,6 +71,12 @@ class SendTenantEmailsJob implements ShouldQueue
                             $this->sendPortalInvitationEmail($user, $user['portal_password'], $tenantUser->name);
                             $emailsSent++;
                         }
+                    }
+
+                    // Send app invitation emails
+                    if (isset($user['is_app_user']) && $user['is_app_user']) {
+                        $this->sendAppInvitationEmail($user, $user['password'], $tenantUser->name);
+                        $emailsSent++;
                     }
                 }
             }

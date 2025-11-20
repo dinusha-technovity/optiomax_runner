@@ -40,12 +40,12 @@ class PortalMails extends Mailable
         $this->supportEmail = $supportEmail;
         $this->supportContact = $supportContact;
     }
-
+ 
     public function build()
     {
         if($this->emailType === "PORTAL_USER_INVITATION") {
 
-            return $this->subject('Welcome to Optiomax')
+            return $this->subject('Welcome to Optiomax PORTAL')
             ->view('emails.portalUserInvitationEmail')
             ->with([
                 'user_name' => $this->user_name,
@@ -58,7 +58,7 @@ class PortalMails extends Mailable
         }
         elseif ($this->emailType === "PORTAL_USER_INVITATION_PASSWORD") {
 
-            return $this->subject('Welcome to Optiomax')
+            return $this->subject('Your Optiomax Portal Account Temporary Password')
             ->view('emails.portalUserPasswordSendingEmail')
             ->with([
                 'user_name' => $this->user_name,
