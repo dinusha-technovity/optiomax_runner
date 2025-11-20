@@ -39,7 +39,7 @@ class TenantMails extends Mailable
     {
         if($this->emailType === "USER_INVITATION") {
 
-            return $this->subject('Welcome to Optiomax')
+            return $this->subject('Welcome to Optiomax Application')
             ->view('emails.userInvitationEmail')
             ->with([
                 'user_name' => $this->user_name,
@@ -50,7 +50,7 @@ class TenantMails extends Mailable
         }
         elseif ($this->emailType === "USER_INVITATION_PASSWORD") {
 
-            return $this->subject('Welcome to Optiomax')
+            return $this->subject('Your Optiomax Application Account Temporary Password')
             ->view('emails.userPasswordSendingEmail')
             ->with([
                 'user_name' => $this->user_name,
