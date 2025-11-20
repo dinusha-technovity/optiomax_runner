@@ -70,10 +70,13 @@ class SendTenantEmailsJob implements ShouldQueue
                         $emailsSent++;
                     }
 
-                    // Send portal invitation emails for owners
+                    // Send portal invitation emails for owners (but not to the tenant owner themselves)
                     if (isset($user['is_owner']) && $user['is_owner'] && isset($user['portal_password'])) {
-                        $this->sendPortalInvitationEmail($user, $user['portal_password'], $tenantUser->name);
-                        $emailsSent++;
+                        // Don't send portal invitation to the tenant owner (they already have credentials)
+                        if ($user['email'] !== $tenantUser->email) {
+                            $this->sendPortalInvitationEmail($user, $user['portal_password'], $tenantUser->name);
+                            $emailsSent++;
+                        }
                     }
                 }
             }
