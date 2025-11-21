@@ -27,7 +27,7 @@ return new class extends Migration
                     END LOOP;
             END$$;
   
-
+ 
             CREATE OR REPLACE FUNCTION workflow_request_rejected(
                 p_approver_user_id INT,
                 p_request_id INT,
