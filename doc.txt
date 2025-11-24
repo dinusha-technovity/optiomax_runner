@@ -103,4 +103,4 @@ Quick Setup for Local Development:
 
 php artisan stripe:setup-products
 
-php artisan queue:work --tries=3 --timeout=7200 --queue=high-priority,medium-priority,low-priority 
+php artisan queue:work --tries=3 --timeout=7200 --queue=high-priority,medium-priority,low-priority  
