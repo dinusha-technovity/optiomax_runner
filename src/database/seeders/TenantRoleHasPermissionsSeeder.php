@@ -19,7 +19,7 @@ class TenantRoleHasPermissionsSeeder extends Seeder
             $this->tenantId = app()->make('selectedTenantId');
         }
     }
-
+ 
     /**
      * Run the database seeds.
      */
