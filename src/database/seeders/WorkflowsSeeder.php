@@ -2,9 +2,11 @@
 
 namespace Database\Seeders;
 
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
+use App\Models\User;
 
 class WorkflowsSeeder extends Seeder
 { 
@@ -66,7 +68,7 @@ class WorkflowsSeeder extends Seeder
 
         foreach ($workflowsData as $workflowData) {
             $existing = DB::table('workflows')
-                ->where('tenant_id', $tenantId)
+                ->where('tenant_id', $tenant_id)
                 ->where('workflow_request_type_id', $workflowData['workflow_request_type_id'])
                 ->first();
 
@@ -92,7 +94,7 @@ class WorkflowsSeeder extends Seeder
                     'workflow_status' => true,
                     'is_published' => false,
                     'deleted_at' => null,
-                    'tenant_id' => $tenantId,
+                    'tenant_id' => $tenant_id,
                     'created_at' => $currentTime,
                     'updated_at' => $currentTime
                 ]);
