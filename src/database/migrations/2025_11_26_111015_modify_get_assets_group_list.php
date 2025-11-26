@@ -193,7 +193,6 @@ return new class extends Migration
                     v_data_prev := COALESCE(v_data_prev, '[]'::json);
                 END;
             END IF;
-
             ----------------------------------------------------------------
             -- Next page (if prefetch)
             ----------------------------------------------------------------
