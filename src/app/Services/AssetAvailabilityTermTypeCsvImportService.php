@@ -8,12 +8,13 @@ use Illuminate\Support\Facades\Log;
 use League\Csv\Reader;
 use League\Csv\Statement;
 use Exception;
-
+  
 class AssetAvailabilityTermTypeCsvImportService
 {
+    use SpreadsheetImportTrait;
+
     private $batchSize;
     private $maxFileSize;
-    private $allowedMimeTypes;
     private $requiredColumns;
     private $csvColumnMapping;
 
@@ -21,7 +22,6 @@ class AssetAvailabilityTermTypeCsvImportService
     {
         $this->batchSize = config('app.csv_batch_size', 2000); // Enterprise performance
         $this->maxFileSize = config('app.csv_max_file_size', 100 * 1024 * 1024); // 100MB
-        $this->allowedMimeTypes = ['text/csv', 'application/csv', 'text/plain'];
         
         // Define required columns for asset availability term types CSV
         $this->requiredColumns = [
@@ -40,33 +40,42 @@ class AssetAvailabilityTermTypeCsvImportService
      */
     public function processCsvFile(string $filePath, int $tenantId, int $userId, array $options = []): array
     {
-        $jobId = null;
+        $jobId = $options['job_id'] ?? null;
+        $createNewJob = $jobId === null;
         
         try {
             Log::info('Starting Asset Availability Term Types CSV processing', [
                 'file_path' => $filePath,
                 'tenant_id' => $tenantId,
                 'user_id' => $userId,
+                'job_id' => $jobId,
+                'create_new_job' => $createNewJob,
                 'options' => $options
             ]);
 
-            // Create import job record
-            $jobId = DB::table('import_jobs')->insertGetId([
-                'tenant_id' => $tenantId,
-                'user_id' => $userId,
-                'type' => 'asset_availability_term_types_csv',
-                'status' => 'pending',
-                'file_name' => basename($filePath),
-                'file_path' => $filePath,
-                'file_size' => Storage::disk('s3')->size($filePath),
-                'options' => json_encode($options),
-                'started_at' => now(),
-                'created_at' => now(),
-                'updated_at' => now()
-            ]);
+            // Create import job record only if not provided (for direct calls)
+            if ($createNewJob) {
+                $jobId = DB::connection('tenant')->table('import_jobs')->insertGetId([
+                    'tenant_id' => $tenantId,
+                    'user_id' => $userId,
+                    'type' => 'asset_availability_term_types_csv',
+                    'status' => 'pending',
+                    'file_name' => basename($filePath),
+                    'file_path' => $filePath,
+                    'file_size' => Storage::disk('s3')->size($filePath),
+                    'options' => json_encode($options),
+                    'started_at' => now(),
+                    'created_at' => now(),
+                    'updated_at' => now()
+                ]);
+                
+                Log::info('Created new import job', ['job_id' => $jobId]);
+            }
 
             // Update job status to processing
-            $this->updateJobStatus($jobId, 'processing', 'Starting file validation...');
+            if ($jobId) {
+                $this->updateJobStatus($jobId, 'processing', 'Starting file validation...');
+            }
 
             // Validate file
             $validationResult = $this->validateCsvFile($filePath);
@@ -88,7 +97,7 @@ class AssetAvailabilityTermTypeCsvImportService
             }
 
             // Update total rows
-            DB::table('import_jobs')->where('id', $jobId)->update([
+            DB::connection('tenant')->table('import_jobs')->where('id', $jobId)->update([
                 'total_rows' => $csvData['total_rows'],
                 'updated_at' => now()
             ]);
@@ -144,13 +153,31 @@ class AssetAvailabilityTermTypeCsvImportService
 
             // Update final job status
             if ($result['success']) {
-                $this->updateJobStatus($jobId, 'completed', $result['message'], [
-                    'total_processed' => $result['data']['total_processed'],
-                    'total_inserted' => $result['data']['total_inserted'],
-                    'total_updated' => $result['data']['total_updated'],
-                    'total_errors' => $result['data']['total_errors'],
-                    'error_details' => $result['data']['error_details']
-                ], 100);
+                $totalProcessed = $result['data']['total_processed'] ?? 0;
+                $totalInserted = $result['data']['total_inserted'] ?? 0;
+                $totalErrors = $result['data']['total_errors'] ?? 0;
+                
+                // If all rows failed (no inserts), mark as failed
+                if ($totalProcessed > 0 && $totalInserted === 0 && $totalErrors === $totalProcessed) {
+                    $this->updateJobStatus($jobId, 'failed', 'All rows failed validation or contain duplicate names', [
+                        'total_processed' => $totalProcessed,
+                        'total_inserted' => $totalInserted,
+                        'total_updated' => $result['data']['total_updated'],
+                        'total_errors' => $totalErrors,
+                        'error_details' => $result['data']['error_details']
+                    ], 100);
+                    
+                    $result['success'] = false;
+                    $result['message'] = 'All rows failed validation or contain duplicate names';
+                } else {
+                    $this->updateJobStatus($jobId, 'completed', $result['message'], [
+                        'total_processed' => $totalProcessed,
+                        'total_inserted' => $totalInserted,
+                        'total_updated' => $result['data']['total_updated'],
+                        'total_errors' => $totalErrors,
+                        'error_details' => $result['data']['error_details']
+                    ], 100);
+                }
             } else {
                 $this->updateJobStatus($jobId, 'failed', $result['message'], [
                     'error_details' => [$result]
@@ -187,23 +214,47 @@ class AssetAvailabilityTermTypeCsvImportService
     /**
      * Use PostgreSQL function for bulk insert asset availability term types
      */
-    private function bulkInsertAssetAvailabilityTermTypes(array $transformedData, int $userId, int $tenantId, int $jobId = null): array
+    public function bulkInsertAssetAvailabilityTermTypes(array $transformedData, int $userId, int $tenantId, int $jobId = null): array
     {
         try {
+            // Log the job_id being passed to the function
+            Log::info('Calling bulk_insert_asset_availability_term_types_with_relationships', [
+                'job_id' => $jobId,
+                'job_id_is_null' => $jobId === null,
+                'user_id' => $userId,
+                'tenant_id' => $tenantId,
+                'data_count' => count($transformedData),
+                'current_connection' => DB::connection('tenant')->getDatabaseName()
+            ]);
+
+            // Check if job exists in tenant database
+            $jobExists = DB::connection('tenant')->table('import_jobs')->where('id', $jobId)->exists();
+            Log::info('Job existence check in tenant database', [
+                'job_id' => $jobId,
+                'exists' => $jobExists,
+                'database' => DB::connection('tenant')->getDatabaseName()
+            ]);
+
             $itemsJson = json_encode($transformedData);
 
             // Use tenant connection for function call
+            // Pass job_id for tracking
             $result = DB::connection('tenant')->selectOne(
                 'SELECT * FROM bulk_insert_asset_availability_term_types_with_relationships(?, ?, ?, ?, ?, ?)',
                 [
                     $userId,           // _created_by_user_id
                     $tenantId,         // _tenant_id
-                    $jobId,            // _job_id
+                    $jobId,            // _job_id for tracking import job
                     now(),             // _current_time
                     $itemsJson,        // _items JSON
                     $this->batchSize   // _batch_size
                 ]
             );
+            
+            Log::info('PostgreSQL function completed', [
+                'job_id' => $jobId,
+                'status' => $result->status ?? 'unknown'
+            ]);
 
             if ($result->status === 'SUCCESS') {
                 return [
@@ -271,6 +322,10 @@ class AssetAvailabilityTermTypeCsvImportService
 
     // Helper methods (similar structure to other CSV import services)
     private function updateJobStatus($jobId, $status, $message = null, $data = null, $progress = null) {
+        if (!$jobId) {
+            return; // Skip if no job ID
+        }
+        
         $updates = [
             'status' => $status,
             'updated_at' => now()
@@ -298,92 +353,15 @@ class AssetAvailabilityTermTypeCsvImportService
             $updates['completed_at'] = now();
         }
 
-        DB::table('import_jobs')->where('id', $jobId)->update($updates);
+        DB::connection('tenant')->table('import_jobs')->where('id', $jobId)->update($updates);
     }
 
     private function validateCsvFile($filePath) {
-        // Check if file exists
-        if (!Storage::disk('s3')->exists($filePath)) {
-            return [
-                'success' => false,
-                'message' => 'CSV file not found',
-                'error_code' => 'FILE_NOT_FOUND'
-            ];
-        }
-
-        // Check file size
-        $fileSize = Storage::disk('s3')->size($filePath);
-        if ($fileSize > $this->maxFileSize) {
-            return [
-                'success' => false,
-                'message' => 'File size exceeds maximum allowed size of ' . ($this->maxFileSize / 1024 / 1024) . 'MB',
-                'error_code' => 'FILE_TOO_LARGE'
-            ];
-        }
-
-        // Check MIME type
-        $mimeType = Storage::disk('s3')->mimeType($filePath);
-        if (!in_array($mimeType, $this->allowedMimeTypes)) {
-            return [
-                'success' => false,
-                'message' => 'Invalid file type. Only CSV files are allowed',
-                'error_code' => 'INVALID_FILE_TYPE'
-            ];
-        }
-
-        return ['success' => true];
+        return $this->validateSpreadsheetFile($filePath);
     }
 
     private function readCsvFile($filePath) {
-        try {
-            $stream = Storage::disk('s3')->readStream($filePath);
-            
-            if (!$stream) {
-                return [
-                    'success' => false,
-                    'message' => 'Unable to read CSV file',
-                    'error_code' => 'FILE_READ_ERROR'
-                ];
-            }
-
-            $csv = Reader::createFromStream($stream);
-            $csv->setHeaderOffset(0);
-            $csv->setDelimiter(',');
-            $csv->setEnclosure('"');
-            $csv->setEscape('\\');
-            
-            $records = iterator_to_array($csv->getRecords());
-            fclose($stream);
-
-            if (empty($records)) {
-                return [
-                    'success' => false,
-                    'message' => 'CSV file is empty or contains no data rows',
-                    'error_code' => 'EMPTY_FILE'
-                ];
-            }
-
-            if (count($records) > 20000) {
-                return [
-                    'success' => false,
-                    'message' => 'CSV file contains more than 20,000 rows. Please split into smaller files.',
-                    'error_code' => 'TOO_MANY_ROWS'
-                ];
-            }
-
-            return [
-                'success' => true,
-                'data' => $records,
-                'total_rows' => count($records)
-            ];
-
-        } catch (Exception $e) {
-            return [
-                'success' => false,
-                'message' => 'Error reading CSV file: ' . $e->getMessage(),
-                'error_code' => 'CSV_PARSE_ERROR'
-            ];
-        }
+        return $this->readSpreadsheetFile($filePath, 20000);
     }
 
     private function validateCsvStructure($csvData) {
@@ -428,7 +406,7 @@ class AssetAvailabilityTermTypeCsvImportService
         ];
     }
 
-    private function transformCsvData($csvData, $tenantId, $jobId = null) {
+    public function transformCsvData($csvData, $tenantId, $jobId = null) {
         $transformedData = [];
         $errors = [];
         $totalRows = count($csvData);

@@ -13,10 +13,16 @@ RUN apk --update add \
     supervisor \
     bash \
     curl \
+    libzip-dev \
+    libxml2-dev \
+    libpng-dev \
+    libjpeg-turbo-dev \
+    freetype-dev \
     && apk add --no-cache autoconf g++ make \
     && pecl install redis \
     && docker-php-ext-enable redis \
-    && docker-php-ext-install pdo_pgsql \
+    && docker-php-ext-configure gd --with-freetype --with-jpeg \
+    && docker-php-ext-install pdo_pgsql zip xml gd \
     && apk del --no-cache autoconf g++ make
 
 # Create Supervisor log directory

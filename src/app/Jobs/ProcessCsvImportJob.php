@@ -11,9 +11,9 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Exception;
-
+ 
 class ProcessCsvImportJob implements ShouldQueue
-{
+{ 
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     public $timeout = 7200; // 2 hours timeout
@@ -79,11 +79,13 @@ class ProcessCsvImportJob implements ShouldQueue
                 $result = $this->processChunk($service);
             } else {
                 // Process entire file (for smaller files or initial processing)
+                // Pass job_id in options so service doesn't create a new job
+                $optionsWithJobId = array_merge($this->options, ['job_id' => $this->jobId]);
                 $result = $service->processCsvFile(
                     $this->filePath,
                     $this->tenantId,
                     $this->userId,
-                    $this->options
+                    $optionsWithJobId
                 );
             }
 
@@ -239,6 +241,14 @@ class ProcessCsvImportJob implements ShouldQueue
 
     private function getServiceInstance()
     {
+        // Ensure import type has _csv suffix for service lookup
+        $importType = $this->importType;
+        
+        // Check if it already ends with '_csv' (using strpos to check last occurrence)
+        if (strrpos($importType, '_csv') !== (strlen($importType) - 4)) {
+            $importType .= '_csv';
+        }
+
         $serviceMap = [
             'asset_items_csv' => \App\Services\AssetItemsCsvImportService::class,
             'suppliers_csv' => \App\Services\SupplierCsvImportService::class,
@@ -250,10 +260,15 @@ class ProcessCsvImportJob implements ShouldQueue
             'asset_availability_term_types_csv' => \App\Services\AssetAvailabilityTermTypeCsvImportService::class,
         ];
 
-        $serviceClass = $serviceMap[$this->importType] ?? null;
+        $serviceClass = $serviceMap[$importType] ?? null;
         
         if (!$serviceClass) {
-            throw new Exception("Unknown import type: {$this->importType}");
+            Log::error('Service lookup failed', [
+                'original_type' => $this->importType,
+                'lookup_type' => $importType,
+                'available_types' => array_keys($serviceMap)
+            ]);
+            throw new Exception("Unknown import type: {$importType} (original: {$this->importType})");
         }
 
         return app($serviceClass);
@@ -261,6 +276,12 @@ class ProcessCsvImportJob implements ShouldQueue
 
     private function getEntityName(): string
     {
+        // Ensure import type has _csv suffix
+        $importType = $this->importType;
+        if (strrpos($importType, '_csv') !== (strlen($importType) - 4)) {
+            $importType .= '_csv';
+        }
+
         $entityMap = [
             'asset_items_csv' => 'AssetItems',
             'suppliers_csv' => 'Suppliers',
@@ -272,11 +293,16 @@ class ProcessCsvImportJob implements ShouldQueue
             'asset_availability_term_types_csv' => 'AssetAvailabilityTermTypes',
         ];
 
-        return $entityMap[$this->importType] ?? 'Unknown';
+        return $entityMap[$importType] ?? 'Unknown';
     }
 
     private function getQueueName(string $importType): string
     {
+        // Ensure import type has _csv suffix
+        if (strrpos($importType, '_csv') !== (strlen($importType) - 4)) {
+            $importType .= '_csv';
+        }
+
         // Priority queues based on import type
         $priorityMap = [
             'asset_items_csv' => 'high-priority',
@@ -332,6 +358,12 @@ class ProcessCsvImportJob implements ShouldQueue
         // Only configure if tenant_db_config is present
         if (!empty($this->options['tenant_db_config'])) {
             $cfg = $this->options['tenant_db_config'];
+            
+            // Validate required configuration
+            if (empty($cfg['host']) || empty($cfg['database']) || empty($cfg['username'])) {
+                throw new Exception('Incomplete tenant database configuration');
+            }
+
             config([
                 'database.connections.tenant' => [
                     'driver' => 'pgsql',
@@ -346,7 +378,23 @@ class ProcessCsvImportJob implements ShouldQueue
                     'sslmode' => 'prefer',
                 ]
             ]);
+            
+            // Purge existing connection
             DB::purge('tenant');
+            
+            // Test connection
+            try {
+                DB::connection('tenant')->getPdo();
+                Log::info('Tenant database connection established in job', [
+                    'job_id' => $this->jobId,
+                    'database' => $cfg['database'],
+                    'host' => $cfg['host']
+                ]);
+            } catch (\Exception $e) {
+                throw new Exception("Failed to connect to tenant database: " . $e->getMessage());
+            }
+        } else {
+            throw new Exception('Tenant database configuration not provided in job options');
         }
     }
 
