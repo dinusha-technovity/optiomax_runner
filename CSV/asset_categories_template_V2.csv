@@ -1,0 +1,7 @@
+name,description,asset_type_name,reading_parameters
+Electronics,Electronic devices and equipment including computers phones and accessories,Tangible assets,"{""temperature"": {""unit"": ""celsius"", ""range"": ""-10 to 60""}, ""humidity"": {""unit"": ""percentage"", ""range"": ""5 to 95""}}"
+Furniture,Office and workplace furniture including desks chairs and storage,Tangible assets,"{""weight_capacity"": {""unit"": ""kg"", ""range"": ""0 to 500""}, ""dimensions"": {""unit"": ""cm"", ""format"": ""L x W x H""}}"
+Vehicles,Transportation assets including cars trucks and delivery vehicles,Tangible assets,"{""mileage"": {""unit"": ""km"", ""tracking"": ""odometer""}, ""fuel_efficiency"": {""unit"": ""km/l"", ""range"": ""5 to 25""}}"
+Software Licenses,Intangible software assets and licensing agreements,Intangible assets,"{""license_count"": {""unit"": ""users"", ""tracking"": ""concurrent""}, ""version"": {""format"": ""semantic_version""}}"
+Manufacturing Equipment,Production machinery and manufacturing tools,Operating assets,"{""operating_hours"": {""unit"": ""hours"", ""tracking"": ""cumulative""}, ""temperature"": {""unit"": ""celsius"", ""range"": ""10 to 80""}}"
+Investment Securities,Financial instruments and investment portfolios,Non-operating assets,"{""market_value"": {""unit"": ""currency"", ""tracking"": ""real_time""}, ""yield"": {""unit"": ""percentage"", ""format"": ""annual""}}"

@@ -255,8 +255,8 @@ class MasterDocumentController extends Controller
     //             'message' => 'Error processing CSV file: ' . $th->getMessage()
     //         ], 500);
     //     }
-    // }
-    public function processAssetItemsCsv(Request $request)
+    // } 
+    public function processDataImport(Request $request)
     {
         try {
             // Validate request
@@ -328,26 +328,6 @@ class MasterDocumentController extends Controller
                     'error_code' => 'JOB_CREATION_ERROR'
                 ], 500);
             }
-
-            // Validate file exists in MinIO
-            // if (!Storage::disk('s3')->exists($job->file_path)) {
-            //     return response()->json([
-            //         'success' => false,
-            //         'message' => 'CSV file not found in storage',
-            //         'error_code' => 'FILE_NOT_FOUND'
-            //     ], 404);
-            // }
-            // dd($job);
-            // // Validate file type (should be CSV)
-            // $mimeType = Storage::disk('s3')->mimeType($job->file_path);
-            // $allowedMimeTypes = ['text/csv', 'application/csv', 'text/plain'];
-            
-            // if (!in_array($mimeType, $allowedMimeTypes)) {
-            //     return response()->json([
-            //         'success' => false,
-            //         'message' => 'Invalid file type. Only CSV files are allowed for processing.'
-            //     ], 422);
-            // }
 
             // Analyze file for chunking strategy
             $chunkingService = app(CsvChunkingService::class);

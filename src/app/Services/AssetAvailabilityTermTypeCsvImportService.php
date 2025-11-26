@@ -8,12 +8,13 @@ use Illuminate\Support\Facades\Log;
 use League\Csv\Reader;
 use League\Csv\Statement;
 use Exception;
-
+ 
 class AssetAvailabilityTermTypeCsvImportService
 {
+    use SpreadsheetImportTrait;
+
     private $batchSize;
     private $maxFileSize;
-    private $allowedMimeTypes;
     private $requiredColumns;
     private $csvColumnMapping;
 
@@ -21,7 +22,6 @@ class AssetAvailabilityTermTypeCsvImportService
     {
         $this->batchSize = config('app.csv_batch_size', 2000); // Enterprise performance
         $this->maxFileSize = config('app.csv_max_file_size', 100 * 1024 * 1024); // 100MB
-        $this->allowedMimeTypes = ['text/csv', 'application/csv', 'text/plain'];
         
         // Define required columns for asset availability term types CSV
         $this->requiredColumns = [
@@ -144,13 +144,31 @@ class AssetAvailabilityTermTypeCsvImportService
 
             // Update final job status
             if ($result['success']) {
-                $this->updateJobStatus($jobId, 'completed', $result['message'], [
-                    'total_processed' => $result['data']['total_processed'],
-                    'total_inserted' => $result['data']['total_inserted'],
-                    'total_updated' => $result['data']['total_updated'],
-                    'total_errors' => $result['data']['total_errors'],
-                    'error_details' => $result['data']['error_details']
-                ], 100);
+                $totalProcessed = $result['data']['total_processed'] ?? 0;
+                $totalInserted = $result['data']['total_inserted'] ?? 0;
+                $totalErrors = $result['data']['total_errors'] ?? 0;
+                
+                // If all rows failed (no inserts), mark as failed
+                if ($totalProcessed > 0 && $totalInserted === 0 && $totalErrors === $totalProcessed) {
+                    $this->updateJobStatus($jobId, 'failed', 'All rows failed validation or contain duplicate names', [
+                        'total_processed' => $totalProcessed,
+                        'total_inserted' => $totalInserted,
+                        'total_updated' => $result['data']['total_updated'],
+                        'total_errors' => $totalErrors,
+                        'error_details' => $result['data']['error_details']
+                    ], 100);
+                    
+                    $result['success'] = false;
+                    $result['message'] = 'All rows failed validation or contain duplicate names';
+                } else {
+                    $this->updateJobStatus($jobId, 'completed', $result['message'], [
+                        'total_processed' => $totalProcessed,
+                        'total_inserted' => $totalInserted,
+                        'total_updated' => $result['data']['total_updated'],
+                        'total_errors' => $totalErrors,
+                        'error_details' => $result['data']['error_details']
+                    ], 100);
+                }
             } else {
                 $this->updateJobStatus($jobId, 'failed', $result['message'], [
                     'error_details' => [$result]
@@ -193,12 +211,13 @@ class AssetAvailabilityTermTypeCsvImportService
             $itemsJson = json_encode($transformedData);
 
             // Use tenant connection for function call
+            // Pass null for job_id to avoid foreign key constraint issues
             $result = DB::connection('tenant')->selectOne(
                 'SELECT * FROM bulk_insert_asset_availability_term_types_with_relationships(?, ?, ?, ?, ?, ?)',
                 [
                     $userId,           // _created_by_user_id
                     $tenantId,         // _tenant_id
-                    $jobId,            // _job_id
+                    null,              // _job_id (set to null to avoid FK constraint)
                     now(),             // _current_time
                     $itemsJson,        // _items JSON
                     $this->batchSize   // _batch_size
@@ -302,88 +321,11 @@ class AssetAvailabilityTermTypeCsvImportService
     }
 
     private function validateCsvFile($filePath) {
-        // Check if file exists
-        if (!Storage::disk('s3')->exists($filePath)) {
-            return [
-                'success' => false,
-                'message' => 'CSV file not found',
-                'error_code' => 'FILE_NOT_FOUND'
-            ];
-        }
-
-        // Check file size
-        $fileSize = Storage::disk('s3')->size($filePath);
-        if ($fileSize > $this->maxFileSize) {
-            return [
-                'success' => false,
-                'message' => 'File size exceeds maximum allowed size of ' . ($this->maxFileSize / 1024 / 1024) . 'MB',
-                'error_code' => 'FILE_TOO_LARGE'
-            ];
-        }
-
-        // Check MIME type
-        $mimeType = Storage::disk('s3')->mimeType($filePath);
-        if (!in_array($mimeType, $this->allowedMimeTypes)) {
-            return [
-                'success' => false,
-                'message' => 'Invalid file type. Only CSV files are allowed',
-                'error_code' => 'INVALID_FILE_TYPE'
-            ];
-        }
-
-        return ['success' => true];
+        return $this->validateSpreadsheetFile($filePath);
     }
 
     private function readCsvFile($filePath) {
-        try {
-            $stream = Storage::disk('s3')->readStream($filePath);
-            
-            if (!$stream) {
-                return [
-                    'success' => false,
-                    'message' => 'Unable to read CSV file',
-                    'error_code' => 'FILE_READ_ERROR'
-                ];
-            }
-
-            $csv = Reader::createFromStream($stream);
-            $csv->setHeaderOffset(0);
-            $csv->setDelimiter(',');
-            $csv->setEnclosure('"');
-            $csv->setEscape('\\');
-            
-            $records = iterator_to_array($csv->getRecords());
-            fclose($stream);
-
-            if (empty($records)) {
-                return [
-                    'success' => false,
-                    'message' => 'CSV file is empty or contains no data rows',
-                    'error_code' => 'EMPTY_FILE'
-                ];
-            }
-
-            if (count($records) > 20000) {
-                return [
-                    'success' => false,
-                    'message' => 'CSV file contains more than 20,000 rows. Please split into smaller files.',
-                    'error_code' => 'TOO_MANY_ROWS'
-                ];
-            }
-
-            return [
-                'success' => true,
-                'data' => $records,
-                'total_rows' => count($records)
-            ];
-
-        } catch (Exception $e) {
-            return [
-                'success' => false,
-                'message' => 'Error reading CSV file: ' . $e->getMessage(),
-                'error_code' => 'CSV_PARSE_ERROR'
-            ];
-        }
+        return $this->readSpreadsheetFile($filePath, 20000);
     }
 
     private function validateCsvStructure($csvData) {

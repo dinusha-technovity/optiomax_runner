@@ -12,9 +12,10 @@ use Exception;
 
 class SupplierCsvImportService
 {
+    use SpreadsheetImportTrait;
+
     private $batchSize;
     private $maxFileSize;
-    private $allowedMimeTypes;
     private $requiredColumns;
     private $csvColumnMapping;
 
@@ -22,7 +23,6 @@ class SupplierCsvImportService
     {
         $this->batchSize = config('app.csv_batch_size', 2000); // Enterprise performance
         $this->maxFileSize = config('app.csv_max_file_size', 100 * 1024 * 1024); // 100MB
-        $this->allowedMimeTypes = ['text/csv', 'application/csv', 'text/plain'];
         
         // Define required columns for supplier CSV
         $this->requiredColumns = [
@@ -346,36 +346,7 @@ class SupplierCsvImportService
      */
     private function validateCsvFile(string $filePath): array
     {
-        // Check if file exists
-        if (!Storage::disk('s3')->exists($filePath)) {
-            return [
-                'success' => false,
-                'message' => 'CSV file not found',
-                'error_code' => 'FILE_NOT_FOUND'
-            ];
-        }
-
-        // Check file size
-        $fileSize = Storage::disk('s3')->size($filePath);
-        if ($fileSize > $this->maxFileSize) {
-            return [
-                'success' => false,
-                'message' => 'File size exceeds maximum allowed size of ' . ($this->maxFileSize / 1024 / 1024) . 'MB',
-                'error_code' => 'FILE_TOO_LARGE'
-            ];
-        }
-
-        // Check MIME type
-        $mimeType = Storage::disk('s3')->mimeType($filePath);
-        if (!in_array($mimeType, $this->allowedMimeTypes)) {
-            return [
-                'success' => false,
-                'message' => 'Invalid file type. Only CSV files are allowed',
-                'error_code' => 'INVALID_FILE_TYPE'
-            ];
-        }
-
-        return ['success' => true];
+        return $this->validateSpreadsheetFile($filePath);
     }
 
     /**
@@ -383,77 +354,7 @@ class SupplierCsvImportService
      */
     private function readCsvFile(string $filePath): array
     {
-        try {
-            // Get file stream from MinIO
-            $stream = Storage::disk('s3')->readStream($filePath);
-            
-            if (!$stream) {
-                return [
-                    'success' => false,
-                    'message' => 'Unable to read CSV file',
-                    'error_code' => 'FILE_READ_ERROR'
-                ];
-            }
-
-            // Create CSV reader from stream
-            $csv = Reader::createFromStream($stream);
-            $csv->setHeaderOffset(0); // First row contains headers
-            
-            // Set delimiter and enclosure for better parsing
-            $csv->setDelimiter(',');
-            $csv->setEnclosure('"');
-            $csv->setEscape('\\');
-            
-            // Convert to array
-            $records = iterator_to_array($csv->getRecords());
-            
-            // Close stream
-            fclose($stream);
-
-            // Check if file is empty
-            if (empty($records)) {
-                return [
-                    'success' => false,
-                    'message' => 'CSV file is empty or contains no data rows',
-                    'error_code' => 'EMPTY_FILE'
-                ];
-            }
-
-            // Check row count limit
-            if (count($records) > 20000) {
-                return [
-                    'success' => false,
-                    'message' => 'CSV file contains more than 20,000 rows. Please split into smaller files.',
-                    'error_code' => 'TOO_MANY_ROWS'
-                ];
-            }
-
-            // Log successful read for debugging
-            Log::info('CSV file read successfully', [
-                'file_path' => $filePath,
-                'total_rows' => count($records),
-                'first_row_keys' => !empty($records) ? array_keys(reset($records)) : []
-            ]);
-
-            return [
-                'success' => true,
-                'data' => $records,
-                'total_rows' => count($records)
-            ];
-
-        } catch (Exception $e) {
-            Log::error('CSV Read Error', [
-                'file_path' => $filePath,
-                'error' => $e->getMessage(),
-                'trace' => $e->getTraceAsString()
-            ]);
-
-            return [
-                'success' => false,
-                'message' => 'Error reading CSV file: ' . $e->getMessage(),
-                'error_code' => 'CSV_PARSE_ERROR'
-            ];
-        }
+        return $this->readSpreadsheetFile($filePath, 20000);
     }
 
     /**
