@@ -5,7 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
-
+ 
 class ApiKeyAuth
 {
     /**
@@ -27,7 +27,7 @@ class ApiKeyAuth
         }
         
         // Get allowed API keys from environment
-        $allowedApiKeys = explode(',', env('CUSTOMER_API_KEY', ''));
+        $allowedApiKeys = explode(',', env('RUNNER_API_KEY', ''));
         
         // Check if the provided API key is valid
         if (!in_array($apiKey, $allowedApiKeys)) {

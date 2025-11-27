@@ -255,7 +255,11 @@ class MasterDocumentController extends Controller
     //             'message' => 'Error processing CSV file: ' . $th->getMessage()
     //         ], 500);
     //     }
-    // } 
+    // }
+
+    /**
+     * Process data import based on job_id
+     */
     public function processDataImport(Request $request)
     {
         try {
@@ -324,9 +328,9 @@ class MasterDocumentController extends Controller
             if (!$job) {
                 return response()->json([
                     'success' => false,
-                    'message' => 'Failed to create import job record',
-                    'error_code' => 'JOB_CREATION_ERROR'
-                ], 500);
+                    'message' => 'Import job not found with ID: ' . $jobId,
+                    'error_code' => 'JOB_NOT_FOUND'
+                ], 404);
             }
 
             // Analyze file for chunking strategy
@@ -1361,7 +1365,7 @@ class MasterDocumentController extends Controller
         ]);
 
         // Chunk the data
-        $chunkResult = $chunkingService->chunkCsvData($filePath, $importType . '_csv', $tenantId);
+        $chunkResult = $chunkingService->chunkCsvData($filePath, $importType, $tenantId);
         
         if (!$chunkResult['success']) {
             DB::connection('tenant')->table('import_jobs')->where('id', $jobId)->update([
@@ -1392,7 +1396,7 @@ class MasterDocumentController extends Controller
             $chunkData = Cache::get($chunkInfo['cache_key']);
             
             ProcessCsvImportJob::dispatch(
-                $importType . '_csv',
+                $importType,
                 $filePath,
                 $tenantId,
                 $userId,
@@ -1426,7 +1430,7 @@ class MasterDocumentController extends Controller
     ): void {
         // Dispatch single job for small files with tenant information
         ProcessCsvImportJob::dispatch(
-            $importType . '_csv',
+            $importType,
             $filePath,
             $tenantId,
             $userId,

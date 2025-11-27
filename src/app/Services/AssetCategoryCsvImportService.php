@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Log;
 use League\Csv\Reader;
 use League\Csv\Statement;
 use Exception;
-
+ 
 class AssetCategoryCsvImportService
 {
     use SpreadsheetImportTrait;
@@ -52,20 +52,27 @@ class AssetCategoryCsvImportService
                 'options' => $options
             ]);
 
-            // Create import job record
-            $jobId = DB::table('import_jobs')->insertGetId([
-                'tenant_id' => $tenantId,
-                'user_id' => $userId,
-                'type' => 'asset_categories_csv',
-                'status' => 'pending',
-                'file_name' => basename($filePath),
-                'file_path' => $filePath,
-                'file_size' => Storage::disk('s3')->size($filePath),
-                'options' => json_encode($options),
-                'started_at' => now(),
-                'created_at' => now(),
-                'updated_at' => now()
-            ]);
+            // Check if job_id is provided in options (from controller)
+            if (isset($options['job_id']) && !empty($options['job_id'])) {
+                $jobId = $options['job_id'];
+                Log::info('Using existing job_id from options', ['job_id' => $jobId]);
+            } else {
+                // Create import job record
+                $jobId = DB::connection('tenant')->table('import_jobs')->insertGetId([
+                    'tenant_id' => $tenantId,
+                    'user_id' => $userId,
+                    'type' => 'asset_categories_csv',
+                    'status' => 'pending',
+                    'file_name' => basename($filePath),
+                    'file_path' => $filePath,
+                    'file_size' => Storage::disk('s3')->size($filePath),
+                    'options' => json_encode($options),
+                    'started_at' => now(),
+                    'created_at' => now(),
+                    'updated_at' => now()
+                ]);
+                Log::info('Created new import job', ['job_id' => $jobId]);
+            }
 
             // Update job status to processing
             $this->updateJobStatus($jobId, 'processing', 'Starting file validation...');
@@ -90,7 +97,7 @@ class AssetCategoryCsvImportService
             }
 
             // Update total rows
-            DB::table('import_jobs')->where('id', $jobId)->update([
+            DB::connection('tenant')->table('import_jobs')->where('id', $jobId)->update([
                 'total_rows' => $csvData['total_rows'],
                 'updated_at' => now()
             ]);
@@ -189,9 +196,29 @@ class AssetCategoryCsvImportService
     /**
      * Use PostgreSQL function for bulk insert asset categories
      */
-    private function bulkInsertAssetCategories(array $transformedData, int $userId, int $tenantId, int $jobId = null): array
+    public function bulkInsertAssetCategories(array $transformedData, int $userId, int $tenantId, int $jobId = null): array
     {
         try {
+            // Log the bulk insert operation
+            Log::info('Calling bulk_insert_asset_categories_with_relationships', [
+                'job_id' => $jobId,
+                'job_id_is_null' => is_null($jobId),
+                'user_id' => $userId,
+                'tenant_id' => $tenantId,
+                'data_count' => count($transformedData),
+                'current_connection' => DB::connection('tenant')->getDatabaseName()
+            ]);
+
+            // Check if job exists in tenant database
+            if ($jobId) {
+                $jobExists = DB::connection('tenant')->table('import_jobs')->where('id', $jobId)->exists();
+                Log::info('Job existence check in tenant database', [
+                    'job_id' => $jobId,
+                    'exists' => $jobExists,
+                    'database' => DB::connection('tenant')->getDatabaseName()
+                ]);
+            }
+
             // Prepare data for PostgreSQL function
             $itemsJson = json_encode($transformedData);
             
@@ -207,6 +234,12 @@ class AssetCategoryCsvImportService
                     $this->batchSize   // _batch_size
                 ]
             );
+
+            Log::info('PostgreSQL function completed', [
+                'job_id' => $jobId,
+                'status' => $result->status ?? 'unknown',
+                'result' => $result
+            ]);
 
             if ($result->status === 'SUCCESS') {
                 return [
@@ -234,6 +267,7 @@ class AssetCategoryCsvImportService
 
         } catch (Exception $e) {
             Log::error('Asset Category Bulk Insert Function Error: ' . $e->getMessage(), [
+                'job_id' => $jobId,
                 'tenant_id' => $tenantId,
                 'user_id' => $userId,
                 'data_count' => count($transformedData),
@@ -304,7 +338,7 @@ class AssetCategoryCsvImportService
             $updates['completed_at'] = now();
         }
 
-        DB::table('import_jobs')->where('id', $jobId)->update($updates);
+        DB::connection('tenant')->table('import_jobs')->where('id', $jobId)->update($updates);
     }
 
     private function validateCsvFile($filePath) {
@@ -357,7 +391,7 @@ class AssetCategoryCsvImportService
         ];
     }
 
-    private function transformCsvData($csvData, $tenantId, $jobId = null) {
+    public function transformCsvData($csvData, $tenantId, $jobId = null) {
         $transformedData = [];
         $errors = [];
         $totalRows = count($csvData);

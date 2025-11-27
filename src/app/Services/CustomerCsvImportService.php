@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Log;
 use League\Csv\Reader;
 use League\Csv\Statement;
 use Exception;
-
+ 
 class CustomerCsvImportService
 {
     use SpreadsheetImportTrait;
@@ -69,20 +69,27 @@ class CustomerCsvImportService
                 'options' => $options
             ]);
 
-            // Create import job record
-            $jobId = DB::table('import_jobs')->insertGetId([
-                'tenant_id' => $tenantId,
-                'user_id' => $userId,
-                'type' => 'customers_csv',
-                'status' => 'pending',
-                'file_name' => basename($filePath),
-                'file_path' => $filePath,
-                'file_size' => Storage::disk('s3')->size($filePath),
-                'options' => json_encode($options),
-                'started_at' => now(),
-                'created_at' => now(),
-                'updated_at' => now()
-            ]);
+            // Check if job_id is provided in options (from controller)
+            if (isset($options['job_id']) && !empty($options['job_id'])) {
+                $jobId = $options['job_id'];
+                Log::info('Using existing job_id from options', ['job_id' => $jobId]);
+            } else {
+                // Create import job record
+                $jobId = DB::connection('tenant')->table('import_jobs')->insertGetId([
+                    'tenant_id' => $tenantId,
+                    'user_id' => $userId,
+                    'type' => 'customers_csv',
+                    'status' => 'pending',
+                    'file_name' => basename($filePath),
+                    'file_path' => $filePath,
+                    'file_size' => Storage::disk('s3')->size($filePath),
+                    'options' => json_encode($options),
+                    'started_at' => now(),
+                    'created_at' => now(),
+                    'updated_at' => now()
+                ]);
+                Log::info('Created new import job', ['job_id' => $jobId]);
+            }
 
             // Update job status to processing
             $this->updateJobStatus($jobId, 'processing', 'Starting file validation...');
@@ -107,7 +114,7 @@ class CustomerCsvImportService
             }
 
             // Update total rows
-            DB::table('import_jobs')->where('id', $jobId)->update([
+            DB::connection('tenant')->table('import_jobs')->where('id', $jobId)->update([
                 'total_rows' => $csvData['total_rows'],
                 'updated_at' => now()
             ]);
@@ -206,7 +213,7 @@ class CustomerCsvImportService
     /**
      * Use PostgreSQL function for bulk insert customers
      */
-    private function bulkInsertCustomers(array $transformedData, int $userId, int $tenantId, int $jobId = null): array
+    public function bulkInsertCustomers(array $transformedData, int $userId, int $tenantId, int $jobId = null): array
     {
         try {
             // Prepare data for PostgreSQL function
@@ -224,6 +231,12 @@ class CustomerCsvImportService
                     $this->batchSize   // _batch_size
                 ]
             );
+
+            Log::info('PostgreSQL function completed', [
+                'job_id' => $jobId,
+                'status' => $result->status ?? 'unknown',
+                'result' => $result
+            ]);
 
             if ($result->status === 'SUCCESS') {
                 return [
@@ -342,7 +355,7 @@ class CustomerCsvImportService
             $updates['completed_at'] = now();
         }
 
-        DB::table('import_jobs')->where('id', $jobId)->update($updates);
+        DB::connection('tenant')->table('import_jobs')->where('id', $jobId)->update($updates);
     }
 
     /**
@@ -413,7 +426,7 @@ class CustomerCsvImportService
     /**
      * Transform CSV data to database format
      */
-    private function transformCsvData(array $csvData, int $tenantId, int $jobId = null): array
+    public function transformCsvData(array $csvData, int $tenantId, int $jobId = null): array
     {
         $transformedData = [];
         $errors = [];
