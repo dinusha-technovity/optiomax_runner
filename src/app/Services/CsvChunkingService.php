@@ -9,14 +9,16 @@ use League\Csv\Reader;
 use Exception;
 
 class CsvChunkingService
-{
+{ 
     private $chunkSize;
     private $maxFileSize;
+    private $excelReaderService;
     
-    public function __construct()
+    public function __construct(ExcelReaderService $excelReaderService)
     {
         $this->chunkSize = config('app.csv_chunk_size', 2500); // Optimized for 25k+ rows
         $this->maxFileSize = config('app.csv_max_file_size', 500 * 1024 * 1024); // 500MB
+        $this->excelReaderService = $excelReaderService;
     }
 
     /**
@@ -73,22 +75,32 @@ class CsvChunkingService
     public function chunkCsvData(string $filePath, string $importType, int $tenantId): array
     {
         try {
-            $stream = Storage::disk('s3')->readStream($filePath);
-            if (!$stream) {
-                throw new Exception('Unable to read CSV file');
+            // Detect file type
+            $fileType = $this->excelReaderService->detectFileType($filePath);
+            
+            // Read file based on type
+            if ($fileType === 'csv') {
+                $records = $this->readCsvFile($filePath);
+            } else if (in_array($fileType, ['xlsx', 'xls'])) {
+                $excelData = $this->excelReaderService->readExcelFile($filePath);
+                
+                if (!$excelData['success']) {
+                    return [
+                        'success' => false,
+                        'message' => $excelData['message'] ?? 'Failed to read Excel file'
+                    ];
+                }
+                
+                $records = $excelData['data'];
+            } else {
+                return [
+                    'success' => false,
+                    'message' => 'Unsupported file format. Please upload CSV, XLSX, or XLS files.'
+                ];
             }
 
-            $csv = Reader::createFromStream($stream);
-            $csv->setHeaderOffset(0);
-            $csv->setDelimiter(',');
-            $csv->setEnclosure('"');
-            $csv->setEscape('\\');
-
-            $records = iterator_to_array($csv->getRecords());
-            fclose($stream);
-
             if (empty($records)) {
-                throw new Exception('CSV file is empty');
+                throw new Exception('File is empty or contains no valid data');
             }
 
             // Get service for data transformation
@@ -146,6 +158,25 @@ class CsvChunkingService
                 'error' => $e->getMessage()
             ];
         }
+    }
+
+    private function readCsvFile(string $filePath): array
+    {
+        $stream = Storage::disk('s3')->readStream($filePath);
+        if (!$stream) {
+            throw new Exception('Unable to read CSV file');
+        }
+
+        $csv = Reader::createFromStream($stream);
+        $csv->setHeaderOffset(0);
+        $csv->setDelimiter(',');
+        $csv->setEnclosure('"');
+        $csv->setEscape('\\');
+
+        $records = iterator_to_array($csv->getRecords());
+        fclose($stream);
+
+        return $records;
     }
 
     private function getServiceInstance(string $importType)
