@@ -8,12 +8,13 @@ use Illuminate\Support\Facades\Log;
 use League\Csv\Reader;
 use League\Csv\Statement;
 use Exception;
-
+ 
 class AssetItemsCsvImportService
 {
+    use SpreadsheetImportTrait;
+
     private $batchSize;
     private $maxFileSize;
-    private $allowedMimeTypes;
     private $requiredColumns;
     private $csvColumnMapping;
 
@@ -21,7 +22,6 @@ class AssetItemsCsvImportService
     {
         $this->batchSize = config('app.csv_batch_size', 1000);
         $this->maxFileSize = config('app.csv_max_file_size', 50 * 1024 * 1024); // 50MB
-        $this->allowedMimeTypes = ['text/csv', 'application/csv', 'text/plain'];
         
         // Define required columns for asset items CSV - Updated for name-based lookups
         $this->requiredColumns = [
@@ -104,20 +104,27 @@ class AssetItemsCsvImportService
                 'options' => $options
             ]);
 
-            // Create import job record
-            $jobId = DB::table('import_jobs')->insertGetId([
-                'tenant_id' => $tenantId,
-                'user_id' => $userId,
-                'type' => 'asset_items_csv',
-                'status' => 'pending',
-                'file_name' => basename($filePath),
-                'file_path' => $filePath,
-                'file_size' => Storage::disk('s3')->size($filePath),
-                'options' => json_encode($options),
-                'started_at' => now(),
-                'created_at' => now(),
-                'updated_at' => now()
-            ]);
+            // Check if job_id is provided in options (from controller)
+            if (isset($options['job_id']) && !empty($options['job_id'])) {
+                $jobId = $options['job_id'];
+                Log::info('Using existing job_id from options', ['job_id' => $jobId]);
+            } else {
+                // Create import job record
+                $jobId = DB::connection('tenant')->table('import_jobs')->insertGetId([
+                    'tenant_id' => $tenantId,
+                    'user_id' => $userId,
+                    'type' => 'asset_items_csv',
+                    'status' => 'pending',
+                    'file_name' => basename($filePath),
+                    'file_path' => $filePath,
+                    'file_size' => Storage::disk('s3')->size($filePath),
+                    'options' => json_encode($options),
+                    'started_at' => now(),
+                    'created_at' => now(),
+                    'updated_at' => now()
+                ]);
+                Log::info('Created new import job', ['job_id' => $jobId]);
+            }
 
             // Update job status to processing
             $this->updateJobStatus($jobId, 'processing', 'Starting file validation...');
@@ -142,7 +149,7 @@ class AssetItemsCsvImportService
             }
 
             // Update total rows
-            DB::table('import_jobs')->where('id', $jobId)->update([
+            DB::connection('tenant')->table('import_jobs')->where('id', $jobId)->update([
                 'total_rows' => $csvData['total_rows'],
                 'updated_at' => now()
             ]);
@@ -276,7 +283,7 @@ class AssetItemsCsvImportService
             $updates['completed_at'] = now();
         }
 
-        DB::table('import_jobs')->where('id', $jobId)->update($updates);
+        DB::connection('tenant')->table('import_jobs')->where('id', $jobId)->update($updates);
     }
 
     /**
@@ -284,36 +291,7 @@ class AssetItemsCsvImportService
      */
     private function validateCsvFile(string $filePath): array
     {
-        // Check if file exists
-        if (!Storage::disk('s3')->exists($filePath)) {
-            return [
-                'success' => false,
-                'message' => 'CSV file not found',
-                'error_code' => 'FILE_NOT_FOUND'
-            ];
-        }
-
-        // Check file size
-        $fileSize = Storage::disk('s3')->size($filePath);
-        if ($fileSize > $this->maxFileSize) {
-            return [
-                'success' => false,
-                'message' => 'File size exceeds maximum allowed size of ' . ($this->maxFileSize / 1024 / 1024) . 'MB',
-                'error_code' => 'FILE_TOO_LARGE'
-            ];
-        }
-
-        // Check MIME type
-        $mimeType = Storage::disk('s3')->mimeType($filePath);
-        if (!in_array($mimeType, $this->allowedMimeTypes)) {
-            return [
-                'success' => false,
-                'message' => 'Invalid file type. Only CSV files are allowed',
-                'error_code' => 'INVALID_FILE_TYPE'
-            ];
-        }
-
-        return ['success' => true];
+        return $this->validateSpreadsheetFile($filePath);
     }
 
     /**
@@ -321,77 +299,7 @@ class AssetItemsCsvImportService
      */
     private function readCsvFile(string $filePath): array
     {
-        try {
-            // Get file stream from MinIO
-            $stream = Storage::disk('s3')->readStream($filePath);
-            
-            if (!$stream) {
-                return [
-                    'success' => false,
-                    'message' => 'Unable to read CSV file',
-                    'error_code' => 'FILE_READ_ERROR'
-                ];
-            }
-
-            // Create CSV reader from stream
-            $csv = Reader::createFromStream($stream);
-            $csv->setHeaderOffset(0); // First row contains headers
-            
-            // Set delimiter and enclosure for better parsing
-            $csv->setDelimiter(',');
-            $csv->setEnclosure('"');
-            $csv->setEscape('\\');
-            
-            // Convert to array
-            $records = iterator_to_array($csv->getRecords());
-            
-            // Close stream
-            fclose($stream);
-
-            // Check if file is empty
-            if (empty($records)) {
-                return [
-                    'success' => false,
-                    'message' => 'CSV file is empty or contains no data rows',
-                    'error_code' => 'EMPTY_FILE'
-                ];
-            }
-
-            // Check row count limit
-            if (count($records) > 20000) {
-                return [
-                    'success' => false,
-                    'message' => 'CSV file contains more than 20,000 rows. Please split into smaller files.',
-                    'error_code' => 'TOO_MANY_ROWS'
-                ];
-            }
-
-            // Log successful read for debugging
-            Log::info('CSV file read successfully', [
-                'file_path' => $filePath,
-                'total_rows' => count($records),
-                'first_row_keys' => !empty($records) ? array_keys(reset($records)) : []
-            ]);
-
-            return [
-                'success' => true,
-                'data' => $records,
-                'total_rows' => count($records)
-            ];
-
-        } catch (Exception $e) {
-            Log::error('CSV Read Error', [
-                'file_path' => $filePath,
-                'error' => $e->getMessage(),
-                'trace' => $e->getTraceAsString()
-            ]);
-
-            return [
-                'success' => false,
-                'message' => 'Error reading CSV file: ' . $e->getMessage(),
-                'error_code' => 'CSV_PARSE_ERROR'
-            ];
-        }
+        return $this->readSpreadsheetFile($filePath, 20000);
     }
 
     /**
@@ -446,7 +354,7 @@ class AssetItemsCsvImportService
     /**
      * Transform CSV data to database format
      */
-    private function transformCsvData(array $csvData, int $tenantId, int $jobId = null): array
+    public function transformCsvData(array $csvData, int $tenantId, int $jobId = null): array
     {
         $transformedData = [];
         $errors = [];
@@ -712,9 +620,29 @@ class AssetItemsCsvImportService
     /**
      * Call PostgreSQL bulk insert function
      */
-    private function bulkInsertAssetItems(array $transformedData, int $userId, int $tenantId, int $jobId = null): array
+    public function bulkInsertAssetItems(array $transformedData, int $userId, int $tenantId, int $jobId = null): array
     {
         try {
+            // Log the bulk insert operation
+            Log::info('Calling bulk_insert_asset_items_with_relationships', [
+                'job_id' => $jobId,
+                'job_id_is_null' => is_null($jobId),
+                'user_id' => $userId,
+                'tenant_id' => $tenantId,
+                'data_count' => count($transformedData),
+                'current_connection' => DB::connection('tenant')->getDatabaseName()
+            ]);
+
+            // Check if job exists in tenant database
+            if ($jobId) {
+                $jobExists = DB::connection('tenant')->table('import_jobs')->where('id', $jobId)->exists();
+                Log::info('Job existence check in tenant database', [
+                    'job_id' => $jobId,
+                    'exists' => $jobExists,
+                    'database' => DB::connection('tenant')->getDatabaseName()
+                ]);
+            }
+
             // Prepare data for PostgreSQL function
             $itemsJson = json_encode($transformedData);
              
@@ -730,6 +658,12 @@ class AssetItemsCsvImportService
                     $this->batchSize   // _batch_size
                 ]
             );
+
+            Log::info('PostgreSQL function completed', [
+                'job_id' => $jobId,
+                'status' => $result->status ?? 'unknown',
+                'result' => $result
+            ]);
 
             if ($result->status === 'SUCCESS') {
                 // Update job progress
@@ -767,6 +701,7 @@ class AssetItemsCsvImportService
 
         } catch (Exception $e) {
             Log::error('Bulk Insert Function Error: ' . $e->getMessage(), [
+                'job_id' => $jobId,
                 'tenant_id' => $tenantId,
                 'user_id' => $userId,
                 'data_count' => count($transformedData),

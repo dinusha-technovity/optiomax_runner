@@ -1,0 +1,31 @@
+name,asset_category_name,description,is_active
+"Laptops","Computers","Portable computers including notebooks and ultrabooks",1
+"Desktops","Computers","Desktop computers and workstations",1
+"Servers","IT Infrastructure","Server hardware for data centers",1
+"Switches","Network Equipment","Network switches and routing equipment",1
+"Routers","Network Equipment","Network routers and gateways",1
+"Monitors","Computers","Display monitors and screens",1
+"Printers","Office Equipment","Printing devices and equipment",1
+"Scanners","Office Equipment","Document scanning equipment",1
+"Projectors","Office Equipment","Video projectors for presentations",1
+"Chairs","Furniture","Office chairs and seating",1
+"","Computers","Missing name - should fail",1
+"Tablets","","Missing category - should fail",1
+"Smartphones","Mobile Devices","Mobile phones and smartphones",1
+"Invalid Active Status","Computers","Active status not 0 or 1",5
+"Keyboards","NonExistentCategory","Category doesn't exist - should fail or auto-create",1
+"Mice","Computers","Computer mice and pointing devices",1
+"Headsets","Computers","Audio headsets and headphones",1
+"Webcams","Computers","Web cameras for video conferencing",1
+"UPS Systems","IT Infrastructure","Uninterruptible power supply systems",1
+"Cables","IT Infrastructure","Various cables and connectors",1
+"Duplicate Name","Computers","This will be duplicate",1
+"Duplicate Name","Office Equipment","Duplicate name - should fail",1
+"Access Points","Network Equipment","Wireless access points",1
+"Firewalls","Network Equipment","Network security firewalls",1
+"Load Balancers","Network Equipment","Network load balancing equipment",1
+"Storage Arrays","IT Infrastructure","Data storage arrays and SAN",1
+"Rack Cabinets","IT Infrastructure","Server rack cabinets",1
+"Cooling Systems","IT Infrastructure","Data center cooling equipment",1
+"Whiteboards","Office Equipment","Whiteboards and presentation boards",1
+"Shredders","Office Equipment","Document shredding machines",1

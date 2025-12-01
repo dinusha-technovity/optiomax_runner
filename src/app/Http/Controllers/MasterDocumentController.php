@@ -24,7 +24,7 @@ use Illuminate\Support\Facades\Queue;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Config;
-
+ 
 class MasterDocumentController extends Controller
 {
     protected $MasterDocumentService;
@@ -256,7 +256,11 @@ class MasterDocumentController extends Controller
     //         ], 500);
     //     }
     // }
-    public function processAssetItemsCsv(Request $request)
+
+    /**
+     * Process data import based on job_id
+     */
+    public function processDataImport(Request $request)
     {
         try {
             // Validate request
@@ -324,30 +328,10 @@ class MasterDocumentController extends Controller
             if (!$job) {
                 return response()->json([
                     'success' => false,
-                    'message' => 'Failed to create import job record',
-                    'error_code' => 'JOB_CREATION_ERROR'
-                ], 500);
+                    'message' => 'Import job not found with ID: ' . $jobId,
+                    'error_code' => 'JOB_NOT_FOUND'
+                ], 404);
             }
-
-            // Validate file exists in MinIO
-            // if (!Storage::disk('s3')->exists($job->file_path)) {
-            //     return response()->json([
-            //         'success' => false,
-            //         'message' => 'CSV file not found in storage',
-            //         'error_code' => 'FILE_NOT_FOUND'
-            //     ], 404);
-            // }
-            // dd($job);
-            // // Validate file type (should be CSV)
-            // $mimeType = Storage::disk('s3')->mimeType($job->file_path);
-            // $allowedMimeTypes = ['text/csv', 'application/csv', 'text/plain'];
-            
-            // if (!in_array($mimeType, $allowedMimeTypes)) {
-            //     return response()->json([
-            //         'success' => false,
-            //         'message' => 'Invalid file type. Only CSV files are allowed for processing.'
-            //     ], 422);
-            // }
 
             // Analyze file for chunking strategy
             $chunkingService = app(CsvChunkingService::class);
@@ -1381,7 +1365,7 @@ class MasterDocumentController extends Controller
         ]);
 
         // Chunk the data
-        $chunkResult = $chunkingService->chunkCsvData($filePath, $importType . '_csv', $tenantId);
+        $chunkResult = $chunkingService->chunkCsvData($filePath, $importType, $tenantId);
         
         if (!$chunkResult['success']) {
             DB::connection('tenant')->table('import_jobs')->where('id', $jobId)->update([
@@ -1412,7 +1396,7 @@ class MasterDocumentController extends Controller
             $chunkData = Cache::get($chunkInfo['cache_key']);
             
             ProcessCsvImportJob::dispatch(
-                $importType . '_csv',
+                $importType,
                 $filePath,
                 $tenantId,
                 $userId,
@@ -1446,7 +1430,7 @@ class MasterDocumentController extends Controller
     ): void {
         // Dispatch single job for small files with tenant information
         ProcessCsvImportJob::dispatch(
-            $importType . '_csv',
+            $importType,
             $filePath,
             $tenantId,
             $userId,
