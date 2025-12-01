@@ -24,7 +24,7 @@ use Illuminate\Support\Facades\Queue;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Config;
-
+ 
 class MasterDocumentController extends Controller
 {
     protected $MasterDocumentService;
