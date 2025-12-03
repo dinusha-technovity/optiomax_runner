@@ -20,7 +20,7 @@ return new class extends Migration
             $table->timestamps();
 
             // $table->unique(['name', 'tenant_id']); // Ensure role name uniqueness per tenant
-        });
+        }); 
     }
 
     /**

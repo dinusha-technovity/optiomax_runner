@@ -64,5 +64,6 @@ class TenantDBSeeder extends Seeder
         $this->call(CustomerTypeSeeder::class);
         $this->call(TaxMasterSeeder::class);
         $this->call(WorkflowsSeeder::class);
+        $this->call(Tenant_RoleWidgetSeeder::class);
     }
 }
