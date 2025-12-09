@@ -48,6 +48,7 @@ class DatabaseSeeder extends Seeder
         $this->call(PackageAddonsSeeder::class);
         $this->call(PackageDiscountsSeeder::class);
         $this->call(PackageFeaturesSeeder::class);
+        $this->call(AssigneeTypeSeeder::class);
 
     }
 }
