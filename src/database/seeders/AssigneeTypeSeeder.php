@@ -9,7 +9,7 @@ class AssigneeTypeSeeder extends Seeder
 {
     public function run(): void
     {
-        DB::table('assignee_types')->truncate();
+        // DB::table('assignee_types')->truncate();
         DB::table('assignee_types')->insert([
             [
                 'name' => 'Individual',
