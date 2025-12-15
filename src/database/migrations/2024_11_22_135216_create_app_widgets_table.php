@@ -10,7 +10,7 @@ return new class extends Migration
      * Run the migrations.
      */
     public function up(): void
-    { 
+    {  
         Schema::create('app_widgets', function (Blueprint $table) {
             $table->id();
             $table->string('image_path');

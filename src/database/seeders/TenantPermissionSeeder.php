@@ -9,17 +9,17 @@ use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 
 class TenantPermissionSeeder extends Seeder
-{
+{ 
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
         $currentTime = Carbon::now();
-        DB::table('permissions')->truncate();
         $permission = [
             // 1
             [
+                'id' => 1,
                 'name' => 'User Management',
                 'description' => 'Manage users, roles and permissions',
                 'parent_id' => null,
@@ -29,11 +29,13 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => true,
                 'menu_order' => 1,
                 'isactive' => true,
+                'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
             ],
             // 2
             [
+                'id' => 2,
                 'name' => 'User Roles',
                 'description' => 'Manage user roles and their permissions',
                 'parent_id' => 1,
@@ -43,11 +45,13 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => true,
                 'menu_order' => 1,
                 'isactive' => true,
+                'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
             ],
             // 3
             [
+                'id' => 3,
                 'name' => 'Create Role',
                 'description' => 'Create new user roles',
                 'parent_id' => 2,
@@ -57,11 +61,13 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 1,
                 'isactive' => true,
+                'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
             ],
             // 4
             [
+                'id' => 4,
                 'name' => 'Edit Role',
                 'description' => 'Edit existing user roles',
                 'parent_id' => 2,
@@ -71,11 +77,13 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 2,
                 'isactive' => true,
+                'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
             ],
             // 5
             [
+                'id' => 5,
                 'name' => 'Delete Role',
                 'description' => 'Delete user roles',
                 'parent_id' => 2,
@@ -85,11 +93,13 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 3,
                 'isactive' => true,
+                'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
             ],
             // 6
             [
+                'id' => 6,
                 'name' => 'Give Permissions to Role',
                 'description' => 'Assign permissions to roles',
                 'parent_id' => 2,
@@ -99,11 +109,13 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 4,
                 'isactive' => true,
+                'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
             ],
             // 7
             [
+                'id' => 7,
                 'name' => 'User Accounts',
                 'description' => 'Manage user accounts',
                 'parent_id' => 1,
@@ -113,11 +125,13 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => true,
                 'menu_order' => 2,
                 'isactive' => true,
+                'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
             ],
             // 8
             [
+                'id' => 8,
                 'name' => 'Create User',
                 'description' => 'Create new user accounts',
                 'parent_id' => 7,
@@ -127,11 +141,13 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 1,
                 'isactive' => true,
+                'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
             ],
             // 9
             [
+                'id' => 9,
                 'name' => 'Edit User',
                 'description' => 'Edit user account details',
                 'parent_id' => 7,
@@ -141,11 +157,13 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 2,
                 'isactive' => true,
+                'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
             ],
             // 10
             [
+                'id' => 10,
                 'name' => 'Delete User',
                 'description' => 'Delete user accounts',
                 'parent_id' => 7,
@@ -155,11 +173,13 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 3,
                 'isactive' => true,
+                'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
             ],
             // 11
             [
+                'id' => 11,
                 'name' => 'User Status Change',
                 'description' => 'Activate or deactivate users',
                 'parent_id' => 7,
@@ -169,11 +189,13 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 4,
                 'isactive' => true,
+                'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
             ],
             // 12
             [
+                'id' => 12,
                 'name' => 'User Password Reset',
                 'description' => 'Reset user passwords',
                 'parent_id' => 7,
@@ -183,11 +205,13 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 5,
                 'isactive' => true,
+                'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
             ],
             // 13
             [
+                'id' => 13,
                 'name' => 'Master Configuration',
                 'description' => 'Configure system masters',
                 'parent_id' => null,
@@ -197,11 +221,13 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => true,
                 'menu_order' => 2,
                 'isactive' => true,
+                'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
             ],
             // 14
             [
+                'id' => 14,
                 'name' => 'Manage Suppliers',
                 'description' => 'Manage supplier details',
                 'parent_id' => 13,
@@ -211,11 +237,13 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => true,
                 'menu_order' => 1,
                 'isactive' => true,
+                'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
             ],
             // 15
             [
+                'id' => 15,
                 'name' => 'Register New Supplier',
                 'description' => 'Register new suppliers',
                 'parent_id' => 14,
@@ -225,11 +253,13 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 1,
                 'isactive' => true,
+                'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
             ],
             // 16
             [
+                'id' => 16,
                 'name' => 'Edit Supplier Details',
                 'description' => 'Edit supplier details',
                 'parent_id' => 14,
@@ -239,11 +269,13 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 2,
                 'isactive' => true,
+                'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
             ],
             // 17
             [
+                'id' => 17,
                 'name' => 'Delete Supplier',
                 'description' => 'Delete suppliers',
                 'parent_id' => 14,
@@ -253,11 +285,13 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 3,
                 'isactive' => true,
+                'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
             ],
             // 18
             [
+                'id' => 18,
                 'name' => 'Supplier Invitation Send',
                 'description' => 'Send invitations to suppliers',
                 'parent_id' => 14,
@@ -267,11 +301,13 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 4,
                 'isactive' => true,
+                'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
             ],
             // 19
             [
+                'id' => 19,
                 'name' => 'Asset Categories',
                 'description' => 'Manage asset categories',
                 'parent_id' => 126,
@@ -281,11 +317,13 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => true,
                 'menu_order' => 1,
                 'isactive' => true,
+                'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
             ],
             // 20
             [
+                'id' => 20,
                 'name' => 'Create Asset Categories',
                 'description' => 'Create new asset category(ies)',
                 'parent_id' => 19,
@@ -295,11 +333,13 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 2,
                 'isactive' => true,
+                'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
             ],
             // 21
             [
+                'id' => 21,
                 'name' => 'Edit Asset Categories',
                 'description' => 'Edit asset category details',
                 'parent_id' => 19,
@@ -309,11 +349,13 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 3,
                 'isactive' => true,
+                'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
             ],
             // 22
             [
+                'id' => 22,
                 'name' => 'Delete Asset Categories',
                 'description' => 'Delete asset categories',
                 'parent_id' => 19,
@@ -323,11 +365,13 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 4,
                 'isactive' => true,
+                'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
             ],
             // 23
             [
+                'id' => 23,
                 'name' => 'Update Reading Parameters',
                 'description' => 'Update reading parameters',
                 'parent_id' => 19,
@@ -337,11 +381,13 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 5,
                 'isactive' => true,
+                'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
             ],
             // 24
             [
+                'id' => 24,
                 'name' => 'Asset Sub Categories',
                 'description' => 'Manage asset sub categories',
                 'parent_id' => 126,
@@ -351,11 +397,13 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => true,
                 'menu_order' => 2,
                 'isactive' => true,
+                'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
             ],
             // 25
             [
+                'id' => 25,
                 'name' => 'Create Asset Sub Categories',
                 'description' => 'Create new asset sub categories',
                 'parent_id' => 24,
@@ -365,11 +413,13 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 1,
                 'isactive' => true,
+                'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
             ],
             // 26
             [
+                'id' => 26,
                 'name' => 'Edit Asset Sub Categories',
                 'description' => 'Edit asset sub category details',
                 'parent_id' => 24,
@@ -379,11 +429,13 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 2,
                 'isactive' => true,
+                'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
             ],
             // 27
             [
+                'id' => 27,
                 'name' => 'Delete Asset Sub Categories',
                 'description' => 'Delete asset sub categories',
                 'parent_id' => 24,
@@ -393,11 +445,13 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 3,
                 'isactive' => true,
+                'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
             ],
             // 28
             [
+                'id' => 28,
                 'name' => 'Update Sub Categories Reading Parameters',
                 'description' => 'Update sub category reading parameters',
                 'parent_id' => 24,
@@ -407,11 +461,13 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 4,
                 'isactive' => true,
+                'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
             ],
             // 29
             [
+                'id' => 29,
                 'name' => 'Build Organization',
                 'description' => 'Build organization structure',
                 'parent_id' => 13,
@@ -421,11 +477,13 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => true,
                 'menu_order' => 4,
                 'isactive' => true,
+                'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
             ],
             // 30
             [
+                'id' => 30,
                 'name' => 'Create Organization Node',
                 'description' => 'Create organization nodes',
                 'parent_id' => 29,
@@ -435,11 +493,13 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 1,
                 'isactive' => true,
+                'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
             ],
             // 31
             [
+                'id' => 31,
                 'name' => 'Edit Organization Node',
                 'description' => 'Edit organization node details',
                 'parent_id' => 30,
@@ -449,11 +509,13 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 2,
                 'isactive' => true,
+                'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
             ],
             // 32
             [
+                'id' => 32,
                 'name' => 'Delete Organization Node',
                 'description' => 'Delete organization nodes',
                 'parent_id' => 30,
@@ -463,11 +525,13 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 3,
                 'isactive' => true,
+                'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
             ],
             // 33
             [
+                'id' => 33,
                 'name' => 'Build Workflow',
                 'description' => 'Build workflow processes',
                 'parent_id' => 13,
@@ -477,11 +541,13 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => true,
                 'menu_order' => 5,
                 'isactive' => true,
+                'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
             ],
             // 34
             [
+                'id' => 34,
                 'name' => 'Create Workflow',
                 'description' => 'Create new workflows',
                 'parent_id' => 33,
@@ -491,11 +557,13 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 1,
                 'isactive' => true,
+                'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
             ],
             // 35
             [
+                'id' => 35,
                 'name' => 'Edit Workflow',
                 'description' => 'Edit workflow details',
                 'parent_id' => 33,
@@ -505,11 +573,13 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 2,
                 'isactive' => true,
+                'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
             ], 
             // 36
             [
+                'id' => 36,
                 'name' => 'Delete Workflow',
                 'description' => 'Delete workflows',
                 'parent_id' => 33,
@@ -519,11 +589,13 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 3,
                 'isactive' => true,
+                'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
             ], 
             // 37
             [
+                'id' => 37,
                 'name' => 'Config Workflow',
                 'description' => 'Configure workflow settings',
                 'parent_id' => 33,
@@ -533,11 +605,13 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 4,
                 'isactive' => true,
+                'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
             ], 
             // 38
             [
+                'id' => 38,
                 'name' => 'Add Workflow Node',
                 'description' => 'Add nodes to workflows',
                 'parent_id' => 37,
@@ -547,11 +621,13 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 1,
                 'isactive' => true,
+                'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
             ], 
             // 39
             [
+                'id' => 39,
                 'name' => 'Edit Workflow Node',
                 'description' => 'Edit workflow node details',
                 'parent_id' => 37,
@@ -561,11 +637,13 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 2,
                 'isactive' => true,
+                'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
             ], 
             // 40
             [
+                'id' => 40,
                 'name' => 'Delete Workflow Node',
                 'description' => 'Delete workflow nodes',
                 'parent_id' => 37,
@@ -575,11 +653,13 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 3,
                 'isactive' => true,
+                'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
             ], 
             // 41
             [
+                'id' => 41,
                 'name' => 'Publish Workflow',
                 'description' => 'Publish workflows',
                 'parent_id' => 37,
@@ -589,11 +669,13 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 4,
                 'isactive' => true,
+                'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
             ], 
             // 42
             [
+                'id' => 42,
                 'name' => 'Item Master',
                 'description' => 'Manage item master records',
                 'parent_id' => 13,
@@ -603,11 +685,13 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => true,
                 'menu_order' => 6,
                 'isactive' => true,
+                'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
             ],
             // 43
             [
+                'id' => 43,
                 'name' => 'Add New Item',
                 'description' => 'Add new items to master',
                 'parent_id' => 42,
@@ -617,11 +701,13 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 1,
                 'isactive' => true,
+                'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
             ],
             // 44
             [
+                'id' => 44,
                 'name' => 'Edit Item Details',
                 'description' => 'Update item details',
                 'parent_id' => 42,
@@ -631,11 +717,13 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 2,
                 'isactive' => true,
+                'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
             ],
             // 45
             [
+                'id' => 45,
                 'name' => 'Delete Item',
                 'description' => 'Delete items from master',
                 'parent_id' => 42,
@@ -645,11 +733,13 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 3,
                 'isactive' => true,
+                'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
             ],
             // 46
             [
+                'id' => 46,
                 'name' => 'Procurement Staff',
                 'description' => 'Manage procurement staff',
                 'parent_id' => 13,
@@ -659,11 +749,13 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => true,
                 'menu_order' => 7,
                 'isactive' => true,
+                'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
             ],
             // 47
             [
+                'id' => 47,
                 'name' => 'Create Procurement Staff',
                 'description' => 'Create new procurement staff',
                 'parent_id' => 46,
@@ -673,11 +765,13 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 1,
                 'isactive' => true,
+                'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
             ],
             // 48
             [
+                'id' => 48,
                 'name' => 'Edit Procurement Staff',
                 'description' => 'Edit procurement staff details',
                 'parent_id' => 46,
@@ -687,11 +781,13 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 2,
                 'isactive' => true,
+                'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
             ],
             // 49
             [
+                'id' => 49,
                 'name' => 'Delete Procurement Staff',
                 'description' => 'Delete procurement staff',
                 'parent_id' => 46,
@@ -701,11 +797,13 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 3,
                 'isactive' => true,
+                'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
             ],
             // 50
             [
+                'id' => 50,
                 'name' => 'Asset Management',
                 'description' => 'Manage organizational assets',
                 'parent_id' => null,
@@ -715,11 +813,13 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => true,
                 'menu_order' => 3,
                 'isactive' => true,
+                'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
             ],
             // 51
             [
+                'id' => 51,
                 'name' => 'Asset Requisitions',
                 'description' => 'Manage asset requisitions',
                 'parent_id' => 50,
@@ -729,11 +829,13 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => true,
                 'menu_order' => 1,
                 'isactive' => true,
+                'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
             ],
             // 52
             [
+                'id' => 52,
                 'name' => 'Create Asset Requisitions',
                 'description' => 'Create new asset requisitions',
                 'parent_id' => 51,
@@ -743,11 +845,13 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 1,
                 'isactive' => true,
+                'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
             ],
             // 53
             [
+                'id' => 53,
                 'name' => 'Asset Groups',
                 'description' => 'Manage asset groups',
                 'parent_id' => 126,
@@ -757,11 +861,13 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => true,
                 'menu_order' => 3,
                 'isactive' => true,
+                'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
             ],
             // 54
             [
+                'id' => 54,
                 'name' => 'Create Asset Group',
                 'description' => 'Create new asset groups',
                 'parent_id' => 53,
@@ -771,11 +877,13 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 1,
                 'isactive' => true,
+                'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
             ],
             // 55
             [
+                'id' => 55,
                 'name' => 'View Asset Group Details',
                 'description' => 'View asset group information',
                 'parent_id' => 53,
@@ -785,11 +893,13 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 2,
                 'isactive' => true,
+                'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
             ],
             // 56
             [
+                'id' => 56,
                 'name' => 'Edit Asset Group Details',
                 'description' => 'Edit asset group information',
                 'parent_id' => 53,
@@ -799,11 +909,13 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 3,
                 'isactive' => true,
+                'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
             ],
             // 57
             [
+                'id' => 57,
                 'name' => 'Delete Asset Group',
                 'description' => 'Delete asset groups',
                 'parent_id' => 53,
@@ -813,11 +925,13 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 4,
                 'isactive' => true,
+                'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
             ],
             // 58
             [
+                'id' => 58,
                 'name' => 'Asset Group Description Tags',
                 'description' => 'Manage asset group description tags',
                 'parent_id' => 53,
@@ -827,11 +941,13 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 5,
                 'isactive' => true,
+                'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
             ],
             // 59
             [
+                'id' => 59,
                 'name' => 'Asset Group Reading Parameters',
                 'description' => 'Manage group reading parameters',
                 'parent_id' => 53,
@@ -841,11 +957,13 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 6,
                 'isactive' => true,
+                'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
             ],
             // 60
             [
+                'id' => 60,
                 'name' => 'Asset Group Maintainers Schedule',
                 'description' => 'Manage group maintenance schedules',
                 'parent_id' => 53,
@@ -855,11 +973,13 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 6,
                 'isactive' => true,
+                'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
             ],
             // 61
             [
+                'id' => 61,
                 'name' => 'Asset Group Manufacturer Recommendations Maintainers Schedule',
                 'description' => 'View manufacturer recommended schedules',
                 'parent_id' => 60,
@@ -869,11 +989,13 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 1,
                 'isactive' => true,
+                'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
             ],
             // 62
             [
+                'id' => 62,
                 'name' => 'Add Asset Group Manufacturer Recommendations Schedule',
                 'description' => 'Add manufacturer schedules',
                 'parent_id' => 61,
@@ -883,11 +1005,13 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 1,
                 'isactive' => true,
+                'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
             ],
             // 63
             [
+                'id' => 63,
                 'name' => 'Edit Asset Group Manufacturer Recommendations Schedule',
                 'description' => 'Edit manufacturer schedules',
                 'parent_id' => 61,
@@ -897,11 +1021,13 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 2,
                 'isactive' => true,
+                'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
             ],
             // 64
             [
+                'id' => 64,
                 'name' => 'Delete Asset Group Manufacturer Recommendations Schedule',
                 'description' => 'Delete manufacturer schedules',
                 'parent_id' => 61,
@@ -911,11 +1037,13 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 3,
                 'isactive' => true,
+                'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
             ],
             // 65
             [
+                'id' => 65,
                 'name' => 'Asset Group Usage Base Maintainers Schedule',
                 'description' => 'View usage-based schedules',
                 'parent_id' => 60,
@@ -925,11 +1053,13 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 2,
                 'isactive' => true,
+                'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
             ],
             // 66
             [
+                'id' => 66,
                 'name' => 'Add Asset Group Usage Base Schedule',
                 'description' => 'Add usage-based schedules',
                 'parent_id' => 65,
@@ -939,11 +1069,13 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 1,
                 'isactive' => true,
+                'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
             ],
             // 67
             [
+                'id' => 67,
                 'name' => 'Edit Asset Group Usage Base Schedule',
                 'description' => 'Edit usage-based schedules',
                 'parent_id' => 65,
@@ -953,11 +1085,13 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 2,
                 'isactive' => true,
+                'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
             ],
             // 68
             [
+                'id' => 68,
                 'name' => 'Delete Asset Group Usage Based Schedule',
                 'description' => 'Delete usage-based schedules',
                 'parent_id' => 65,
@@ -967,11 +1101,13 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 3,
                 'isactive' => true,
+                'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
             ],
             // 69
             [
+                'id' => 69,
                 'name' => 'Asset Group Critically Based Maintainers Schedule',
                 'description' => 'View criticality-based schedules',
                 'parent_id' => 60,
@@ -981,11 +1117,13 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 9,
                 'isactive' => true,
+                'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
             ],
             // 70
             [
+                'id' => 70,
                 'name' => 'Add Asset Group Critically Based Schedule',
                 'description' => 'Add criticality-based schedules',
                 'parent_id' => 69,
@@ -995,11 +1133,13 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 1,
                 'isactive' => true,
+                'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
             ],
             // 71
             [
+                'id' => 71,
                 'name' => 'Edit Asset Group Critically Based Schedule',
                 'description' => 'Edit criticality-based schedules',
                 'parent_id' => 69,
@@ -1009,11 +1149,13 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 2,
                 'isactive' => true,
+                'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
             ],
             // 72
             [
+                'id' => 72,
                 'name' => 'Delete Asset Group Critically Based Schedule',
                 'description' => 'Delete criticality-based schedules',
                 'parent_id' => 69,
@@ -1023,11 +1165,13 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 3,
                 'isactive' => true,
+                'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
             ],
             // 73
             [
+                'id' => 73,
                 'name' => 'Asset Group Maintenance Task Schedule',
                 'description' => 'View maintenance task schedules',
                 'parent_id' => 60,
@@ -1037,11 +1181,13 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 10,
                 'isactive' => true,
+                'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
             ],
             // 74
             [
+                'id' => 74,
                 'name' => 'Add Asset Group Maintenance Task Schedule',
                 'description' => 'Add maintenance task schedules',
                 'parent_id' => 73,
@@ -1051,11 +1197,13 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 1,
                 'isactive' => true,
+                'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
             ],
             // 75
             [
+                'id' => 75,
                 'name' => 'Edit Asset Group Maintenance Task Schedule',
                 'description' => 'Edit maintenance task schedules',
                 'parent_id' => 73,
@@ -1065,11 +1213,13 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 2,
                 'isactive' => true,
+                'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
             ],
             // 76
             [
+                'id' => 76,
                 'name' => 'Delete Asset Group Maintenance Task Schedule',
                 'description' => 'Delete maintenance task schedules',
                 'parent_id' => 73,
@@ -1079,11 +1229,13 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 3,
                 'isactive' => true,
+                'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
             ],
             // 77
             [
+                'id' => 77,
                 'name' => 'Asset Master',
                 'description' => 'Manage asset master records',
                 'parent_id' => 126,
@@ -1093,11 +1245,13 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => true,
                 'menu_order' => 4,
                 'isactive' => true,
+                'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
             ],
             // 78
             [
+                'id' => 78,
                 'name' => 'Register Asset Master',
                 'description' => 'Register new assets',
                 'parent_id' => 77,
@@ -1107,11 +1261,13 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 1,
                 'isactive' => true,
+                'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
             ],
             // 79
             [
+                'id' => 79,
                 'name' => 'Edit Asset Master',
                 'description' => 'Edit asset master details',
                 'parent_id' => 77,
@@ -1121,11 +1277,13 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 2,
                 'isactive' => true,
+                'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
             ],
             // 80
             [
+                'id' => 80,
                 'name' => 'Delete Asset Master',
                 'description' => 'Delete asset masters',
                 'parent_id' => 77,
@@ -1135,11 +1293,13 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 2,
                 'isactive' => true,
+                'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
             ],
             // 81
             [
+                'id' => 81,
                 'name' => 'Asset Master Maintainers Schedule',
                 'description' => 'Manage asset maintenance schedules',
                 'parent_id' => 77,
@@ -1149,11 +1309,13 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 6,
                 'isactive' => true,
+                'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
             ],
             // 82
             [
+                'id' => 82,
                 'name' => 'Asset Master Manufacturer Recommendations Maintainers Schedule',
                 'description' => 'View manufacturer schedules',
                 'parent_id' => 81,
@@ -1163,11 +1325,13 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 1,
                 'isactive' => true,
+                'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
             ],
             // 83
             [
+                'id' => 83,
                 'name' => 'Add Asset Master Manufacturer Recommendations Schedule',
                 'description' => 'Add manufacturer schedules',
                 'parent_id' => 82,
@@ -1177,11 +1341,13 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 1,
                 'isactive' => true,
+                'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
             ],
             // 84
             [
+                'id' => 84,
                 'name' => 'Edit Asset Master Manufacturer Recommendations Schedule',
                 'description' => 'Edit manufacturer schedules',
                 'parent_id' => 82,
@@ -1191,11 +1357,13 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 2,
                 'isactive' => true,
+                'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
             ],
             // 85
             [
+                'id' => 85,
                 'name' => 'Delete Asset Master Manufacturer Recommendations Schedule',
                 'description' => 'Delete manufacturer schedules',
                 'parent_id' => 82,
@@ -1205,11 +1373,13 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 3,
                 'isactive' => true,
+                'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
             ],
             // 86
             [
+                'id' => 86,
                 'name' => 'Asset Master Usage Base Maintainers Schedule',
                 'description' => 'View usage-based schedules',
                 'parent_id' => 77,
@@ -1219,11 +1389,13 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 2,
                 'isactive' => true,
+                'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
             ],
             // 87
             [
+                'id' => 87,
                 'name' => 'Add Asset Master Usage Base Schedule',
                 'description' => 'Add usage-based schedules',
                 'parent_id' => 86,
@@ -1233,11 +1405,13 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 1,
                 'isactive' => true,
+                'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
             ],
             // 88
             [
+                'id' => 88,
                 'name' => 'Edit Asset Master Usage Base Schedule',
                 'description' => 'Edit usage-based schedules',
                 'parent_id' => 86,
@@ -1247,11 +1421,13 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 2,
                 'isactive' => true,
+                'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
             ],
             // 89
             [
+                'id' => 89,
                 'name' => 'Delete Asset Master Usage Based Schedule',
                 'description' => 'Delete usage-based schedules',
                 'parent_id' => 86,
@@ -1261,11 +1437,13 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 3,
                 'isactive' => true,
+                'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
             ],
             // 90
             [
+                'id' => 90,
                 'name' => 'Asset Master Critically Based Maintainers Schedule',
                 'description' => 'View criticality-based schedules',
                 'parent_id' => 77,
@@ -1275,11 +1453,13 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 9,
                 'isactive' => true,
+                'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
             ],
             // 91
             [
+                'id' => 91,
                 'name' => 'Add Asset Master Critically Based Schedule',
                 'description' => 'Add criticality-based schedules',
                 'parent_id' => 90,
@@ -1289,11 +1469,13 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 1,
                 'isactive' => true,
+                'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
             ],
             // 92
             [
+                'id' => 92,
                 'name' => 'Edit Asset Master Critically Based Schedule',
                 'description' => 'Edit criticality-based schedules',
                 'parent_id' => 90,
@@ -1303,11 +1485,13 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 2,
                 'isactive' => true,
+                'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
             ],
             // 93
             [
+                'id' => 93,
                 'name' => 'Delete Asset Master Critically Based Schedule',
                 'description' => 'Delete criticality-based schedules',
                 'parent_id' => 90,
@@ -1317,11 +1501,13 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 3,
                 'isactive' => true,
+                'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
             ],
             // 94
             [
+                'id' => 94,
                 'name' => 'Asset Master Maintenance Task Schedule',
                 'description' => 'View maintenance task schedules',
                 'parent_id' => 77,
@@ -1331,11 +1517,13 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 10,
                 'isactive' => true,
+                'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
             ],
             // 95
             [
+                'id' => 95,
                 'name' => 'Add Asset Master Maintenance Task Schedule',
                 'description' => 'Add maintenance task schedules',
                 'parent_id' => 94,
@@ -1345,11 +1533,13 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 1,
                 'isactive' => true,
+                'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
             ],
             // 96
             [
+                'id' => 96,
                 'name' => 'Edit Asset Master Maintenance Task Schedule',
                 'description' => 'Edit maintenance task schedules',
                 'parent_id' => 94,
@@ -1359,11 +1549,13 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 2,
                 'isactive' => true,
+                'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
             ],
             // 97
             [
+                'id' => 97,
                 'name' => 'Delete Asset Master Maintenance Task Schedule',
                 'description' => 'Delete maintenance task schedules',
                 'parent_id' => 94,
@@ -1373,11 +1565,13 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 3,
                 'isactive' => true,
+                'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
             ],
             // 98
             [
+                'id' => 98,
                 'name' => 'My Assets',
                 'description' => 'View and manage assigned assets',
                 'parent_id' => 50,
@@ -1387,11 +1581,13 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => true,
                 'menu_order' => 4,
                 'isactive' => true,
+                'is_enable_for_mobile_app' => true,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
             ],
             // 99
             [
+                'id' => 99,
                 'name' => 'View My Assets Details',
                 'description' => 'View detailed asset information',
                 'parent_id' => 98,
@@ -1401,11 +1597,13 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 1,
                 'isactive' => true,
+                'is_enable_for_mobile_app' => true,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
             ],
             // 100
             [
+                'id' => 100,
                 'name' => 'Add My Assets Readings',
                 'description' => 'Add asset readings',
                 'parent_id' => 98,
@@ -1415,11 +1613,13 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 1,
                 'isactive' => true,
+                'is_enable_for_mobile_app' => true,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
             ],
             // 101
             [
+                'id' => 101,
                 'name' => 'Work Orders',
                 'description' => 'Manage work orders',
                 'parent_id' => 50,
@@ -1429,11 +1629,13 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => true,
                 'menu_order' => 5,
                 'isactive' => true,
+                'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
             ],
             // 102
             [
+                'id' => 102,
                 'name' => 'Add New Work Order',
                 'description' => 'Create new work orders',
                 'parent_id' => 101,
@@ -1443,11 +1645,13 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 1,
                 'isactive' => true,
+                'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
             ],
             // 103
             [
+                'id' => 103,
                 'name' => 'Edit Work Order',
                 'description' => 'Edit work order details',
                 'parent_id' => 101,
@@ -1457,11 +1661,13 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 2,
                 'isactive' => true,
+                'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
             ],
             // 104
             [
+                'id' => 104,
                 'name' => 'Delete Work Order',
                 'description' => 'Delete work orders',
                 'parent_id' => 101,
@@ -1471,11 +1677,13 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 3,
                 'isactive' => true,
+                'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
             ],
             // 105
             [
+                'id' => 105,
                 'name' => 'Update Work Order Status',
                 'description' => 'Update work order status',
                 'parent_id' => 101,
@@ -1485,11 +1693,13 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 4,
                 'isactive' => true,
+                'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
             ],
             // 106
             [
+                'id' => 106,
                 'name' => 'Procurement Management',
                 'description' => 'Manage procurement processes',
                 'parent_id' => null,
@@ -1499,11 +1709,13 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => true,
                 'menu_order' => 4,
                 'isactive' => true,
+                'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
             ],
             // 107
             [
+                'id' => 107,
                 'name' => 'Procurement Submissions',
                 'description' => 'Manage procurement submissions',
                 'parent_id' => 106,
@@ -1513,11 +1725,13 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => true,
                 'menu_order' => 1,
                 'isactive' => true,
+                'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
             ],
             // 108
             [
+                'id' => 108,
                 'name' => 'Procurement Submission',
                 'description' => 'Submit procurement requests',
                 'parent_id' => 107,
@@ -1527,11 +1741,13 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 1,
                 'isactive' => true,
+                'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
             ],
             // 109
             [
+                'id' => 109,
                 'name' => 'View Received Quotation',
                 'description' => 'View supplier quotations',
                 'parent_id' => 107,
@@ -1541,11 +1757,13 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 2,
                 'isactive' => true,
+                'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
             ],
             // 110
             [
+                'id' => 110,
                 'name' => 'Proceed Procurement',
                 'description' => 'Process procurement',
                 'parent_id' => 107,
@@ -1555,11 +1773,13 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 3,
                 'isactive' => true,
+                'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
             ],
             // 111
             [
+                'id' => 111,
                 'name' => 'Supplier Quotations',
                 'description' => 'Manage supplier quotations',
                 'parent_id' => 106,
@@ -1569,11 +1789,13 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => true,
                 'menu_order' => 2,
                 'isactive' => true,
+                'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
             ],
             // 112
             [
+                'id' => 112,
                 'name' => 'Add Supplier Quotation',
                 'description' => 'Add new supplier quotations',
                 'parent_id' => 111,
@@ -1583,11 +1805,13 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 1,
                 'isactive' => true,
+                'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
             ],
             // 113
             [
+                'id' => 113,
                 'name' => 'View Added Supplier Quotation',
                 'description' => 'View added quotations',
                 'parent_id' => 111,
@@ -1597,11 +1821,13 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 1,
                 'isactive' => true,
+                'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
             ],
             // 114
             [
+                'id' => 114,
                 'name' => 'View Supplier Quotation Details',
                 'description' => 'View quotation details',
                 'parent_id' => 113,
@@ -1611,11 +1837,13 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 1,
                 'isactive' => true,
+                'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
             ],
             // 115
             [
+                'id' => 115,
                 'name' => 'Edit Supplier Quotation',
                 'description' => 'Edit supplier quotations',
                 'parent_id' => 113,
@@ -1625,11 +1853,13 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 2,
                 'isactive' => true,
+                'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
             ],
             // 116
             [
+                'id' => 116,
                 'name' => 'Delete Supplier Quotation',
                 'description' => 'Delete supplier quotations',
                 'parent_id' => 113,
@@ -1639,11 +1869,13 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 3,
                 'isactive' => true,
+                'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
             ],
             // 117
             [
+                'id' => 117,
                 'name' => 'Supplier Quotation Adding Complete',
                 'description' => 'Complete quotation submission',
                 'parent_id' => 111,
@@ -1653,11 +1885,13 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 2,
                 'isactive' => true,
+                'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
             ],
             // 118
             [
+                'id' => 118,
                 'name' => 'Edit Selected Item Qty',
                 'description' => 'Edit item quantities',
                 'parent_id' => 108,
@@ -1667,11 +1901,13 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 1,
                 'isactive' => true,
+                'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
             ],
             // 119
             [
+                'id' => 119,
                 'name' => 'Edit Selected Item Budget',
                 'description' => 'Edit item budget',
                 'parent_id' => 108,
@@ -1681,11 +1917,13 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 2,
                 'isactive' => true,
+                'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
             ],
             // 120
             [
+                'id' => 120,
                 'name' => 'Incidents',
                 'description' => 'Manage asset incidents',
                 'parent_id' => 50,
@@ -1695,11 +1933,13 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => true,
                 'menu_order' => 6,
                 'isactive' => true,
+                'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
             ],
             // 121
             [
+                'id' => 121,
                 'name' => 'New Incident',
                 'description' => 'Create new incidents',
                 'parent_id' => 120,
@@ -1709,11 +1949,13 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 1,
                 'isactive' => true,
+                'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
             ],
             // 122
             [
+                'id' => 122,
                 'name' => 'View Incident',
                 'description' => 'View incident details',
                 'parent_id' => 120,
@@ -1723,11 +1965,13 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 2,
                 'isactive' => true,
+                'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
             ],
             // 123
             [
+                'id' => 123,
                 'name' => 'Edit Incident',
                 'description' => 'Edit incident information',
                 'parent_id' => 120,
@@ -1737,11 +1981,13 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 3,
                 'isactive' => true,
+                'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
             ],
             // 124
             [
+                'id' => 124,
                 'name' => 'Delete Incident',
                 'description' => 'Delete incidents',
                 'parent_id' => 120,
@@ -1751,11 +1997,13 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 4,
                 'isactive' => true,
+                'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
             ],
             // 125
             [
+                'id' => 125,
                 'name' => 'View Asset Categories',
                 'description' => 'View category details',
                 'parent_id' => 19,
@@ -1765,11 +2013,13 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 1,
                 'isactive' => true,
+                'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
             ],
             // 126
             [
+                'id' => 126,
                 'name' => 'Asset',
                 'description' => 'Asset configuration and management',
                 'parent_id' => null,
@@ -1779,11 +2029,13 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => true,
                 'menu_order' => 2,
                 'isactive' => true,
+                'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
             ],
              // 127
             [
+                'id' => 127,
                 'name' => 'Maintenance',
                 'description' => 'Maintenance management',
                 'parent_id' => null,
@@ -1793,11 +2045,13 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => true,
                 'menu_order' => 3,
                 'isactive' => true,
+                'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
             ],
             // 128
             [
+                'id' => 128,
                 'name' => 'Maintenance Team',
                 'description' => 'Manage maintenance teams',
                 'parent_id' => 127,
@@ -1807,11 +2061,13 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => true,
                 'menu_order' => 1,
                 'isactive' => true,
+                'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
             ],
             // 129
             [
+                'id' => 129,
                 'name' => 'Register Maintenance Team',
                 'description' => 'Register new maintenance teams',
                 'parent_id' => 128,
@@ -1821,11 +2077,13 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 1,
                 'isactive' => true,
+                'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
             ],
             // 130
             [
+                'id' => 130,
                 'name' => 'Edit Maintenance Team',
                 'description' => 'Edit team information',
                 'parent_id' => 128,
@@ -1835,11 +2093,13 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 2,
                 'isactive' => true,
+                'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
             ],
             // 131
             [
+                'id' => 131,
                 'name' => 'Delete Maintenance Team',
                 'description' => 'Delete maintenance teams',
                 'parent_id' => 128,
@@ -1849,11 +2109,13 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 3,
                 'isactive' => true,
+                'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
             ],
             // 132
             [
+                'id' => 132,
                 'name' => 'Purchasing',
                 'description' => 'Purchasing operations',
                 'parent_id' => null,
@@ -1863,11 +2125,13 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => true,
                 'menu_order' => 5,
                 'isactive' => true,
+                'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
             ],
             // 133
             [
+                'id' => 133,
                 'name' => 'Goods Received Note',
                 'description' => 'Manage goods received notes',
                 'parent_id' => 132,
@@ -1877,11 +2141,13 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => true,
                 'menu_order' => 1,
                 'isactive' => true,
+                'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
             ],
             // 134
             [
+                'id' => 134,
                 'name' => 'Create Goods Received Note',
                 'description' => 'Create new GRN',
                 'parent_id' => 133,
@@ -1891,11 +2157,13 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 1,
                 'isactive' => true,
+                'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
             ],
             // 135
             [
+                'id' => 135,
                 'name' => 'View Goods Received Note',
                 'description' => 'View GRN details',
                 'parent_id' => 133,
@@ -1905,11 +2173,13 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 2,
                 'isactive' => true,
+                'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
             ],
             // 136
             [
+                'id' => 136,
                 'name' => 'Cancel Goods Received Note',
                 'description' => 'Cancel goods received notes',
                 'parent_id' => 133,
@@ -1919,11 +2189,13 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 3,
                 'isactive' => true,
+                'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
             ],
             // 137
             [
+                'id' => 137,
                 'name' => 'Export Goods Received Note',
                 'description' => 'Export GRN data',
                 'parent_id' => 133,
@@ -1933,11 +2205,13 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 4,
                 'isactive' => true,
+                'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
             ],
             // 138
             [
+                'id' => 138,
                 'name' => 'System Configuration',
                 'description' => 'Configure system settings',
                 'parent_id' => null,
@@ -1947,11 +2221,13 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 6,
                 'isactive' => true,
+                'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
             ],
             // 139
             [
+                'id' => 139,
                 'name' => 'Asset Availability',
                 'description' => 'Manage asset availability',
                 'parent_id' => 50,
@@ -1961,11 +2237,13 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => true,
                 'menu_order' => 7,
                 'isactive' => true,
+                'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
             ],
             // 140
             [
+                'id' => 140,
                 'name' => 'Schedule Assets',
                 'description' => 'Schedule asset availability',
                 'parent_id' => 139,
@@ -1975,11 +2253,13 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 1,
                 'isactive' => true,
+                'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
             ],
             // 141
             [
+                'id' => 141,
                 'name' => 'Availability Schedule',
                 'description' => 'Manage availability schedules',
                 'parent_id' => 140,
@@ -1989,11 +2269,13 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 1,
                 'isactive' => true,
+                'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
             ],
             // 142
             [
+                'id' => 142,
                 'name' => 'Create Availability Schedule',
                 'description' => 'Create new availability schedule',
                 'parent_id' => 141,
@@ -2003,11 +2285,13 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 1,
                 'isactive' => true,
+                'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
             ],
             // 143
             [
+                'id' => 143,
                 'name' => 'Edit Availability Schedule',
                 'description' => 'Edit schedule details',
                 'parent_id' => 141,
@@ -2017,11 +2301,13 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 2,
                 'isactive' => true,
+                'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
             ],
             // 144
             [
+                'id' => 144,
                 'name' => 'Delete Availability Schedule',
                 'description' => 'Delete availability schedules',
                 'parent_id' => 141,
@@ -2031,11 +2317,13 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 3,
                 'isactive' => true,
+                'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
             ],
             // 145
             [
+                'id' => 145,
                 'name' => 'View Availability Schedule',
                 'description' => 'View schedule details',
                 'parent_id' => 141,
@@ -2045,11 +2333,13 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 4,
                 'isactive' => true,
+                'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
             ],
             // 146
             [
+                'id' => 146,
                 'name' => 'Publish/Unpublish Availability Schedule',
                 'description' => 'Publish or unpublish schedules',
                 'parent_id' => 141,
@@ -2059,11 +2349,13 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 5,
                 'isactive' => true,
+                'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
             ],
             // 147
             [
+                'id' => 147,
                 'name' => 'Blockout Schedule',
                 'description' => 'Manage blockout schedules',
                 'parent_id' => 140,
@@ -2073,11 +2365,13 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 2,
                 'isactive' => true,
+                'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
             ],
             // 148
             [
+                'id' => 148,
                 'name' => 'Create Blockout Schedule',
                 'description' => 'Create new blockout schedule(s)',
                 'parent_id' => 147,
@@ -2087,11 +2381,13 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 1,
                 'isactive' => true,
+                'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
             ],
             // 149
             [
+                'id' => 149,
                 'name' => 'Edit Blockout Schedule',
                 'description' => 'Edit blockout schedule details',
                 'parent_id' => 147,
@@ -2101,11 +2397,13 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 2,
                 'isactive' => true,
+                'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
             ],
             // 150
             [
+                'id' => 150,
                 'name' => 'Delete Blockout Schedule',
                 'description' => 'Delete blockout schedules',
                 'parent_id' => 147,
@@ -2115,11 +2413,13 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 3,
                 'isactive' => true,
+                'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
             ],
             // 151
             [
+                'id' => 151,
                 'name' => 'View Blockout Schedule',
                 'description' => 'View blockout schedule details',
                 'parent_id' => 147,
@@ -2129,11 +2429,13 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 4,
                 'isactive' => true,
+                'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
             ],
             // 152
             [
+                'id' => 152,
                 'name' => 'Publish/Unpublish Blockout Schedule',
                 'description' => 'Publish or unpublish blockout schedules',
                 'parent_id' => 147,
@@ -2143,11 +2445,13 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 5,
                 'isactive' => true,
+                'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
             ],
             // 153
             [
+                'id' => 153,
                 'name' => 'View Assets Details',
                 'description' => 'Access asset details',
                 'parent_id' => 139,
@@ -2157,11 +2461,13 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 2,
                 'isactive' => true,
+                'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
             ],
             // 154
             [
+                'id' => 154,
                 'name' => 'My Bookings',
                 'description' => 'View my asset bookings',
                 'parent_id' => 50,
@@ -2171,11 +2477,13 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => true,
                 'menu_order' => 8,
                 'isactive' => true,
+                'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
             ],
             // 155
             [
+                'id' => 155,
                 'name' => 'Assets Availability and Booking',
                 'description' => 'Manage asset availability and bookings',
                 'parent_id' => null,
@@ -2185,11 +2493,13 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => true,
                 'menu_order' => 4,
                 'isactive' => true,
+                'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
             ],
             // 156
             [
+                'id' => 156,
                 'name' => 'Assets Availability terms type',
                 'description' => 'Manage availability terms types',
                 'parent_id' => 155,
@@ -2199,11 +2509,13 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => true,
                 'menu_order' => 1,
                 'isactive' => true,
+                'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
             ],
             // 157
             [
+                'id' => 157,
                 'name' => 'Create Terms Type',
                 'description' => 'Create new terms type(s)',
                 'parent_id' => 156,
@@ -2213,11 +2525,13 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 1,
                 'isactive' => true,
+                'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
             ],
             // 158
             [
+                'id' => 158,
                 'name' => 'Delete Terms Type',
                 'description' => 'Delete terms types',
                 'parent_id' => 156,
@@ -2227,11 +2541,13 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 2,
                 'isactive' => true,
+                'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
             ],
             // 159
             [
+                'id' => 159,
                 'name' => 'View Terms Type',
                 'description' => 'View terms type details',
                 'parent_id' => 156,
@@ -2241,11 +2557,13 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 3,
                 'isactive' => true,
+                'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
             ],
             // 160
             [
+                'id' => 160,
                 'name' => 'Edit Terms Type',
                 'description' => 'Edit terms type details',
                 'parent_id' => 156,
@@ -2255,11 +2573,13 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 4,
                 'isactive' => true,
+                'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
             ],
             // 161
             [
+                'id' => 161,
                 'name' => 'Manage Customers',
                 'description' => 'Manage customer details',
                 'parent_id' => 155,
@@ -2269,12 +2589,14 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => true,
                 'menu_order' => 2,
                 'isactive' => true,
+                'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
             ],
 
             // 162
             [
+                'id' => 162,
                 'name' => 'Create Customer',
                 'description' => 'Create new customer(s)',
                 'parent_id' => 161,
@@ -2284,12 +2606,14 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 2,
                 'isactive' => true,
+                'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
             ],
 
              // 163
             [
+                'id' => 163,
                 'name' => 'Edit Customer',
                 'description' => 'Edit customer details',
                 'parent_id' => 161,
@@ -2299,12 +2623,14 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 2,
                 'isactive' => true,
+                'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
             ],
 
              // 164
             [
+                'id' => 164,
                 'name' => 'Delete Customer',
                 'description' => 'Delete customers',
                 'parent_id' => 161,
@@ -2314,12 +2640,14 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 2,
                 'isactive' => true,
+                'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
             ],
 
               // 165
             [
+                'id' => 165,
                 'name' => 'View Customer',
                 'description' => 'View customer details',
                 'parent_id' => 161,
@@ -2329,11 +2657,13 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 2,
                 'isactive' => true,
+                'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
             ],
             // 166
             [
+                'id' => 166,
                 'name' => 'External Asset Reservation',
                 'description' => 'Manage external asset reservations',
                 'parent_id' => 50,
@@ -2343,11 +2673,13 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => true,
                 'menu_order' => 9,
                 'isactive' => true,
+                'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
             ],
              // 167
             [
+                'id' => 167,
                 'name' => 'Purchasing Orders',
                 'description' => 'Manage purchasing orders',
                 'parent_id' => 132,
@@ -2357,12 +2689,14 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => true,
                 'menu_order' => 2,
                 'isactive' => true,
+                'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
             ],
 
             // 168
             [
+                'id' => 168,
                 'name' => 'Create Purchasing Orders',
                 'description' => 'Create new purchasing order(s)',
                 'parent_id' => 167,
@@ -2372,12 +2706,14 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 3,
                 'isactive' => true,
+                'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
             ],
 
             // 169
             [
+                'id' => 169,
                 'name' => 'View Purchasing Orders',
                 'description' => 'View purchasing order details',
                 'parent_id' => 167,
@@ -2387,12 +2723,14 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 4,
                 'isactive' => true,
+                'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
             ],
 
              // 170
             // [
+            //     'id' => 170,
             //     'name' => 'Approval Purchasing Orders',
             //     'description' => 'Approve purchasing orders',
             //     'parent_id' => 167,
@@ -2402,15 +2740,18 @@ class TenantPermissionSeeder extends Seeder
             //     'ismenu_list' => false,
             //     'menu_order' => 7,
             //     'isactive' => true,
+            //     'is_enable_for_mobile_app' => false,
             //     'created_at' => $currentTime,
             //     'updated_at' => $currentTime
             // ],
 
         ];
 
-        // Seed multiple permission
-        foreach ($permission as $Permission) {
-            Permission::create($Permission);
-        }
+        // Upsert permissions - update if exists, insert if new
+        Permission::upsert(
+            $permission,
+            ['id'], // Unique identifier
+            ['name', 'description', 'parent_id', 'menulink', 'icon', 'isconfiguration', 'ismenu_list', 'menu_order', 'isactive', 'is_enable_for_mobile_app', 'updated_at'] // Columns to update
+        );
     }
 } 

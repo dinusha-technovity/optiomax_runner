@@ -14,7 +14,7 @@ use App\Http\Controllers\TenantAuthController;
 use App\Http\Controllers\TenantPackagesController;
 use App\Http\Controllers\PortalWidgetItemManagementController;
 use App\Http\Controllers\MasterDocumentController;
- 
+  
 Route::get('/status', function (Request $request): string {
     return "API is live";
 }); 
