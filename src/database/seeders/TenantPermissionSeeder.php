@@ -2745,6 +2745,71 @@ class TenantPermissionSeeder extends Seeder
             //     'updated_at' => $currentTime
             // ],
 
+            // 170
+            [
+                'id' => 170,
+                'name' => 'Manage Employees',
+                'description' => 'Manage employee accounts',
+                'parent_id' => 1,
+                'menulink' => '/manage_employees',
+                'icon' => null,
+                'isconfiguration' => true,
+                'ismenu_list' => true,
+                'menu_order' => 2,
+                'isactive' => true,
+                'is_enable_for_mobile_app' => false,
+                'created_at' => $currentTime,
+                'updated_at' => $currentTime
+            ],
+            // 171
+            [
+                'id' => 171,
+                'name' => 'Create Employee',
+                'description' => 'Create new employee',
+                'parent_id' => 170,
+                'menulink' => '#',
+                'icon' => null,
+                'isconfiguration' => true,
+                'ismenu_list' => false,
+                'menu_order' => 1,
+                'isactive' => true,
+                'is_enable_for_mobile_app' => false,
+                'created_at' => $currentTime,
+                'updated_at' => $currentTime
+            ],
+            // 172
+            [
+                'id' => 172,
+                'name' => 'Edit Employee',
+                'description' => 'Edit existing employee',
+                'parent_id' => 170,
+                'menulink' => '#',
+                'icon' => null,
+                'isconfiguration' => true,
+                'ismenu_list' => false,
+                'menu_order' => 2,
+                'isactive' => true,
+                'is_enable_for_mobile_app' => false,
+                'created_at' => $currentTime,
+                'updated_at' => $currentTime
+            ],
+            // 173
+            [
+                'id' => 173,
+                'name' => 'Delete Employee',
+                'description' => 'Delete employee',
+                'parent_id' => 170,
+                'menulink' => '#',
+                'icon' => null,
+                'isconfiguration' => true,
+                'ismenu_list' => false,
+                'menu_order' => 3,
+                'isactive' => true,
+                'is_enable_for_mobile_app' => false,
+                'created_at' => $currentTime,
+                'updated_at' => $currentTime
+            ],
+
         ];
 
         // Upsert permissions - update if exists, insert if new
