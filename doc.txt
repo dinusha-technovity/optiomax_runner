@@ -53,7 +53,7 @@ php artisan queue:work redis --queue=tenant-registration --sleep=1 --tries=5 --t
 php artisan queue:work redis --queue=default,emails --sleep=1 --tries=3 --timeout=300 --memory=512
 
 # Terminal 3: Run the tenant registration listener
-php artisan listen:tenant-registration-actions --batch=10
+php artisan listen:tenant-registration-actions --batch=10 
 
 # Terminal 4: (Optional) Monitor the queues
 php artisan listen:tenant-registration-actions --monitor
