@@ -50,7 +50,10 @@ class SendAssetActionEmailJob implements ShouldQueue
             ]);
 
             if (!$details) {
-                logger()->error("No details returned from function for action_queries_id: {$this->readingId}");
+                // Mark as notified to prevent reprocessing
+                $conn->table('asset_item_action_queries')
+                    ->where('id', $this->readingId)
+                    ->update(['notified_at' => now()]);
                 return;
             }
 
