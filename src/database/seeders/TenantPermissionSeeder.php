@@ -29,6 +29,7 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => true,
                 'menu_order' => 1,
                 'isactive' => true,
+                'is_enable_for_web_app' => true,
                 'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
@@ -45,6 +46,7 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => true,
                 'menu_order' => 1,
                 'isactive' => true,
+                'is_enable_for_web_app' => true,
                 'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
@@ -61,6 +63,7 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 1,
                 'isactive' => true,
+                'is_enable_for_web_app' => true,
                 'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
@@ -77,6 +80,7 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 2,
                 'isactive' => true,
+                'is_enable_for_web_app' => true,
                 'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
@@ -93,6 +97,7 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 3,
                 'isactive' => true,
+                'is_enable_for_web_app' => true,
                 'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
@@ -109,6 +114,7 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 4,
                 'isactive' => true,
+                'is_enable_for_web_app' => true,
                 'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
@@ -125,6 +131,7 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => true,
                 'menu_order' => 2,
                 'isactive' => true,
+                'is_enable_for_web_app' => true,
                 'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
@@ -141,6 +148,7 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 1,
                 'isactive' => true,
+                'is_enable_for_web_app' => true,
                 'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
@@ -157,6 +165,7 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 2,
                 'isactive' => true,
+                'is_enable_for_web_app' => true,
                 'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
@@ -173,6 +182,7 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 3,
                 'isactive' => true,
+                'is_enable_for_web_app' => true,
                 'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
@@ -189,6 +199,7 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 4,
                 'isactive' => true,
+                'is_enable_for_web_app' => true,
                 'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
@@ -205,6 +216,7 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 5,
                 'isactive' => true,
+                'is_enable_for_web_app' => true,
                 'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
@@ -221,6 +233,7 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => true,
                 'menu_order' => 2,
                 'isactive' => true,
+                'is_enable_for_web_app' => true,
                 'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
@@ -237,6 +250,7 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => true,
                 'menu_order' => 1,
                 'isactive' => true,
+                'is_enable_for_web_app' => true,
                 'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
@@ -253,6 +267,7 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 1,
                 'isactive' => true,
+                'is_enable_for_web_app' => true,
                 'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
@@ -269,6 +284,7 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 2,
                 'isactive' => true,
+                'is_enable_for_web_app' => true,
                 'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
@@ -285,6 +301,7 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 3,
                 'isactive' => true,
+                'is_enable_for_web_app' => true,
                 'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
@@ -301,6 +318,7 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 4,
                 'isactive' => true,
+                'is_enable_for_web_app' => true,
                 'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
@@ -317,6 +335,7 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => true,
                 'menu_order' => 1,
                 'isactive' => true,
+                'is_enable_for_web_app' => true,
                 'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
@@ -333,6 +352,7 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 2,
                 'isactive' => true,
+                'is_enable_for_web_app' => true,
                 'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
@@ -349,6 +369,7 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 3,
                 'isactive' => true,
+                'is_enable_for_web_app' => true,
                 'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
@@ -365,6 +386,7 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 4,
                 'isactive' => true,
+                'is_enable_for_web_app' => true,
                 'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
@@ -381,6 +403,7 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 5,
                 'isactive' => true,
+                'is_enable_for_web_app' => true,
                 'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
@@ -397,6 +420,7 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => true,
                 'menu_order' => 2,
                 'isactive' => true,
+                'is_enable_for_web_app' => true,
                 'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
@@ -413,6 +437,7 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 1,
                 'isactive' => true,
+                'is_enable_for_web_app' => true,
                 'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
@@ -429,6 +454,7 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 2,
                 'isactive' => true,
+                'is_enable_for_web_app' => true,
                 'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
@@ -445,6 +471,7 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 3,
                 'isactive' => true,
+                'is_enable_for_web_app' => true,
                 'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
@@ -461,6 +488,7 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 4,
                 'isactive' => true,
+                'is_enable_for_web_app' => true,
                 'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
@@ -477,6 +505,7 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => true,
                 'menu_order' => 4,
                 'isactive' => true,
+                'is_enable_for_web_app' => true,
                 'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
@@ -493,6 +522,7 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 1,
                 'isactive' => true,
+                'is_enable_for_web_app' => true,
                 'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
@@ -509,6 +539,7 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 2,
                 'isactive' => true,
+                'is_enable_for_web_app' => true,
                 'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
@@ -525,6 +556,7 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 3,
                 'isactive' => true,
+                'is_enable_for_web_app' => true,
                 'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
@@ -541,6 +573,7 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => true,
                 'menu_order' => 5,
                 'isactive' => true,
+                'is_enable_for_web_app' => true,
                 'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
@@ -557,6 +590,7 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 1,
                 'isactive' => true,
+                'is_enable_for_web_app' => true,
                 'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
@@ -573,6 +607,7 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 2,
                 'isactive' => true,
+                'is_enable_for_web_app' => true,
                 'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
@@ -589,6 +624,7 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 3,
                 'isactive' => true,
+                'is_enable_for_web_app' => true,
                 'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
@@ -605,6 +641,7 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 4,
                 'isactive' => true,
+                'is_enable_for_web_app' => true,
                 'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
@@ -621,6 +658,7 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 1,
                 'isactive' => true,
+                'is_enable_for_web_app' => true,
                 'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
@@ -637,6 +675,7 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 2,
                 'isactive' => true,
+                'is_enable_for_web_app' => true,
                 'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
@@ -653,6 +692,7 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 3,
                 'isactive' => true,
+                'is_enable_for_web_app' => true,
                 'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
@@ -669,6 +709,7 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 4,
                 'isactive' => true,
+                'is_enable_for_web_app' => true,
                 'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
@@ -685,6 +726,7 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => true,
                 'menu_order' => 6,
                 'isactive' => true,
+                'is_enable_for_web_app' => true,
                 'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
@@ -701,6 +743,7 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 1,
                 'isactive' => true,
+                'is_enable_for_web_app' => true,
                 'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
@@ -717,6 +760,7 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 2,
                 'isactive' => true,
+                'is_enable_for_web_app' => true,
                 'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
@@ -733,6 +777,7 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 3,
                 'isactive' => true,
+                'is_enable_for_web_app' => true,
                 'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
@@ -749,6 +794,7 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => true,
                 'menu_order' => 7,
                 'isactive' => true,
+                'is_enable_for_web_app' => true,
                 'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
@@ -765,6 +811,7 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 1,
                 'isactive' => true,
+                'is_enable_for_web_app' => true,
                 'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
@@ -781,6 +828,7 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 2,
                 'isactive' => true,
+                'is_enable_for_web_app' => true,
                 'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
@@ -797,6 +845,7 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 3,
                 'isactive' => true,
+                'is_enable_for_web_app' => true,
                 'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
@@ -813,6 +862,7 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => true,
                 'menu_order' => 3,
                 'isactive' => true,
+                'is_enable_for_web_app' => true,
                 'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
@@ -829,6 +879,7 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => true,
                 'menu_order' => 1,
                 'isactive' => true,
+                'is_enable_for_web_app' => true,
                 'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
@@ -845,6 +896,7 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 1,
                 'isactive' => true,
+                'is_enable_for_web_app' => true,
                 'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
@@ -861,6 +913,7 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => true,
                 'menu_order' => 3,
                 'isactive' => true,
+                'is_enable_for_web_app' => true,
                 'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
@@ -877,6 +930,7 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 1,
                 'isactive' => true,
+                'is_enable_for_web_app' => true,
                 'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
@@ -893,6 +947,7 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 2,
                 'isactive' => true,
+                'is_enable_for_web_app' => true,
                 'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
@@ -909,6 +964,7 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 3,
                 'isactive' => true,
+                'is_enable_for_web_app' => true,
                 'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
@@ -925,6 +981,7 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 4,
                 'isactive' => true,
+                'is_enable_for_web_app' => true,
                 'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
@@ -941,6 +998,7 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 5,
                 'isactive' => true,
+                'is_enable_for_web_app' => true,
                 'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
@@ -957,6 +1015,7 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 6,
                 'isactive' => true,
+                'is_enable_for_web_app' => true,
                 'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
@@ -973,6 +1032,7 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 6,
                 'isactive' => true,
+                'is_enable_for_web_app' => true,
                 'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
@@ -989,6 +1049,7 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 1,
                 'isactive' => true,
+                'is_enable_for_web_app' => true,
                 'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
@@ -1005,6 +1066,7 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 1,
                 'isactive' => true,
+                'is_enable_for_web_app' => true,
                 'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
@@ -1021,6 +1083,7 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 2,
                 'isactive' => true,
+                'is_enable_for_web_app' => true,
                 'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
@@ -1037,6 +1100,7 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 3,
                 'isactive' => true,
+                'is_enable_for_web_app' => true,
                 'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
@@ -1053,6 +1117,7 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 2,
                 'isactive' => true,
+                'is_enable_for_web_app' => true,
                 'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
@@ -1069,6 +1134,7 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 1,
                 'isactive' => true,
+                'is_enable_for_web_app' => true,
                 'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
@@ -1085,6 +1151,7 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 2,
                 'isactive' => true,
+                'is_enable_for_web_app' => true,
                 'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
@@ -1101,6 +1168,7 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 3,
                 'isactive' => true,
+                'is_enable_for_web_app' => true,
                 'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
@@ -1117,6 +1185,7 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 9,
                 'isactive' => true,
+                'is_enable_for_web_app' => true,
                 'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
@@ -1133,6 +1202,7 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 1,
                 'isactive' => true,
+                'is_enable_for_web_app' => true,
                 'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
@@ -1149,6 +1219,7 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 2,
                 'isactive' => true,
+                'is_enable_for_web_app' => true,
                 'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
@@ -1165,6 +1236,7 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 3,
                 'isactive' => true,
+                'is_enable_for_web_app' => true,
                 'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
@@ -1181,6 +1253,7 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 10,
                 'isactive' => true,
+                'is_enable_for_web_app' => true,
                 'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
@@ -1197,6 +1270,7 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 1,
                 'isactive' => true,
+                'is_enable_for_web_app' => true,
                 'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
@@ -1213,6 +1287,7 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 2,
                 'isactive' => true,
+                'is_enable_for_web_app' => true,
                 'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
@@ -1229,6 +1304,7 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 3,
                 'isactive' => true,
+                'is_enable_for_web_app' => true,
                 'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
@@ -1245,6 +1321,7 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => true,
                 'menu_order' => 4,
                 'isactive' => true,
+                'is_enable_for_web_app' => true,
                 'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
@@ -1261,6 +1338,7 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 1,
                 'isactive' => true,
+                'is_enable_for_web_app' => true,
                 'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
@@ -1277,6 +1355,7 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 2,
                 'isactive' => true,
+                'is_enable_for_web_app' => true,
                 'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
@@ -1293,6 +1372,7 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 2,
                 'isactive' => true,
+                'is_enable_for_web_app' => true,
                 'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
@@ -1309,6 +1389,7 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 6,
                 'isactive' => true,
+                'is_enable_for_web_app' => true,
                 'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
@@ -1325,6 +1406,7 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 1,
                 'isactive' => true,
+                'is_enable_for_web_app' => true,
                 'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
@@ -1341,6 +1423,7 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 1,
                 'isactive' => true,
+                'is_enable_for_web_app' => true,
                 'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
@@ -1357,6 +1440,7 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 2,
                 'isactive' => true,
+                'is_enable_for_web_app' => true,
                 'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
@@ -1373,6 +1457,7 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 3,
                 'isactive' => true,
+                'is_enable_for_web_app' => true,
                 'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
@@ -1389,6 +1474,7 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 2,
                 'isactive' => true,
+                'is_enable_for_web_app' => true,
                 'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
@@ -1405,6 +1491,7 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 1,
                 'isactive' => true,
+                'is_enable_for_web_app' => true,
                 'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
@@ -1421,6 +1508,7 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 2,
                 'isactive' => true,
+                'is_enable_for_web_app' => true,
                 'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
@@ -1437,6 +1525,7 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 3,
                 'isactive' => true,
+                'is_enable_for_web_app' => true,
                 'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
@@ -1453,6 +1542,7 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 9,
                 'isactive' => true,
+                'is_enable_for_web_app' => true,
                 'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
@@ -1469,6 +1559,7 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 1,
                 'isactive' => true,
+                'is_enable_for_web_app' => true,
                 'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
@@ -1485,6 +1576,7 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 2,
                 'isactive' => true,
+                'is_enable_for_web_app' => true,
                 'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
@@ -1501,6 +1593,7 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 3,
                 'isactive' => true,
+                'is_enable_for_web_app' => true,
                 'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
@@ -1517,6 +1610,7 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 10,
                 'isactive' => true,
+                'is_enable_for_web_app' => true,
                 'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
@@ -1533,6 +1627,7 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 1,
                 'isactive' => true,
+                'is_enable_for_web_app' => true,
                 'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
@@ -1549,6 +1644,7 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 2,
                 'isactive' => true,
+                'is_enable_for_web_app' => true,
                 'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
@@ -1565,6 +1661,7 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 3,
                 'isactive' => true,
+                'is_enable_for_web_app' => true,
                 'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
@@ -1581,6 +1678,7 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => true,
                 'menu_order' => 4,
                 'isactive' => true,
+                'is_enable_for_web_app' => true,
                 'is_enable_for_mobile_app' => true,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
@@ -1597,6 +1695,7 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 1,
                 'isactive' => true,
+                'is_enable_for_web_app' => true,
                 'is_enable_for_mobile_app' => true,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
@@ -1613,6 +1712,7 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 1,
                 'isactive' => true,
+                'is_enable_for_web_app' => true,
                 'is_enable_for_mobile_app' => true,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
@@ -1629,6 +1729,7 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => true,
                 'menu_order' => 5,
                 'isactive' => true,
+                'is_enable_for_web_app' => true,
                 'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
@@ -1645,6 +1746,7 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 1,
                 'isactive' => true,
+                'is_enable_for_web_app' => true,
                 'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
@@ -1661,6 +1763,7 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 2,
                 'isactive' => true,
+                'is_enable_for_web_app' => true,
                 'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
@@ -1677,6 +1780,7 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 3,
                 'isactive' => true,
+                'is_enable_for_web_app' => true,
                 'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
@@ -1693,6 +1797,7 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 4,
                 'isactive' => true,
+                'is_enable_for_web_app' => true,
                 'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
@@ -1709,6 +1814,7 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => true,
                 'menu_order' => 4,
                 'isactive' => true,
+                'is_enable_for_web_app' => true,
                 'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
@@ -1725,6 +1831,7 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => true,
                 'menu_order' => 1,
                 'isactive' => true,
+                'is_enable_for_web_app' => true,
                 'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
@@ -1741,6 +1848,7 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 1,
                 'isactive' => true,
+                'is_enable_for_web_app' => true,
                 'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
@@ -1757,6 +1865,7 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 2,
                 'isactive' => true,
+                'is_enable_for_web_app' => true,
                 'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
@@ -1773,6 +1882,7 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 3,
                 'isactive' => true,
+                'is_enable_for_web_app' => true,
                 'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
@@ -1789,6 +1899,7 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => true,
                 'menu_order' => 2,
                 'isactive' => true,
+                'is_enable_for_web_app' => true,
                 'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
@@ -1805,6 +1916,7 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 1,
                 'isactive' => true,
+                'is_enable_for_web_app' => true,
                 'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
@@ -1821,6 +1933,7 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 1,
                 'isactive' => true,
+                'is_enable_for_web_app' => true,
                 'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
@@ -1837,6 +1950,7 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 1,
                 'isactive' => true,
+                'is_enable_for_web_app' => true,
                 'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
@@ -1853,6 +1967,7 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 2,
                 'isactive' => true,
+                'is_enable_for_web_app' => true,
                 'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
@@ -1869,6 +1984,7 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 3,
                 'isactive' => true,
+                'is_enable_for_web_app' => true,
                 'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
@@ -1885,6 +2001,7 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 2,
                 'isactive' => true,
+                'is_enable_for_web_app' => true,
                 'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
@@ -1901,6 +2018,7 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 1,
                 'isactive' => true,
+                'is_enable_for_web_app' => true,
                 'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
@@ -1917,6 +2035,7 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 2,
                 'isactive' => true,
+                'is_enable_for_web_app' => true,
                 'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
@@ -1933,6 +2052,7 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => true,
                 'menu_order' => 6,
                 'isactive' => true,
+                'is_enable_for_web_app' => true,
                 'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
@@ -1949,6 +2069,7 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 1,
                 'isactive' => true,
+                'is_enable_for_web_app' => true,
                 'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
@@ -1965,6 +2086,7 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 2,
                 'isactive' => true,
+                'is_enable_for_web_app' => true,
                 'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
@@ -1981,6 +2103,7 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 3,
                 'isactive' => true,
+                'is_enable_for_web_app' => true,
                 'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
@@ -1997,6 +2120,7 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 4,
                 'isactive' => true,
+                'is_enable_for_web_app' => true,
                 'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
@@ -2013,6 +2137,7 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 1,
                 'isactive' => true,
+                'is_enable_for_web_app' => true,
                 'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
@@ -2029,6 +2154,7 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => true,
                 'menu_order' => 2,
                 'isactive' => true,
+                'is_enable_for_web_app' => true,
                 'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
@@ -2045,6 +2171,7 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => true,
                 'menu_order' => 3,
                 'isactive' => true,
+                'is_enable_for_web_app' => true,
                 'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
@@ -2061,6 +2188,7 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => true,
                 'menu_order' => 1,
                 'isactive' => true,
+                'is_enable_for_web_app' => true,
                 'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
@@ -2077,6 +2205,7 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 1,
                 'isactive' => true,
+                'is_enable_for_web_app' => true,
                 'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
@@ -2093,6 +2222,7 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 2,
                 'isactive' => true,
+                'is_enable_for_web_app' => true,
                 'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
@@ -2109,6 +2239,7 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 3,
                 'isactive' => true,
+                'is_enable_for_web_app' => true,
                 'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
@@ -2125,6 +2256,7 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => true,
                 'menu_order' => 5,
                 'isactive' => true,
+                'is_enable_for_web_app' => true,
                 'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
@@ -2141,6 +2273,7 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => true,
                 'menu_order' => 1,
                 'isactive' => true,
+                'is_enable_for_web_app' => true,
                 'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
@@ -2157,6 +2290,7 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 1,
                 'isactive' => true,
+                'is_enable_for_web_app' => true,
                 'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
@@ -2173,6 +2307,7 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 2,
                 'isactive' => true,
+                'is_enable_for_web_app' => true,
                 'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
@@ -2189,6 +2324,7 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 3,
                 'isactive' => true,
+                'is_enable_for_web_app' => true,
                 'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
@@ -2205,6 +2341,7 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 4,
                 'isactive' => true,
+                'is_enable_for_web_app' => true,
                 'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
@@ -2221,6 +2358,7 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 6,
                 'isactive' => true,
+                'is_enable_for_web_app' => true,
                 'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
@@ -2237,6 +2375,7 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => true,
                 'menu_order' => 7,
                 'isactive' => true,
+                'is_enable_for_web_app' => true,
                 'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
@@ -2253,6 +2392,7 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 1,
                 'isactive' => true,
+                'is_enable_for_web_app' => true,
                 'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
@@ -2269,6 +2409,7 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 1,
                 'isactive' => true,
+                'is_enable_for_web_app' => true,
                 'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
@@ -2285,6 +2426,7 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 1,
                 'isactive' => true,
+                'is_enable_for_web_app' => true,
                 'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
@@ -2301,6 +2443,7 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 2,
                 'isactive' => true,
+                'is_enable_for_web_app' => true,
                 'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
@@ -2317,6 +2460,7 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 3,
                 'isactive' => true,
+                'is_enable_for_web_app' => true,
                 'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
@@ -2333,6 +2477,7 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 4,
                 'isactive' => true,
+                'is_enable_for_web_app' => true,
                 'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
@@ -2349,6 +2494,7 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 5,
                 'isactive' => true,
+                'is_enable_for_web_app' => true,
                 'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
@@ -2365,6 +2511,7 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 2,
                 'isactive' => true,
+                'is_enable_for_web_app' => true,
                 'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
@@ -2381,6 +2528,7 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 1,
                 'isactive' => true,
+                'is_enable_for_web_app' => true,
                 'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
@@ -2397,6 +2545,7 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 2,
                 'isactive' => true,
+                'is_enable_for_web_app' => true,
                 'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
@@ -2413,6 +2562,7 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 3,
                 'isactive' => true,
+                'is_enable_for_web_app' => true,
                 'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
@@ -2429,6 +2579,7 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 4,
                 'isactive' => true,
+                'is_enable_for_web_app' => true,
                 'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
@@ -2445,6 +2596,7 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 5,
                 'isactive' => true,
+                'is_enable_for_web_app' => true,
                 'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
@@ -2461,6 +2613,7 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 2,
                 'isactive' => true,
+                'is_enable_for_web_app' => true,
                 'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
@@ -2477,6 +2630,7 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => true,
                 'menu_order' => 8,
                 'isactive' => true,
+                'is_enable_for_web_app' => true,
                 'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
@@ -2493,6 +2647,7 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => true,
                 'menu_order' => 4,
                 'isactive' => true,
+                'is_enable_for_web_app' => true,
                 'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
@@ -2509,6 +2664,7 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => true,
                 'menu_order' => 1,
                 'isactive' => true,
+                'is_enable_for_web_app' => true,
                 'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
@@ -2525,6 +2681,7 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 1,
                 'isactive' => true,
+                'is_enable_for_web_app' => true,
                 'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
@@ -2541,6 +2698,7 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 2,
                 'isactive' => true,
+                'is_enable_for_web_app' => true,
                 'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
@@ -2557,6 +2715,7 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 3,
                 'isactive' => true,
+                'is_enable_for_web_app' => true,
                 'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
@@ -2573,6 +2732,7 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 4,
                 'isactive' => true,
+                'is_enable_for_web_app' => true,
                 'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
@@ -2589,6 +2749,7 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => true,
                 'menu_order' => 2,
                 'isactive' => true,
+                'is_enable_for_web_app' => true,
                 'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
@@ -2606,6 +2767,7 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 2,
                 'isactive' => true,
+                'is_enable_for_web_app' => true,
                 'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
@@ -2623,6 +2785,7 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 2,
                 'isactive' => true,
+                'is_enable_for_web_app' => true,
                 'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
@@ -2640,6 +2803,7 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 2,
                 'isactive' => true,
+                'is_enable_for_web_app' => true,
                 'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
@@ -2657,6 +2821,7 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 2,
                 'isactive' => true,
+                'is_enable_for_web_app' => true,
                 'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
@@ -2673,6 +2838,7 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => true,
                 'menu_order' => 9,
                 'isactive' => true,
+                'is_enable_for_web_app' => true,
                 'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
@@ -2689,6 +2855,7 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => true,
                 'menu_order' => 2,
                 'isactive' => true,
+                'is_enable_for_web_app' => true,
                 'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
@@ -2706,6 +2873,7 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 3,
                 'isactive' => true,
+                'is_enable_for_web_app' => true,
                 'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
@@ -2723,6 +2891,7 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 4,
                 'isactive' => true,
+                'is_enable_for_web_app' => true,
                 'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
@@ -2740,6 +2909,7 @@ class TenantPermissionSeeder extends Seeder
             //     'ismenu_list' => false,
             //     'menu_order' => 7,
             //     'isactive' => true,
+            //     'is_enable_for_web_app' => true,
             //     'is_enable_for_mobile_app' => false,
             //     'created_at' => $currentTime,
             //     'updated_at' => $currentTime
@@ -2757,6 +2927,7 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => true,
                 'menu_order' => 2,
                 'isactive' => true,
+                'is_enable_for_web_app' => true,
                 'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
@@ -2773,6 +2944,7 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 1,
                 'isactive' => true,
+                'is_enable_for_web_app' => true,
                 'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
@@ -2789,6 +2961,7 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 2,
                 'isactive' => true,
+                'is_enable_for_web_app' => true,
                 'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
@@ -2805,6 +2978,7 @@ class TenantPermissionSeeder extends Seeder
                 'ismenu_list' => false,
                 'menu_order' => 3,
                 'isactive' => true,
+                'is_enable_for_web_app' => true,
                 'is_enable_for_mobile_app' => false,
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
@@ -2816,7 +2990,7 @@ class TenantPermissionSeeder extends Seeder
         Permission::upsert(
             $permission,
             ['id'], // Unique identifier
-            ['name', 'description', 'parent_id', 'menulink', 'icon', 'isconfiguration', 'ismenu_list', 'menu_order', 'isactive', 'is_enable_for_mobile_app', 'updated_at'] // Columns to update
+            ['name', 'description', 'parent_id', 'menulink', 'icon', 'isconfiguration', 'ismenu_list', 'menu_order', 'isactive', 'is_enable_for_web_app', 'is_enable_for_mobile_app', 'updated_at'] // Columns to update
         );
     }
 } 
