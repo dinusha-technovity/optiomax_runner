@@ -15,14 +15,10 @@ class DocumentCategoryFieldSeeder extends Seeder
      */
     public function run(): void
     { 
-        if (Schema::hasTable('document_category_field')) {
-            // Schema::disableForeignKeyConstraints();
-            DB::table('document_category_field')->truncate();
-            // Schema::enableForeignKeyConstraints();
-        }
-        DB::table('document_category_field')->insert([
+        DB::table('document_category_field')->upsert([
             // 1
             [
+                'id'=>1,
                 'document_category_id'=>8,
                 'document_field_name'=>"Br attachment",
                 'description'=>"Br attachment of supplire",
@@ -36,6 +32,7 @@ class DocumentCategoryFieldSeeder extends Seeder
             ],
             // 2
             [
+                'id'=>2,
                 'document_category_id'=>16,
                 'document_field_name'=>"Item master image",
                 'description'=>"Item master image",
@@ -49,6 +46,7 @@ class DocumentCategoryFieldSeeder extends Seeder
             ],
             // 3
             [
+                'id'=>3,
                 'document_category_id'=>11,
                 'document_field_name'=>"User Profile image",
                 'description'=>"profile image",
@@ -59,10 +57,10 @@ class DocumentCategoryFieldSeeder extends Seeder
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
                 'listable'=>false,
-
             ],
             // 4
             [
+                'id'=>4,
                 'document_category_id'=>4,
                 'document_field_name'=>"any document related with asset",
                 'description'=>"any document related with asset",
@@ -73,10 +71,10 @@ class DocumentCategoryFieldSeeder extends Seeder
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
                 'listable'=>true,
-
             ],
             // 5
             [
+                'id'=>5,
                 'document_category_id'=>2,
                 'document_field_name'=>"Thumbnail images",
                 'description'=>"new asset group",
@@ -90,6 +88,7 @@ class DocumentCategoryFieldSeeder extends Seeder
             ],
             // 6
             [
+                'id'=>6,
                 'document_category_id'=>3,
                 'document_field_name'=>"Thumbnail images",
                 'description'=>"new asset item",
@@ -100,10 +99,10 @@ class DocumentCategoryFieldSeeder extends Seeder
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
                 'listable'=>false,
-
             ],
             // 7
             [
+                'id'=>7,
                 'document_category_id'=>3,
                 'document_field_name'=>"Purchase documents",
                 'description'=>"pruchase docs",
@@ -117,6 +116,7 @@ class DocumentCategoryFieldSeeder extends Seeder
             ],
             // 8
             [
+                'id'=>8,
                 'document_category_id'=>3,
                 'document_field_name'=>"item documents",
                 'description'=>"item docs",
@@ -127,10 +127,10 @@ class DocumentCategoryFieldSeeder extends Seeder
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
                 'listable'=>true,
-
             ],
             // 9
             [
+                'id'=>9,
                 'document_category_id'=>3,
                 'document_field_name'=>"insurance documents",
                 'description'=>"insurance docs",
@@ -141,10 +141,10 @@ class DocumentCategoryFieldSeeder extends Seeder
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
                 'listable'=>true,
-
             ],
             // 10
             [
+                'id'=>10,
                 'document_category_id'=>14,
                 'document_field_name'=>"permit documents",
                 'description'=>"permit docs",
@@ -155,10 +155,10 @@ class DocumentCategoryFieldSeeder extends Seeder
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
                 'listable'=>true,
-
             ],
             // 11
             [
+                'id'=>11,
                 'document_category_id'=>5,
                 'document_field_name'=>"upload files",
                 'description'=>"uploads files",
@@ -172,6 +172,7 @@ class DocumentCategoryFieldSeeder extends Seeder
             ],
             // 12
             [
+                'id'=>12,
                 'document_category_id'=>5,
                 'document_field_name'=>"RPF documents",
                 'description'=>"RPF doc files",
@@ -182,10 +183,10 @@ class DocumentCategoryFieldSeeder extends Seeder
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
                 'listable'=>true,
-
             ],
             // 13
             [
+                'id'=>13,
                 'document_category_id'=>15,
                 'document_field_name'=>"Work order completion image",
                 'description'=>"work order completion docs",
@@ -196,10 +197,10 @@ class DocumentCategoryFieldSeeder extends Seeder
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
                 'listable'=>true,
-
             ],
             // 14
             [
+                'id'=>14,
                 'document_category_id'=>17,
                 'document_field_name'=>"Incident reports Attachments",
                 'description'=>"incident reports docs",
@@ -210,11 +211,10 @@ class DocumentCategoryFieldSeeder extends Seeder
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
                 'listable'=>true,
-
             ],
-
             // 15
             [
+                'id'=>15,
                 'document_category_id'=>9,
                 'document_field_name'=>"Supplier Quotation Attachments",
                 'description'=>"supplier quotation docs",
@@ -226,9 +226,9 @@ class DocumentCategoryFieldSeeder extends Seeder
                 'updated_at' => Carbon::now(),
                 'listable'=>true,
             ],
-            
             // 16
             [
+                'id'=>16,
                 'document_category_id'=>19,
                 'document_field_name'=>"Asset Availability Attachments",
                 'description'=>"asset availability docs",
@@ -242,6 +242,7 @@ class DocumentCategoryFieldSeeder extends Seeder
             ],
             // 17
             [
+                'id'=>17,
                 'document_category_id'=>20,
                 'document_field_name'=>"National ID card",
                 'description'=>"Government-issued National ID card",
@@ -255,6 +256,7 @@ class DocumentCategoryFieldSeeder extends Seeder
             ],
             // 18
             [
+                'id'=>18,
                 'document_category_id'=>20,
                 'document_field_name'=>"Passport",
                 'description'=>"Government-issued Passport",
@@ -268,9 +270,10 @@ class DocumentCategoryFieldSeeder extends Seeder
             ],
             // 19
             [
+                'id'=>19,
                 'document_category_id'=>20,
-                'document_field_name'=>"Driver’s license",
-                'description'=>"Driver’s license for vehicles or equipment",
+                'document_field_name'=>"Driver's license",
+                'description'=>"Driver's license for vehicles or equipment",
                 'file_path'=>'uploads/asset_booking/identity/drivers_license',
                 'isactive'=>true,
                 'document_formats'=>'PDF,JPG,PNG',
@@ -281,6 +284,7 @@ class DocumentCategoryFieldSeeder extends Seeder
             ],
             // 20
             [
+                'id'=>20,
                 'document_category_id'=>20,
                 'document_field_name'=>"Employee ID card",
                 'description'=>"Proof of employment - Employee ID card",
@@ -294,6 +298,7 @@ class DocumentCategoryFieldSeeder extends Seeder
             ],
             // 21
             [
+                'id'=>21,
                 'document_category_id'=>20,
                 'document_field_name'=>"Company authorization letter",
                 'description'=>"Company authorization letter for access",
@@ -307,6 +312,7 @@ class DocumentCategoryFieldSeeder extends Seeder
             ],
             // 22
             [
+                'id'=>22,
                 'document_category_id'=>20,
                 'document_field_name'=>"Student ID",
                 'description'=>"Student ID for educational institution users",
@@ -320,6 +326,7 @@ class DocumentCategoryFieldSeeder extends Seeder
             ],
             // 23
             [
+                'id'=>23,
                 'document_category_id'=>20,
                 'document_field_name'=>"Utility bill",
                 'description'=>"Recent utility bill as proof of address",
@@ -333,6 +340,7 @@ class DocumentCategoryFieldSeeder extends Seeder
             ],
             // 24
             [
+                'id'=>24,
                 'document_category_id'=>20,
                 'document_field_name'=>"Bank statement",
                 'description'=>"Bank statement as proof of address",
@@ -346,6 +354,7 @@ class DocumentCategoryFieldSeeder extends Seeder
             ],
             // 25
             [
+                'id'=>25,
                 'document_category_id'=>20,
                 'document_field_name'=>"Official correspondence",
                 'description'=>"Official correspondence as proof of address",
@@ -359,6 +368,7 @@ class DocumentCategoryFieldSeeder extends Seeder
             ],
             // 26
             [
+                'id'=>26,
                 'document_category_id'=>20,
                 'document_field_name'=>"Equipment operation license",
                 'description'=>"License/certificate for equipment operation",
@@ -372,6 +382,7 @@ class DocumentCategoryFieldSeeder extends Seeder
             ],
             // 27
             [
+                'id'=>27,
                 'document_category_id'=>20,
                 'document_field_name'=>"Access permit",
                 'description'=>"Access permit for restricted areas/assets",
@@ -385,6 +396,7 @@ class DocumentCategoryFieldSeeder extends Seeder
             ],
             // 28
             [
+                'id'=>28,
                 'document_category_id'=>20,
                 'document_field_name'=>"Forklift/heavy machinery operator license",
                 'description'=>"License for forklift or heavy machinery operation",
@@ -398,6 +410,7 @@ class DocumentCategoryFieldSeeder extends Seeder
             ],
             // 29
             [
+                'id'=>29,
                 'document_category_id'=>20,
                 'document_field_name'=>"Supervisor approval",
                 'description'=>"Supervisor/manager approval for booking",
@@ -411,6 +424,7 @@ class DocumentCategoryFieldSeeder extends Seeder
             ],
             // 30
             [
+                'id'=>30,
                 'document_category_id'=>20,
                 'document_field_name'=>"Department head approval",
                 'description'=>"Department head approval for booking",
@@ -424,6 +438,7 @@ class DocumentCategoryFieldSeeder extends Seeder
             ],
             // 31
             [
+                'id'=>31,
                 'document_category_id'=>20,
                 'document_field_name'=>"Project manager approval",
                 'description'=>"Project manager approval for project assets",
@@ -437,6 +452,7 @@ class DocumentCategoryFieldSeeder extends Seeder
             ],
             // 32
             [
+                'id'=>32,
                 'document_category_id'=>20,
                 'document_field_name'=>"Insurance certificate",
                 'description'=>"Personal or company insurance certificate",
@@ -450,6 +466,7 @@ class DocumentCategoryFieldSeeder extends Seeder
             ],
             // 33
             [
+                'id'=>33,
                 'document_category_id'=>20,
                 'document_field_name'=>"Temporary insurance",
                 'description'=>"Temporary insurance for high-value/risk assets",
@@ -463,6 +480,7 @@ class DocumentCategoryFieldSeeder extends Seeder
             ],
             // 34
             [
+                'id'=>34,
                 'document_category_id'=>20,
                 'document_field_name'=>"Liability waiver",
                 'description'=>"Liability waiver form",
@@ -476,6 +494,7 @@ class DocumentCategoryFieldSeeder extends Seeder
             ],
             // 35
             [
+                'id'=>35,
                 'document_category_id'=>20,
                 'document_field_name'=>"Credit/debit card details",
                 'description'=>"Payment/deposit - credit or debit card details",
@@ -489,6 +508,7 @@ class DocumentCategoryFieldSeeder extends Seeder
             ],
             // 36
             [
+                'id'=>36,
                 'document_category_id'=>20,
                 'document_field_name'=>"Purchase order",
                 'description'=>"Purchase order for corporate bookings",
@@ -502,6 +522,7 @@ class DocumentCategoryFieldSeeder extends Seeder
             ],
             // 37
             [
+                'id'=>37,
                 'document_category_id'=>20,
                 'document_field_name'=>"Bank transfer/deposit slip",
                 'description'=>"Bank transfer or deposit slip",
@@ -515,6 +536,7 @@ class DocumentCategoryFieldSeeder extends Seeder
             ],
             // 38
             [
+                'id'=>38,
                 'document_category_id'=>20,
                 'document_field_name'=>"Internal cost center code",
                 'description'=>"Internal cost center code for accounting",
@@ -528,6 +550,7 @@ class DocumentCategoryFieldSeeder extends Seeder
             ],
             // 39
             [
+                'id'=>39,
                 'document_category_id'=>20,
                 'document_field_name'=>"Safety training certificate",
                 'description'=>"Safety training certificate for hazardous equipment",
@@ -541,6 +564,7 @@ class DocumentCategoryFieldSeeder extends Seeder
             ],
             // 40
             [
+                'id'=>40,
                 'document_category_id'=>20,
                 'document_field_name'=>"Event permit",
                 'description'=>"Event permit for asset use at events",
@@ -554,6 +578,7 @@ class DocumentCategoryFieldSeeder extends Seeder
             ],
             // 41
             [
+                'id'=>41,
                 'document_category_id'=>20,
                 'document_field_name'=>"Health certificate",
                 'description'=>"Health certificate for health-related assets",
@@ -567,6 +592,7 @@ class DocumentCategoryFieldSeeder extends Seeder
             ],
             // 42
             [
+                'id'=>42,
                 'document_category_id'=>20,
                 'document_field_name'=>"Customs clearance documents",
                 'description'=>"Customs clearance for cross-border assets",
@@ -580,6 +606,7 @@ class DocumentCategoryFieldSeeder extends Seeder
             ],
             // 43
             [
+                'id'=>43,
                 'document_category_id'=>20,
                 'document_field_name'=>"Environmental clearance",
                 'description'=>"Environmental clearance/permit for equipment",
@@ -593,6 +620,7 @@ class DocumentCategoryFieldSeeder extends Seeder
             ],
             // 44
             [
+                'id'=>44,
                 'document_category_id'=>20,
                 'document_field_name'=>"Equipment calibration certificate",
                 'description'=>"Equipment calibration certificate",
@@ -606,6 +634,7 @@ class DocumentCategoryFieldSeeder extends Seeder
             ],
             // 45
             [
+                'id'=>45,
                 'document_category_id'=>20,
                 'document_field_name'=>"Signed rental agreement",
                 'description'=>"Signed rental or usage agreement",
@@ -619,6 +648,7 @@ class DocumentCategoryFieldSeeder extends Seeder
             ],
             // 46
             [
+                'id'=>46,
                 'document_category_id'=>20,
                 'document_field_name'=>"Digital acceptance of terms",
                 'description'=>"Digital acceptance of terms and conditions",
@@ -632,6 +662,7 @@ class DocumentCategoryFieldSeeder extends Seeder
             ],
             // 47
             [
+                'id'=>47,
                 'document_category_id'=>20,
                 'document_field_name'=>"Non-disclosure agreement",
                 'description'=>"Non-disclosure agreement for confidential assets",
@@ -645,6 +676,7 @@ class DocumentCategoryFieldSeeder extends Seeder
             ],
             // 48
             [
+                'id'=>48,
                 'document_category_id'=>20,
                 'document_field_name'=>"Asset check-out form",
                 'description'=>"Asset handover/check-out form",
@@ -658,6 +690,7 @@ class DocumentCategoryFieldSeeder extends Seeder
             ],
             // 49
             [
+                'id'=>49,
                 'document_category_id'=>20,
                 'document_field_name'=>"Asset check-in form",
                 'description'=>"Asset check-in/return form",
@@ -671,6 +704,7 @@ class DocumentCategoryFieldSeeder extends Seeder
             ],
             // 50
             [
+                'id'=>50,
                 'document_category_id'=>20,
                 'document_field_name'=>"Condition report",
                 'description'=>"Condition report before and after use",
@@ -684,6 +718,7 @@ class DocumentCategoryFieldSeeder extends Seeder
             ],
             // 51
             [
+                'id'=>51,
                 'document_category_id'=>20,
                 'document_field_name'=>"Photo evidence of asset condition",
                 'description'=>"Photo evidence of asset condition",
@@ -697,6 +732,7 @@ class DocumentCategoryFieldSeeder extends Seeder
             ],
             // 52
             [
+                'id'=>52,
                 'document_category_id'=>20,
                 'document_field_name'=>"Project proposal",
                 'description'=>"Project proposal or justification for asset",
@@ -710,6 +746,7 @@ class DocumentCategoryFieldSeeder extends Seeder
             ],
             // 53
             [
+                'id'=>53,
                 'document_category_id'=>20,
                 'document_field_name'=>"Budget approval document",
                 'description'=>"Budget approval for asset usage",
@@ -723,6 +760,7 @@ class DocumentCategoryFieldSeeder extends Seeder
             ],
             // 54
             [
+                'id'=>54,
                 'document_category_id'=>20,
                 'document_field_name'=>"Reference/endorsement letter",
                 'description'=>"Reference or endorsement letter for external users",
@@ -734,9 +772,9 @@ class DocumentCategoryFieldSeeder extends Seeder
                 'updated_at' => Carbon::now(),
                 'listable'=>true,
             ],
-
             // 55
             [
+                'id'=>55,
                 'document_category_id'=>18,
                 'document_field_name'=>"Customer Attachments",
                 'description'=>"customer attachments docs",
@@ -748,9 +786,9 @@ class DocumentCategoryFieldSeeder extends Seeder
                 'updated_at' => Carbon::now(),
                 'listable'=>true,
             ],
-
             // 56
-             [
+            [
+                'id'=>56,
                 'document_category_id'=>18,
                 'document_field_name'=>"Customer logo/image",
                 'description'=>"customer logo/image docs",
@@ -764,6 +802,7 @@ class DocumentCategoryFieldSeeder extends Seeder
             ],
             // 57
             [
+                'id'=>57,
                 'document_category_id'=>21,
                 'document_field_name'=>"Upload bulk data files",
                 'description'=>"upload bulk data files for asset master",
@@ -774,10 +813,10 @@ class DocumentCategoryFieldSeeder extends Seeder
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
                 'listable'=>true,
-
             ],
             // 58
-            [ 
+            [
+                'id'=>58,
                 'document_category_id'=>22,
                 'document_field_name'=>"Upload bulk data files",
                 'description'=>"upload bulk data files for supplier",
@@ -788,10 +827,10 @@ class DocumentCategoryFieldSeeder extends Seeder
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
                 'listable'=>true,
-
             ], 
             // 59
-            [ 
+            [
+                'id'=>59,
                 'document_category_id'=>23,
                 'document_field_name'=>"Upload bulk data files",
                 'description'=>"upload bulk data files for customer",
@@ -802,10 +841,10 @@ class DocumentCategoryFieldSeeder extends Seeder
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
                 'listable'=>true,
-
             ],
             // 60
-            [ 
+            [
+                'id'=>60,
                 'document_category_id'=>24,
                 'document_field_name'=>"Upload bulk data files",
                 'description'=>"upload bulk data files for asset category",
@@ -816,10 +855,10 @@ class DocumentCategoryFieldSeeder extends Seeder
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
                 'listable'=>true,
-
             ],
             // 61
-            [ 
+            [
+                'id'=>61,
                 'document_category_id'=>25,
                 'document_field_name'=>"Upload bulk data files",
                 'description'=>"upload bulk data files for asset sub category",
@@ -830,10 +869,10 @@ class DocumentCategoryFieldSeeder extends Seeder
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
                 'listable'=>true,
-
             ],
             // 62
-            [ 
+            [
+                'id'=>62,
                 'document_category_id'=>26,
                 'document_field_name'=>"Upload bulk data files",
                 'description'=>"upload bulk data files for asset group",
@@ -844,10 +883,10 @@ class DocumentCategoryFieldSeeder extends Seeder
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
                 'listable'=>true,
-
             ],
             // 63
-            [ 
+            [
+                'id'=>63,
                 'document_category_id'=>27,
                 'document_field_name'=>"Upload bulk data files",
                 'description'=>"upload bulk data files for items master",
@@ -858,10 +897,10 @@ class DocumentCategoryFieldSeeder extends Seeder
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
                 'listable'=>true,
-
             ],
             // 64
-            [ 
+            [
+                'id'=>64,
                 'document_category_id'=>28,
                 'document_field_name'=>"Upload bulk data files",
                 'description'=>"upload bulk data files for assets availability terms type",
@@ -872,9 +911,21 @@ class DocumentCategoryFieldSeeder extends Seeder
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
                 'listable'=>true,
-
             ],
-        ]);
+            // 65
+            [
+                'id'=>65,
+                'document_category_id'=>3,
+                'document_field_name'=>"QR code image",
+                'description'=>"asset QR code image",
+                'file_path'=>'uploads/assets/qr_code_image',
+                'isactive'=>true,
+                'document_formats'=>'SVG,PNG,JPG,GIF,DOC,DOCX,CSV,PDF',
+                'max_upload_count'=>1,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+                'listable'=>false,
+            ],
+        ], ['id'], ['document_category_id', 'document_field_name', 'description', 'file_path', 'isactive', 'document_formats', 'max_upload_count', 'updated_at', 'listable']);
     }
-} 
- 
+}
