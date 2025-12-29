@@ -56,7 +56,7 @@ php artisan queue:work redis --queue=default,emails --sleep=1 --tries=3 --timeou
 php artisan listen:tenant-registration-actions --batch=10 
 
 # Terminal 4: (Optional) Monitor the queues
-php artisan listen:tenant-registration-actions --monitor
+php artisan listen:tenant-registration-actions --monitor 
 
 Production Commands (Single terminal for testing):
 
