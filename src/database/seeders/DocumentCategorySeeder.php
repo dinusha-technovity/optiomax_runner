@@ -219,7 +219,6 @@ class DocumentCategorySeeder extends Seeder
             // 21
             [
                 'id' => 21,
-                'id' => 21,
                 'category_name' => 'Asset Master Bulk Data Import',
                 'description' => 'asset master bulk data import form',
                 'category_tag' => 'ASSET_MASTER_BULK_DATA_IMPORT',
@@ -229,7 +228,6 @@ class DocumentCategorySeeder extends Seeder
             ],
             // 22
             [ 
-                'id' => 22,
                 'id' => 22,
                 'category_name' => 'Supplier Bulk Data Import',
                 'description' => 'supplier bulk data import form',
@@ -241,7 +239,6 @@ class DocumentCategorySeeder extends Seeder
             // 23
             [ 
                 'id' => 23,
-                'id' => 23,
                 'category_name' => 'Customer Bulk Data Import',
                 'description' => 'customer bulk data import form',
                 'category_tag' => 'CUSTOMER_BULK_DATA_IMPORT',
@@ -251,7 +248,6 @@ class DocumentCategorySeeder extends Seeder
             ],
             // 24
             [ 
-                'id' => 24,
                 'id' => 24,
                 'category_name' => 'Asset Category Bulk Data Import',
                 'description' => 'asset category bulk data import form',
@@ -263,7 +259,6 @@ class DocumentCategorySeeder extends Seeder
             // 25
             [ 
                 'id' => 25,
-                'id' => 25,
                 'category_name' => 'Asset Sub Category Bulk Data Import',
                 'description' => 'asset sub category bulk data import form',
                 'category_tag' => 'ASSET_SUB_CATEGORY_BULK_DATA_IMPORT',
@@ -273,7 +268,6 @@ class DocumentCategorySeeder extends Seeder
             ],
             // 26
             [ 
-                'id' => 26,
                 'id' => 26,
                 'category_name' => 'Asset Group Bulk Data Import',
                 'description' => 'asset group bulk data import form',
@@ -285,7 +279,6 @@ class DocumentCategorySeeder extends Seeder
             // 27
             [ 
                 'id' => 27,
-                'id' => 27,
                 'category_name' => 'Items Master Bulk Data Import',
                 'description' => 'items master bulk data import form',
                 'category_tag' => 'ITEMS_MASTER_BULK_DATA_IMPORT',
@@ -295,7 +288,6 @@ class DocumentCategorySeeder extends Seeder
             ],
             // 28
             [ 
-                'id' => 28,
                 'id' => 28,
                 'category_name' => 'Assets Availability Terms Type Bulk Data Import',
                 'description' => 'assets availability terms type bulk data import form',
