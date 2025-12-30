@@ -13,28 +13,20 @@ class Tenantassest_requisition_period_typeSeeder extends Seeder
      */
     public function run(): void
     {
-        $period_type = [
-            [
-                'name' => "Long period/terms",
-                'description' => "test",
-            ],
-            [
-                'name' => "Short period/terms",
-                'description' => "test",
-            ],
-            [
-                'name' => "Temporary",
-                'description' => "test",
-            ],
-            [
-                'name' => "Permanent",
-                'description' => "test",
-            ],
+        $period_types = [
+            ['id' => 1, 'name' => 'Custom', 'description' => 'test', 'created_at' => now(), 'updated_at' => now()],
+            ['id' => 2, 'name' => 'Permanent', 'description' => 'test', 'created_at' => now(), 'updated_at' => now()],
         ];
 
-        // Seed multiple period_type
-        foreach ($period_type as $Period_type) {
-            DB::table('asset_requisition_period_types')->insert($Period_type);
-        }
+        $targetIds = [1, 2];
+        // Delete any rows not part of the target set, then upsert
+        DB::transaction(function () use ($period_types, $targetIds) {
+            DB::table('asset_requisition_period_types')
+                ->whereNotIn('id', $targetIds)
+                ->delete();
+
+            DB::table('asset_requisition_period_types')
+                ->upsert($period_types, ['id'], ['name', 'description', 'updated_at']);
+        });
     }
 }
