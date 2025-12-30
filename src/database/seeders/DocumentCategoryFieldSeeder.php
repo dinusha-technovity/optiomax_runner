@@ -934,7 +934,7 @@ class DocumentCategoryFieldSeeder extends Seeder
 
             ],
         ];
-
+ 
         DB::table('document_category_field')->upsert(
             $rows,
             ['id'],
