@@ -19,8 +19,8 @@ class DocumentCategorySeeder extends Seeder
             // 1
             [
                 'id' => 1,
-                'category_name' => 'Asset Category',
-                'description' => 'asset category form',
+                'category_name' => 'Add Documents to Asset Category Form',
+                'description' => 'Submit documents to asset category form',
                 'category_tag' => 'ASSET_CATEGORY',
                 'isactive' => true,
                 'created_at' => Carbon::now(),
@@ -29,8 +29,8 @@ class DocumentCategorySeeder extends Seeder
             // 2
             [
                 'id' => 2,
-                'category_name' => 'Asset Groups Create',
-                'description' => 'asset groups create form',
+                'category_name' => 'Add Documents to Asset Groups Form',
+                'description' => 'Submit documents to asset groups form',
                 'category_tag' => 'ASSET_GROUPS_CREATE',
                 'isactive' => true,
                 'created_at' => Carbon::now(),
@@ -39,8 +39,8 @@ class DocumentCategorySeeder extends Seeder
             // 3
             [
                 'id' => 3,
-                'category_name' => 'Asset Items Create',
-                'description' => 'asset items create form',
+                'category_name' => 'Add Documents to Asset Items Form',
+                'description' => 'Submit documents to asset items form',
                 'category_tag' => 'ASSET_ITEMS_CREATE',
                 'isactive' => true,
                 'created_at' => Carbon::now(),
@@ -49,8 +49,8 @@ class DocumentCategorySeeder extends Seeder
             // 4
             [
                 'id' => 4,
-                'category_name' => 'Asset Requisitions',
-                'description' => 'asset requisitions form',
+                'category_name' => 'Add Documents to Asset Requisitions Form',
+                'description' => 'Submit documents to asset requisitions form',
                 'category_tag' => 'ASSET_REQUISITIONS_',
                 'isactive' => true,
                 'created_at' => Carbon::now(),
@@ -59,8 +59,8 @@ class DocumentCategorySeeder extends Seeder
             // 5
             [
                 'id' => 5,
-                'category_name' => 'Procurement Initiate',
-                'description' => 'procurement initiate form',
+                'category_name' => 'Add Documents to Procurement Initiate Form',
+                'description' => 'Submit documents to procurement initiate form',
                 'category_tag' => 'PROCURENMENT_INITIATE',
                 'isactive' => true,
                 'created_at' => Carbon::now(),
@@ -69,8 +69,8 @@ class DocumentCategorySeeder extends Seeder
             // 6
             [
                 'id' => 6,
-                'category_name' => 'Staff',
-                'description' => 'staff form',
+                'category_name' => 'Add Documents to Staff Form',
+                'description' => 'Submit documents to staff form',
                 'category_tag' => 'STAFF',
                 'isactive' => true,
                 'created_at' => Carbon::now(),
@@ -79,8 +79,8 @@ class DocumentCategorySeeder extends Seeder
             // 7
             [
                 'id' => 7,
-                'category_name' => 'Sub Asset Category',
-                'description' => 'sub asset category form',
+                'category_name' => 'Add Documents to Sub Asset Category Form',
+                'description' => 'Submit documents to sub asset category form',
                 'category_tag' => 'SUB_ASSET_CATEGORY',
                 'isactive' => true,
                 'created_at' => Carbon::now(),
@@ -89,8 +89,8 @@ class DocumentCategorySeeder extends Seeder
             // 8
             [
                 'id' => 8,
-                'category_name' => 'Supplier',
-                'description' => 'supplier form',
+                'category_name' => 'Add Documents to Supplier Form',
+                'description' => 'Submit documents to supplier form',
                 'category_tag' => 'SUPPLIER',
                 'isactive' => true,
                 'created_at' => Carbon::now(),
@@ -99,8 +99,8 @@ class DocumentCategorySeeder extends Seeder
             // 9
             [
                 'id' => 9,
-                'category_name' => 'Supplier Quotation',
-                'description' => 'supplier quotation form',
+                'category_name' => 'Add Documents to Supplier Quotation Form',
+                'description' => 'Submit documents to supplier quotation form',
                 'category_tag' => 'SUPPLIER_QUOTATION',
                 'isactive' => true,
                 'created_at' => Carbon::now(),
@@ -109,8 +109,8 @@ class DocumentCategorySeeder extends Seeder
             // 10
             [
                 'id' => 10,
-                'category_name' => 'System Configuration',
-                'description' => 'system configuration form',
+                'category_name' => 'Add Documents to System Configuration Form',
+                'description' => 'Submit documents to system configuration form',
                 'category_tag' => 'SYSTEM_CONFIGURATION',
                 'isactive' => true,
                 'created_at' => Carbon::now(),
@@ -119,8 +119,8 @@ class DocumentCategorySeeder extends Seeder
             // 11
             [
                 'id' => 11,
-                'category_name' => 'Users Create',
-                'description' => 'users create form',
+                'category_name' => 'Add Documents to Users Form',
+                'description' => 'Submit documents to users form',
                 'category_tag' => 'USERS_CREATE',
                 'isactive' => true,
                 'created_at' => Carbon::now(),
@@ -129,8 +129,8 @@ class DocumentCategorySeeder extends Seeder
             // 12
             [
                 'id' => 12,
-                'category_name' => 'User Asset Items',
-                'description' => 'user asset items form',
+                'category_name' => 'Add Documents to User Asset Items Form',
+                'description' => 'Submit documents to user asset items form',
                 'category_tag' => 'USER_ASSET_ITEMS',
                 'isactive' => true,
                 'created_at' => Carbon::now(),
@@ -139,8 +139,8 @@ class DocumentCategorySeeder extends Seeder
             // 13
             [
                 'id' => 13,
-                'category_name' => 'Work Flow',
-                'description' => 'work flow form',
+                'category_name' => 'Add Documents to Work Flow Form',
+                'description' => 'Submit documents to work flow form',
                 'category_tag' => 'WORK_FLOW',
                 'isactive' => true,
                 'created_at' => Carbon::now(),
@@ -149,8 +149,8 @@ class DocumentCategorySeeder extends Seeder
             // 14
             [
                 'id' => 14,
-                'category_name' => 'Create Work Orders',
-                'description' => 'create work orders form',
+                'category_name' => 'Add Documents to Work Orders Form',
+                'description' => 'Submit documents to work orders form',
                 'category_tag' => 'CREATE_WORK_ORDERS',
                 'isactive' => true,
                 'created_at' => Carbon::now(),
@@ -159,8 +159,8 @@ class DocumentCategorySeeder extends Seeder
             // 15
             [
                 'id' => 15,
-                'category_name' => 'Close Work Order',
-                'description' => 'close work order form',
+                'category_name' => 'Add Documents to Close Work Order Form',
+                'description' => 'Submit documents to close work order form',
                 'category_tag' => 'CLOSE_WORK_ORDER',
                 'isactive' => true,
                 'created_at' => Carbon::now(),
@@ -169,8 +169,8 @@ class DocumentCategorySeeder extends Seeder
             // 16
             [
                 'id' => 16,
-                'category_name' => 'Create Item Master',
-                'description' => 'Create item master form',
+                'category_name' => 'Add Documents to Item Master Form',
+                'description' => 'Submit documents to item master form',
                 'category_tag' => 'ITEM_MASTER_CREATE',
                 'isactive' => true,
                 'created_at' => Carbon::now(),
@@ -179,8 +179,8 @@ class DocumentCategorySeeder extends Seeder
             // 17
             [
                 'id' => 17,
-                'category_name' => 'Create Incident Reports',
-                'description' => 'Create incident reports form',
+                'category_name' => 'Add Documents to Incident Reports Form',
+                'description' => 'Submit documents to incident reports form',
                 'category_tag' => 'CREATE_INCIDENT_REPORTS',
                 'isactive' => true,
                 'created_at' => Carbon::now(),
@@ -189,8 +189,8 @@ class DocumentCategorySeeder extends Seeder
             // 18
             [
                 'id' => 18,
-                'category_name' => 'Customer create',
-                'description' => 'Submit customer create form',
+                'category_name' => 'Add Documents to Customer Form',
+                'description' => 'Submit documents to customer form',
                 'category_tag' => 'CUSTOMER_CREATE',
                 'isactive' => true,
                 'created_at' => Carbon::now(),
@@ -199,8 +199,8 @@ class DocumentCategorySeeder extends Seeder
             // 19
             [
                 'id' => 19,
-                'category_name' => 'Asset Availability',
-                'description' => 'Submit asset availability form',
+                'category_name' => 'Add Documents to Asset Availability Form',
+                'description' => 'Submit documents to asset availability form',
                 'category_tag' => 'ASSET_AVAILABILITY',
                 'isactive' => true,
                 'created_at' => Carbon::now(),
@@ -209,8 +209,8 @@ class DocumentCategorySeeder extends Seeder
             // 20
             [
                 'id' => 20,
-                'category_name' => 'Asset Booking',
-                'description' => 'Submit asset booking form',
+                'category_name' => 'Add Documents to Asset Booking Form',
+                'description' => 'Submit documents to asset booking form',
                 'category_tag' => 'ASSET_BOOKING',
                 'isactive' => true,
                 'created_at' => Carbon::now(),
