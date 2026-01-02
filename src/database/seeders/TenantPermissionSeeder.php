@@ -2983,6 +2983,23 @@ class TenantPermissionSeeder extends Seeder
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
             ],
+            // 174
+            [
+                'id' => 174,
+                'name' => 'Add My Assets Schedule',
+                'description' => 'Add asset schedule',
+                'parent_id' => 98,
+                'menulink' => '#',
+                'icon' => null,
+                'isconfiguration' => false,
+                'ismenu_list' => false,
+                'menu_order' => 1,
+                'isactive' => true,
+                'is_enable_for_web_app' => true,
+                'is_enable_for_mobile_app' => true,
+                'created_at' => $currentTime,
+                'updated_at' => $currentTime
+            ],
 
         ];
 
