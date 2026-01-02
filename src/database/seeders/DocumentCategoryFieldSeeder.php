@@ -930,11 +930,11 @@ class DocumentCategoryFieldSeeder extends Seeder
                 'max_upload_count'=>1,
                 'created_at' => $now,
                 'updated_at' => $now,
-                'listable'=>true,
+                'listable'=>false,
 
             ],
         ];
-
+ 
         DB::table('document_category_field')->upsert(
             $rows,
             ['id'],
