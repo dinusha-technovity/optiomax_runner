@@ -3000,6 +3000,74 @@ class TenantPermissionSeeder extends Seeder
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
             ],
+            // 175
+            [
+                'id' => 175,
+                'name' => 'Manage Designations',
+                'description' => 'Manage designations',
+                'parent_id' => 1,
+                'menulink' => '/designation_master',
+                'icon' => null,
+                'isconfiguration' => true,
+                'ismenu_list' => true,
+                'menu_order' => 2,
+                'isactive' => true,
+                'is_enable_for_web_app' => true,
+                'is_enable_for_mobile_app' => false,
+                'created_at' => $currentTime,
+                'updated_at' => $currentTime
+            ],
+            // 176
+            [
+                'id' => 176,
+                'name' => 'Create Designation',
+                'description' => 'Create new designation',
+                'parent_id' => 175,
+                'menulink' => '#',
+                'icon' => null,
+                'isconfiguration' => true,
+                'ismenu_list' => false,
+                'menu_order' => 1,
+                'isactive' => true,
+                'is_enable_for_web_app' => true,
+                'is_enable_for_mobile_app' => false,
+                'created_at' => $currentTime,
+                'updated_at' => $currentTime
+            ],
+            // 177
+            [
+                'id' => 177,
+                'name' => 'Edit Designation',
+                'description' => 'Edit existing designation',
+                'parent_id' => 175,
+                'menulink' => '#',
+                'icon' => null,
+                'isconfiguration' => true,
+                'ismenu_list' => false,
+                'menu_order' => 2,
+                'isactive' => true,
+                'is_enable_for_web_app' => true,
+                'is_enable_for_mobile_app' => false,
+                'created_at' => $currentTime,
+                'updated_at' => $currentTime
+            ],
+            // 178
+            [
+                'id' => 178,
+                'name' => 'Delete Designation',
+                'description' => 'Delete designation',
+                'parent_id' => 175,
+                'menulink' => '#',
+                'icon' => null,
+                'isconfiguration' => true,
+                'ismenu_list' => false,
+                'menu_order' => 3,
+                'isactive' => true,
+                'is_enable_for_web_app' => true,
+                'is_enable_for_mobile_app' => false,
+                'created_at' => $currentTime,
+                'updated_at' => $currentTime
+            ],
 
         ];
 
