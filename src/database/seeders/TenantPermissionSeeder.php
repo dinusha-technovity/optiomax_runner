@@ -3068,6 +3068,40 @@ class TenantPermissionSeeder extends Seeder
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
             ],
+            // 179
+            [
+                'id' => 179,
+                'name' => 'My Schedules',
+                'description' => 'View my asset schedules',
+                'parent_id' => 50,
+                'menulink' => '/my_scheduling',
+                'icon' => null,
+                'isconfiguration' => false,
+                'ismenu_list' => true,
+                'menu_order' => 9,
+                'isactive' => true,
+                'is_enable_for_web_app' => true,
+                'is_enable_for_mobile_app' => false,
+                'created_at' => $currentTime,
+                'updated_at' => $currentTime
+            ],
+            // 180
+            [
+                'id' => 180,
+                'name' => 'Add My Schedules Readings',
+                'description' => 'Create readings for my asset schedules',
+                'parent_id' => 179,
+                'menulink' => '#',
+                'icon' => null,
+                'isconfiguration' => false,
+                'ismenu_list' => true,
+                'menu_order' => 9,
+                'isactive' => true,
+                'is_enable_for_web_app' => true,
+                'is_enable_for_mobile_app' => false,
+                'created_at' => $currentTime,
+                'updated_at' => $currentTime
+            ],
 
         ];
 
