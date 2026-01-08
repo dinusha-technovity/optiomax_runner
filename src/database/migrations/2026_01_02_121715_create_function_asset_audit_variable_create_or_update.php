@@ -83,15 +83,14 @@ return new class extends Migration
             IF p_audit_variable_id IS NULL OR p_audit_variable_id = 0 THEN
                 -- INSERT operation
                 
-                -- Check if variable name already exists for the same type and tenant
+                -- Check if variable name already exists for the tenant
                 IF EXISTS (
                     SELECT 1 FROM asset_audit_variable 
                     WHERE name = p_name 
-                    AND asset_audit_variable_type_id = p_asset_audit_variable_type_id
                     AND tenant_id = p_tenant_id 
                     AND deleted_at IS NULL
                 ) THEN
-                    RETURN QUERY SELECT 'FAILURE'::TEXT, 'Variable name already exists for this type'::TEXT, NULL::BIGINT, NULL::JSONB, NULL::JSONB;
+                    RETURN QUERY SELECT 'FAILURE'::TEXT, 'Variable name already exists'::TEXT, NULL::BIGINT, NULL::JSONB, NULL::JSONB;
                     RETURN;
                 END IF;
 
@@ -157,12 +156,11 @@ return new class extends Migration
                 IF EXISTS (
                     SELECT 1 FROM asset_audit_variable 
                     WHERE name = p_name 
-                    AND asset_audit_variable_type_id = p_asset_audit_variable_type_id
                     AND tenant_id = p_tenant_id 
                     AND id != p_audit_variable_id
                     AND deleted_at IS NULL
                 ) THEN
-                    RETURN QUERY SELECT 'FAILURE'::TEXT, 'Variable name already exists for this type'::TEXT, NULL::BIGINT, NULL::JSONB, NULL::JSONB;
+                    RETURN QUERY SELECT 'FAILURE'::TEXT, 'Variable name already exists'::TEXT, NULL::BIGINT, NULL::JSONB, NULL::JSONB;
                     RETURN;
                 END IF;
 
