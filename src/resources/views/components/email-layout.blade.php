@@ -26,7 +26,7 @@
             border: 1px solid #e0e0e0; 
             border-radius: 6px;">
             <p style="margin: 30px 0 0; font-size: 36px; font-weight: bold;">
-                Integrate. Automate. Streamline.
+                Integrate. Automate. Optimized.
             </p>
         </div>
 

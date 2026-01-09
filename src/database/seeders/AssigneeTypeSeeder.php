@@ -10,8 +10,9 @@ class AssigneeTypeSeeder extends Seeder
     public function run(): void
     {
         // DB::table('assignee_types')->truncate();
-        DB::table('assignee_types')->insert([
+        DB::table('assignee_types')->upsert([
             [
+                'id' => 1,
                 'name' => 'Individual',
                 'description' => 'Assignable to individual users.',
                 'is_active' => true,
@@ -21,6 +22,7 @@ class AssigneeTypeSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
+                'id' => 2,
                 'name' => 'Groups',
                 'description' => 'Assignable to groups or teams.',
                 'is_active' => true,
@@ -30,6 +32,7 @@ class AssigneeTypeSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
+                'id' => 3,
                 'name' => 'Both',
                 'description' => 'Assignable to both individuals and groups.',
                 'is_active' => true,
@@ -38,6 +41,6 @@ class AssigneeTypeSeeder extends Seeder
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
-        ]);
+        ], ['id'], ['name', 'description', 'is_active', 'updated_at']);
     }
 }

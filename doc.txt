@@ -69,8 +69,8 @@ php artisan listen:tenant-registration-actions --batch=10 --daemon
 Local Testing Commands:
 
 # Check queue status
-php artisan queue:monitor
-
+php artisan queue:monitor 
+ 
 # Clear failed jobs
 php artisan queue:clear redis
 php artisan queue:flush
