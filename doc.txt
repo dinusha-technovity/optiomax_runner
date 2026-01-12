@@ -72,7 +72,7 @@ Local Testing Commands:
 php artisan queue:monitor 
   
 # Clear failed jobs
-php artisan queue:clear redis
+php artisan queue:clear redis 
 php artisan queue:flush
 
 # Debug specific registration
