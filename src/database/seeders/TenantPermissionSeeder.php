@@ -3102,6 +3102,22 @@ class TenantPermissionSeeder extends Seeder
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
             ],
+            [
+                'id' => 181,
+                'name' => 'System Settings',
+                'description' => 'Configure system settings',
+                'parent_id' => null,
+                'menulink' => '/system_settings',
+                'icon' => 'GrDocumentConfig',
+                'isconfiguration' => false,
+                'ismenu_list' => false,
+                'menu_order' => 7,
+                'isactive' => true,
+                'is_enable_for_web_app' => true,
+                'is_enable_for_mobile_app' => false,
+                'created_at' => $currentTime,
+                'updated_at' => $currentTime
+            ],
 
         ];
 
