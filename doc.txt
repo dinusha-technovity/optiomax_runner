@@ -74,7 +74,7 @@ php artisan queue:monitor
 # Clear failed jobs
 php artisan queue:clear redis 
 php artisan queue:flush
-
+ 
 # Debug specific registration
 php artisan debug:tenant-registration --id=27
 
