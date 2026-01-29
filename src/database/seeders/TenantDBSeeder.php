@@ -67,5 +67,7 @@ class TenantDBSeeder extends Seeder
         $this->call(Tenant_RoleWidgetSeeder::class);
         $this->call(AssetAuditVariableTypeSeeder::class);
         $this->call(SystemSettingsSeeder::class);
+        $this->call(AssigneeTypeSeeder::class);
+
     }
 }
