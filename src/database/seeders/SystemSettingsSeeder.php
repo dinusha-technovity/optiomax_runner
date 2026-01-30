@@ -48,14 +48,14 @@ class SystemSettingsSeeder extends Seeder
                 'label' => 'Finance Department Email',
                 'description' => 'Primary finance department email address',
             ],
-            [
-                'key' => 'po_limit',
-                'value' => '100000',
-                'type' => 'number',
-                'category' => 'finance',
-                'label' => 'Purchase Order Limit',
-                'description' => 'Default maximum purchase order value',
-            ],
+            // [
+            //     'key' => 'po_limit',
+            //     'value' => '100000',
+            //     'type' => 'number',
+            //     'category' => 'finance',
+            //     'label' => 'Purchase Order Limit',
+            //     'description' => 'Default maximum purchase order value',
+            // ],
             [
                 'key' => 'enable_notifications',
                 'value' => 'true',
