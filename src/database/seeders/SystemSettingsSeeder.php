@@ -49,14 +49,6 @@ class SystemSettingsSeeder extends Seeder
                 'description' => 'Primary finance department email address',
             ],
             [
-                'key' => 'po_limit',
-                'value' => '100000',
-                'type' => 'number',
-                'category' => 'finance',
-                'label' => 'Purchase Order Limit',
-                'description' => 'Default maximum purchase order value',
-            ],
-            [
                 'key' => 'enable_notifications',
                 'value' => 'true',
                 'type' => 'boolean',
@@ -66,28 +58,53 @@ class SystemSettingsSeeder extends Seeder
             ],
         ];
 
+        $settingsToUpsert = [];
+        $settingKeys = array_column($defaultSettings, 'key');
+
         foreach ($tenantIds as $tenantId) {
+            // Delete settings for this tenant that are not in the current defaultSettings
+            DB::table('system_settings')
+                ->where('tenant_id', $tenantId)
+                ->whereNotIn('key', $settingKeys)
+                ->delete();
+
             foreach ($defaultSettings as $setting) {
-                DB::table('system_settings')->updateOrInsert(
-                    [
-                        'tenant_id' => $tenantId,
-                        'key' => $setting['key'],
-                    ],
-                    [
-                        'value' => $setting['value'],
-                        'type' => $setting['type'],
-                        'category' => $setting['category'],
-                        'label' => $setting['label'],
-                        'description' => $setting['description'],
-                        'metadata' => null,
-                        'is_default' => true,
-                        'is_editable' => true,
-                        'is_active' => true,
-                        'created_at' => $now,
-                        'updated_at' => $now,
-                    ]
-                );
+                $settingsToUpsert[] = [
+                    'tenant_id' => $tenantId,
+                    'key' => $setting['key'],
+                    'value' => $setting['value'],
+                    'type' => $setting['type'],
+                    'category' => $setting['category'],
+                    'label' => $setting['label'],
+                    'description' => $setting['description'],
+                    'metadata' => null,
+                    'is_default' => true,
+                    'is_editable' => true,
+                    'is_active' => true,
+                    'created_at' => $now,
+                    'updated_at' => $now,
+                ];
             }
+        }
+
+        if (!empty($settingsToUpsert)) {
+            DB::table('system_settings')->upsert(
+                $settingsToUpsert,
+                ['tenant_id', 'key'],
+                [
+                    'value',
+                    'type',
+                    'category',
+                    'label',
+                    'description',
+                    'metadata',
+                    'is_default',
+                    'is_editable',
+                    'is_active',
+                    'created_at',
+                    'updated_at',
+                ]
+            );
         }
     }
 }

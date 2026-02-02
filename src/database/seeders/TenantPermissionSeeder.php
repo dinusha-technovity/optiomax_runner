@@ -3094,7 +3094,7 @@ class TenantPermissionSeeder extends Seeder
                 'menulink' => '#',
                 'icon' => null,
                 'isconfiguration' => false,
-                'ismenu_list' => true,
+                'ismenu_list' => false,
                 'menu_order' => 9,
                 'isactive' => true,
                 'is_enable_for_web_app' => true,
