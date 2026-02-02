@@ -7,8 +7,8 @@ use Illuminate\Database\Seeder;
 use App\Models\Permission;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
- 
-class TenantPermissionSeederr extends Seeder
+
+class TenantPermissionSeeder extends Seeder
 { 
     /**
      * Run the database seeds.
@@ -3078,7 +3078,7 @@ class TenantPermissionSeederr extends Seeder
                 'icon' => null,
                 'isconfiguration' => false,
                 'ismenu_list' => true,
-                'menu_order' => 9,
+                'menu_order' => 10,
                 'isactive' => true,
                 'is_enable_for_web_app' => true,
                 'is_enable_for_mobile_app' => false,
@@ -3102,6 +3102,7 @@ class TenantPermissionSeederr extends Seeder
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
             ],
+            // 181
             [
                 'id' => 181,
                 'name' => 'System Settings',
@@ -3112,6 +3113,74 @@ class TenantPermissionSeederr extends Seeder
                 'isconfiguration' => false,
                 'ismenu_list' => false,
                 'menu_order' => 7,
+                'isactive' => true,
+                'is_enable_for_web_app' => true,
+                'is_enable_for_mobile_app' => false,
+                'created_at' => $currentTime,
+                'updated_at' => $currentTime
+            ],
+            // 182
+            [
+                'id' => 182,
+                'name' => 'Asset Request from Owner',
+                'description' => 'Manage internal asset requisitions',
+                'parent_id' => 50,
+                'menulink' => '/asset_request_from_owner',
+                'icon' => null,
+                'isconfiguration' => false,
+                'ismenu_list' => true,
+                'menu_order' => 11,
+                'isactive' => true,
+                'is_enable_for_web_app' => true,
+                'is_enable_for_mobile_app' => false,
+                'created_at' => $currentTime,
+                'updated_at' => $currentTime
+            ],
+            // 183
+            [
+                'id' => 183,
+                'name' => 'Asset Transfer',
+                'description' => 'Asset Ownership, Department or Location Change',
+                'parent_id' => null,
+                'menulink' => '#',
+                'icon' => 'FiShoppingCart',
+                'isconfiguration' => false,
+                'ismenu_list' => true,
+                'menu_order' => 6,
+                'isactive' => true,
+                'is_enable_for_web_app' => true,
+                'is_enable_for_mobile_app' => false,
+                'created_at' => $currentTime,
+                'updated_at' => $currentTime
+            ],
+            // 184
+            [
+                'id' => 184,
+                'name' => 'Requisition-Based Asset Transfer',
+                'description' => 'Manage asset transfers based on requisitions',
+                'parent_id' => 183,
+                'menulink' => '/requisition_based_asset_transfer',
+                'icon' => null,
+                'isconfiguration' => false,
+                'ismenu_list' => true,
+                'menu_order' => 1,
+                'isactive' => true,
+                'is_enable_for_web_app' => true,
+                'is_enable_for_mobile_app' => false,
+                'created_at' => $currentTime,
+                'updated_at' => $currentTime
+            ],
+            // 185
+            [
+                'id' => 185,
+                'name' => 'Direct Asset Transfer Requests',
+                'description' => 'Direct Asset Transfer (Location / Owner / Department)',
+                'parent_id' => 183,
+                'menulink' => '/direct_asset_transfer_requests',
+                'icon' => null,
+                'isconfiguration' => false,
+                'ismenu_list' => true,
+                'menu_order' => 2,
                 'isactive' => true,
                 'is_enable_for_web_app' => true,
                 'is_enable_for_mobile_app' => false,

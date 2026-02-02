@@ -62,6 +62,20 @@ class TenantRequestTypesSeeder extends Seeder
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
             ],
+            [
+                'id' => 8,
+                'request_type' => 'Asset Request from Owner Requisition',
+                'description'  => 'Request assets from the asset owner for specific needs.',
+                'created_at' => $currentTime,
+                'updated_at' => $currentTime
+            ],
+            [
+                'id' => 9,
+                'request_type' => 'Direct Asset Transfer Requests',
+                'description'  => 'Manage direct asset transfer requests.',
+                'created_at' => $currentTime,
+                'updated_at' => $currentTime
+            ],
         ];
         DB::table('workflow_request_types')->upsert($requestTypes, ['id'], ['request_type'], ['description', 'updated_at']);
     }
