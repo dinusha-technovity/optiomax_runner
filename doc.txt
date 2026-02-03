@@ -59,7 +59,7 @@ php artisan listen:tenant-registration-actions --batch=10
 php artisan listen:tenant-registration-actions --monitor 
 
 Production Commands (Single terminal for testing):
-
+ 
 # Start combined queue worker for both tenant-registration and default queues
 php artisan queue:work redis --queue=tenant-registration,default,emails --sleep=1 --tries=3 --timeout=300 --memory=512
 
