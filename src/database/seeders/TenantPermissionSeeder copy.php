@@ -7,8 +7,8 @@ use Illuminate\Database\Seeder;
 use App\Models\Permission;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
-
-class TenantPermissionSeeder extends Seeder
+ 
+class TenantPermissionSeederr extends Seeder
 { 
     /**
      * Run the database seeds.
