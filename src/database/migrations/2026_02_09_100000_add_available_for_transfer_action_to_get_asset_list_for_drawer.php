@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Support\Facades\DB;
 
 return new class extends Migration
-{
+{ 
     /**
      * Run the migrations.
      */
@@ -173,6 +173,7 @@ return new class extends Migration
                     WHERE mtm.user_id = %L
                         AND mtm.tenant_id = %L
                         AND mtm.deleted_at IS NULL AND mtm.isactive = TRUE
+                        AND mtm.is_team_leader = TRUE
                         AND mt.deleted_at IS NULL AND mt.isactive = TRUE
                         AND mtag.deleted_at IS NULL AND mtag.isactive = TRUE
                         AND a.deleted_at IS NULL AND a.isactive = TRUE
@@ -579,7 +580,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        // No rollback needed as the function will be recreated if rolled back
-        // The previous migration will handle recreation
+        DB::unprepared('DROP FUNCTION IF EXISTS get_asset_list_for_drawer CASCADE;');
     }
 };
