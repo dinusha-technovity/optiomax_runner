@@ -933,6 +933,20 @@ class DocumentCategoryFieldSeeder extends Seeder
                 'listable'=>false,
 
             ],
+            // 66
+            [
+                'id' => 66,
+                'document_category_id'=>29,
+                'document_field_name'=>"Any document related with asset",
+                'description'=>"Asset documents (related files)",
+                'file_path'=>'uploads/MyInternalAssetsRequisitions/AssetDocument',
+                'isactive'=>true,
+                'document_formats'=>'SVG,PNG,JPG,GIF,DOC,DOCX,CSV,PDF',
+                'max_upload_count'=>5,
+                'created_at' => $now,
+                'updated_at' => $now,
+                'listable'=>true,
+            ],
         ];
  
         DB::table('document_category_field')->upsert(

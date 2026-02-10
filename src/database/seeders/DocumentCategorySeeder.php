@@ -296,6 +296,16 @@ class DocumentCategorySeeder extends Seeder
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
             ],
+            // 29
+            [ 
+                'id' => 29,
+                'category_name' => 'My Internal Assets Requisitions',
+                'description' => 'my internal assets requisitions form',
+                'category_tag' => 'MY_INTERNAL_ASSETS_REQUISITIONS',
+                'isactive' => true,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ],
         ], ['id'], ['category_name', 'description', 'category_tag', 'isactive', 'updated_at']); 
     } 
 } 

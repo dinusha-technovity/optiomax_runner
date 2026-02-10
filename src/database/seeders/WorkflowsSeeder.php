@@ -64,6 +64,16 @@ class WorkflowsSeeder extends Seeder
                 'workflow_name' => 'Purchase Order Submission Workflow',
                 'workflow_description' => 'Workflow for purchase order submission requests.',
             ],
+            [
+                'workflow_request_type_id' => 8,
+                'workflow_name' => 'Asset Request from Owner Requisition Workflow',
+                'workflow_description' => 'Workflow for asset request from owner requisition requests.',
+            ],
+            [
+                'workflow_request_type_id' => 9,
+                'workflow_name' => 'Direct Asset Transfer Requests Workflow',
+                'workflow_description' => 'Workflow for direct asset transfer requests.',
+            ],
         ];
 
         foreach ($workflowsData as $workflowData) {
