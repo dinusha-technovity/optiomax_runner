@@ -28,7 +28,8 @@ return new class extends Migration
 
             CREATE OR REPLACE FUNCTION change_supplier_asset_stats(
                 p_supplier_id BIGINT,
-                p_action TEXT
+                p_action TEXT,
+                p_tenant_id BIGINT
             )
             RETURNS VOID
             LANGUAGE plpgsql
@@ -49,20 +50,25 @@ return new class extends Migration
                 ================================ */
                 IF p_action = 'REGISTER' THEN
 
-                    INSERT INTO supplier_asset_counters (supplier_id, asset_count)
-                    VALUES (p_supplier_id, 1)
-                    ON CONFLICT (supplier_id)
-                    DO UPDATE SET
-                        asset_count = supplier_asset_counters.asset_count + 1
-                    RETURNING asset_count
-                    INTO v_new_asset_count;
+                    IF EXISTS (SELECT 1 FROM supplier_asset_counters WHERE supplier_id = p_supplier_id AND tenant_id = p_tenant_id) THEN
+                        UPDATE supplier_asset_counters
+                        SET asset_count = asset_count + 1
+                        WHERE supplier_id = p_supplier_id AND tenant_id = p_tenant_id
+                        RETURNING asset_count INTO v_new_asset_count;
+                    ELSE
+                        INSERT INTO supplier_asset_counters (supplier_id, asset_count, tenant_id)
+                        VALUES (p_supplier_id, 1, p_tenant_id)
+                        RETURNING asset_count INTO v_new_asset_count;
+                    END IF;
 
-                    UPDATE supplier_asset_global_stats
-                    SET
+                    -- Insert or update global stats record
+                    INSERT INTO supplier_asset_global_stats ( highest_asset_count, highest_supplier_id, tenant_id)
+                    VALUES ( v_new_asset_count, p_supplier_id, p_tenant_id)
+                    ON CONFLICT (tenant_id)
+                    DO UPDATE SET
                         highest_asset_count = v_new_asset_count,
                         highest_supplier_id = p_supplier_id
-                    WHERE id = 1
-                    AND v_new_asset_count > highest_asset_count;
+                    WHERE v_new_asset_count > supplier_asset_global_stats.highest_asset_count;
 
                 /* ===============================
                 DELETE ACTION
@@ -79,7 +85,7 @@ return new class extends Migration
                     SELECT highest_supplier_id
                     INTO v_current_max_supplier
                     FROM supplier_asset_global_stats
-                    WHERE id = 1;
+                    WHERE tenant_id = p_tenant_id;
 
                     IF v_current_max_supplier = p_supplier_id THEN
                         -- Recalculate global max safely
@@ -90,10 +96,11 @@ return new class extends Migration
                         FROM (
                             SELECT supplier_id, asset_count AS max_count
                             FROM supplier_asset_counters
+                            WHERE tenant_id = p_tenant_id
                             ORDER BY asset_count DESC
                             LIMIT 1
                         ) sub
-                        WHERE supplier_asset_global_stats.id = 1;
+                        WHERE supplier_asset_global_stats.tenant_id = p_tenant_id;
                     END IF;
 
                 END IF;

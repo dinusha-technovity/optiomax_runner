@@ -12,13 +12,10 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('supplier_asset_global_stats', function (Blueprint $table) {
-            // Standard Auto-Increment ID
             // We removed 'DEFAULT 1' and the CHECK constraint because 
             // this table now holds multiple rows (one per tenant).
-            $table->id();
-
             // Tenant ID: Groups the stats to a specific tenant
-            $table->unsignedBigInteger('tenant_id');
+            $table->unsignedBigInteger('tenant_id')->primary();
 
             // Stats Columns
             $table->integer('highest_asset_count')->default(0);

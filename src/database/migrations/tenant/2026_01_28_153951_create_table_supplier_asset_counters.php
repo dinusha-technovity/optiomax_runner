@@ -13,10 +13,13 @@ return new class extends Migration
     {
         Schema::create('supplier_asset_counters', function (Blueprint $table) {
             // supplier_id is both the PK and the FK
-            $table->unsignedBigInteger('supplier_id')->primary();
+            $table->id();
+            $table->unsignedBigInteger('supplier_id');
 
             // asset_count mapping to INT NOT NULL DEFAULT 0
             $table->integer('asset_count')->default(0);
+
+            $table->unsignedBigInteger('tenant_id');
 
             // Only updated_at is required (no created_at)
             // useCurrent() translates to DEFAULT now() in Postgres
