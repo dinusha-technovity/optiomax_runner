@@ -1,5 +1,5 @@
 <?php
-
+ 
 namespace Database\Seeders;
 
 use Carbon\Carbon;
@@ -7,7 +7,7 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
-
+ 
 class DocumentCategorySeeder extends Seeder
 {  
     /**
@@ -302,6 +302,16 @@ class DocumentCategorySeeder extends Seeder
                 'category_name' => 'My Internal Assets Requisitions',
                 'description' => 'my internal assets requisitions form',
                 'category_tag' => 'MY_INTERNAL_ASSETS_REQUISITIONS',
+                'isactive' => true,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ],
+            // 30
+            [ 
+                'id' => 30,
+                'category_name' => 'Direct Asset Transfer Requests',
+                'description' => 'direct asset transfer requests form',
+                'category_tag' => 'DIRECT_ASSET_TRANSFER_REQUESTS',
                 'isactive' => true,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
