@@ -14,7 +14,7 @@ CACHE_DRIVER=redis
 SESSION_DRIVER=redis
 REDIS_HOST=172.17.0.1
 REDIS_PORT=6379
-
+ 
 Step 3: redis config file edit and allow to all ip
 
 Step 4: check redix connection with laravel tinker or run below commond on your docker root
