@@ -1,5 +1,5 @@
 <?php
-
+ 
 namespace Database\Seeders;
 
 use Carbon\Carbon;
@@ -7,7 +7,7 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
-
+ 
 class DocumentCategoryFieldSeeder extends Seeder
 {  
     /**
@@ -940,6 +940,20 @@ class DocumentCategoryFieldSeeder extends Seeder
                 'document_field_name'=>"Any document related with asset",
                 'description'=>"Asset documents (related files)",
                 'file_path'=>'uploads/MyInternalAssetsRequisitions/AssetDocument',
+                'isactive'=>true,
+                'document_formats'=>'SVG,PNG,JPG,GIF,DOC,DOCX,CSV,PDF',
+                'max_upload_count'=>5,
+                'created_at' => $now,
+                'updated_at' => $now,
+                'listable'=>true,
+            ],
+            // 67
+            [
+                'id' => 67,
+                'document_category_id'=>30,
+                'document_field_name'=>"Any document related with asset",
+                'description'=>"Asset documents (related files)",
+                'file_path'=>'uploads/DirectAssetTransferRequests/AssetDocument',
                 'isactive'=>true,
                 'document_formats'=>'SVG,PNG,JPG,GIF,DOC,DOCX,CSV,PDF',
                 'max_upload_count'=>5,

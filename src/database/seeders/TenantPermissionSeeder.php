@@ -2622,7 +2622,7 @@ class TenantPermissionSeeder extends Seeder
             // 154
             [
                 'id' => 154,
-                'name' => 'Assets Availability terms type',
+                'name' => 'Assets Terms Types',
                 'description' => 'Manage availability terms types',
                 'parent_id' => null,
                 'menulink' => '/assets_availability_terms_type',
