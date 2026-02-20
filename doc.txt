@@ -7,7 +7,7 @@ sudo apt install redis-server
 sudo systemctl start redis-server
 (if you are using docker container add redis php extention to docker container)
 
-Step 2: Update Laravel .env (inside your Docker volume)
+Step 2: Update Laravel .env (inside your Docker volume) 
 
 QUEUE_CONNECTION=redis
 CACHE_DRIVER=redis
