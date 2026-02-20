@@ -2976,6 +2976,91 @@ class TenantPermissionSeeder extends Seeder
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
             ],
+            // 175
+            [
+                'id' => 175,
+                'name' => 'Audit & Compliance',
+                'description' => 'Manage audit and compliance activities',
+                'parent_id' => null,
+                'menulink' => '#',
+                'icon' => 'AiOutlineAudit',
+                'isconfiguration' => true,
+                'ismenu_list' => true,
+                'menu_order' => 7,
+                'isactive' => true,
+                'is_enable_for_web_app' => true,
+                'is_enable_for_mobile_app' => false,
+                'created_at' => $currentTime,
+                'updated_at' => $currentTime
+            ],
+            // 176
+            [
+                'id' => 176,
+                'name' => 'Audit Groups',
+                'description' => 'Manage audit groups',
+                'parent_id' => 175,
+                'menulink' => '/audit_groups',
+                'icon' => null,
+                'isconfiguration' => true,
+                'ismenu_list' => true,
+                'menu_order' => 1,
+                'isactive' => true,
+                'is_enable_for_web_app' => true,
+                'is_enable_for_mobile_app' => false,
+                'created_at' => $currentTime,
+                'updated_at' => $currentTime
+            ],
+            // 177
+            [
+                'id' => 177,
+                'name' => 'Create Audit Group',
+                'description' => 'Create new audit groups',
+                'parent_id' => 176,
+                'menulink' => '#',
+                'icon' => null,
+                'isconfiguration' => true,
+                'ismenu_list' => false,
+                'menu_order' => 1,
+                'isactive' => true,
+                'is_enable_for_web_app' => true,
+                'is_enable_for_mobile_app' => false,
+                'created_at' => $currentTime,
+                'updated_at' => $currentTime
+            ],
+            // 178
+            [
+                'id' => 178,
+                'name' => 'Edit Audit Group',
+                'description' => 'Edit existing audit groups',
+                'parent_id' => 176,
+                'menulink' => '#',
+                'icon' => null,
+                'isconfiguration' => true,
+                'ismenu_list' => false,
+                'menu_order' => 2,
+                'isactive' => true,
+                'is_enable_for_web_app' => true,
+                'is_enable_for_mobile_app' => false,
+                'created_at' => $currentTime,
+                'updated_at' => $currentTime
+            ],
+            // 179
+            [
+                'id' => 179,
+                'name' => 'Delete Audit Group',
+                'description' => 'Delete audit groups',
+                'parent_id' => 176,
+                'menulink' => '#',
+                'icon' => null,
+                'isconfiguration' => true,
+                'ismenu_list' => false,
+                'menu_order' => 3,
+                'isactive' => true,
+                'is_enable_for_web_app' => true,
+                'is_enable_for_mobile_app' => false,
+                'created_at' => $currentTime,
+                'updated_at' => $currentTime
+            ],
         ];
 
         // Upsert permissions - update if exists, insert if new
