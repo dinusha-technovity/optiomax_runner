@@ -2978,7 +2978,7 @@ class TenantPermissionSeeder extends Seeder
             ],
             //175
             [
-                'id' => 174,
+                'id' => 175,
                 'name' => 'Schedule Configurations',
                 'description' => 'Manage schedule configurations',
                 'parent_id' => 6,
