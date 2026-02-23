@@ -3061,6 +3061,74 @@ class TenantPermissionSeeder extends Seeder
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
             ],
+            // 180
+            [
+                'id' => 180,
+                'name' => 'Audit Staff',
+                'description' => 'Manage audit staff',
+                'parent_id' => 175,
+                'menulink' => '/audit_staff',
+                'icon' => null,
+                'isconfiguration' => true,
+                'ismenu_list' => true,
+                'menu_order' => 2,
+                'isactive' => true,
+                'is_enable_for_web_app' => true,
+                'is_enable_for_mobile_app' => false,
+                'created_at' => $currentTime,
+                'updated_at' => $currentTime
+            ],
+            // 181
+            [
+                'id' => 181,
+                'name' => 'Create Auditer',
+                'description' => 'Create new auditer',
+                'parent_id' => 180,
+                'menulink' => '#',
+                'icon' => null,
+                'isconfiguration' => true,
+                'ismenu_list' => false,
+                'menu_order' => 1,
+                'isactive' => true,
+                'is_enable_for_web_app' => true,
+                'is_enable_for_mobile_app' => false,
+                'created_at' => $currentTime,
+                'updated_at' => $currentTime
+            ],
+            // 182
+            [
+                'id' => 182,
+                'name' => 'Edit Auditer Configuration',
+                'description' => 'Edit auditer details and configuration',
+                'parent_id' => 180,
+                'menulink' => '#',
+                'icon' => null,
+                'isconfiguration' => true,
+                'ismenu_list' => false,
+                'menu_order' => 2,
+                'isactive' => true,
+                'is_enable_for_web_app' => true,
+                'is_enable_for_mobile_app' => false,
+                'created_at' => $currentTime,
+                'updated_at' => $currentTime
+            ],
+            // 183
+            [
+                'id' => 183,
+                'name' => 'Delete Auditer',
+                'description' => 'Delete auditer',
+                'parent_id' => 180,
+                'menulink' => '#',
+                'icon' => null,
+                'isconfiguration' => true,
+                'ismenu_list' => false,
+                'menu_order' => 3,
+                'isactive' => true,
+                'is_enable_for_web_app' => true,
+                'is_enable_for_mobile_app' => false,
+                'created_at' => $currentTime,
+                'updated_at' => $currentTime
+            ],
         ];
 
         // Upsert permissions - update if exists, insert if new
