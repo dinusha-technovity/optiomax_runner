@@ -5,7 +5,7 @@
 ### Required Columns (6 total)
 
 1. **name** - Asset name (REQUIRED, must be unique per tenant)
-2. **asset_type_name** - Asset type (REQUIRED)
+2. **asset_type_name** - Asset type (REQUIRED) 
 3. **category_name** - Asset category (REQUIRED)
 4. **sub_category_name** - Asset sub-category (REQUIRED)
 5. **asset_description** - Description text (OPTIONAL)
