@@ -50,5 +50,13 @@ class DatabaseSeeder extends Seeder
         $this->call(PackageFeaturesSeeder::class);
         $this->call(AssigneeTypeSeeder::class);
 
+        $this->call(AssetRequisitionLogTypeSeeder::class);
+        $this->call(AssetUpgradeReasonsSeeder::class);
+        $this->call(AssetRecommendationTypesSeeder::class);
+        $this->call(AssetRecomendedUserTypesSeeder::class);
+        $this->call(WorkOrderInitiateTypeSeeder::class);
+        $this->call(AssetUpgradeOutcomesSeeder::class);
+        $this->call(AssetRequisitionTypesSeeder::class);
+
     }
 }
