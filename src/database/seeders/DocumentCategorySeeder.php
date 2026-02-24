@@ -316,6 +316,17 @@ class DocumentCategorySeeder extends Seeder
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
             ],
+
+             // 31
+            [ 
+                'id' => 31,
+                'category_name' => 'Upgrade Asset Requisition Form',
+                'description' => 'Upload system logs, screenshots, or performance reports to the form.',
+                'category_tag' => 'UPGRADE_ASSET_REQUISITION_FORM',
+                'isactive' => true,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ],
         ], ['id'], ['category_name', 'description', 'category_tag', 'isactive', 'updated_at']); 
     } 
 } 
