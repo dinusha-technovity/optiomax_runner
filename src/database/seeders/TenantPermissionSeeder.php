@@ -3146,6 +3146,23 @@ class TenantPermissionSeeder extends Seeder
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
             ],
+            //185
+            [
+                'id' => 185,
+                'name' => 'Schedule Configurations',
+                'description' => 'Manage schedule configurations',
+                'parent_id' => 6,
+                'menulink' => '#',
+                'icon' => null,
+                'isconfiguration' => false,
+                'ismenu_list' => false,
+                'menu_order' => 3,
+                'isactive' => true,
+                'is_enable_for_web_app' => true,
+                'is_enable_for_mobile_app' => false,
+                'created_at' => $currentTime,
+                'updated_at' => $currentTime
+            ],
         ];
 
         // Upsert permissions - update if exists, insert if new
