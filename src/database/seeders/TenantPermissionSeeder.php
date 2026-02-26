@@ -108,7 +108,7 @@ class TenantPermissionSeeder extends Seeder
                 'id' => 6,
                 'name' => 'Asset Master',
                 'description' => 'Manage asset master records',
-                'parent_id' => 184,
+                'parent_id' => 180,
                 'menulink' => '/asset_master',
                 'icon' => null,
                 'isconfiguration' => true,
@@ -482,7 +482,7 @@ class TenantPermissionSeeder extends Seeder
                 'id' => 28,
                 'name' => 'Item Master',
                 'description' => 'Manage item master records',
-                'parent_id' => 184,
+                'parent_id' => 180,
                 'menulink' => '/item_master',
                 'icon' => null,
                 'isconfiguration' => true,
@@ -550,7 +550,7 @@ class TenantPermissionSeeder extends Seeder
                 'id' => 32,
                 'name' => 'Asset Categories',
                 'description' => 'Manage asset categories',
-                'parent_id' => 184,
+                'parent_id' => 180,
                 'menulink' => '/asset_categories',
                 'icon' => null,
                 'isconfiguration' => true,
@@ -635,7 +635,7 @@ class TenantPermissionSeeder extends Seeder
                 'id' => 37,
                 'name' => 'Asset Sub Categories',
                 'description' => 'Manage asset sub categories',
-                'parent_id' => 184,
+                'parent_id' => 180,
                 'menulink' => '/asset_sub_categories',
                 'icon' => null,
                 'isconfiguration' => true,
@@ -720,7 +720,7 @@ class TenantPermissionSeeder extends Seeder
                 'id' => 42,
                 'name' => 'Asset Groups',
                 'description' => 'Manage asset groups',
-                'parent_id' => 184,
+                'parent_id' => 180,
                 'menulink' => '/asset_groups',
                 'icon' => null,
                 'isconfiguration' => true,
@@ -2996,10 +2996,10 @@ class TenantPermissionSeeder extends Seeder
             // 176
             [
                 'id' => 176,
-                'name' => 'Audit Groups',
-                'description' => 'Manage audit groups',
+                'name' => 'Audit Asset Batches',
+                'description' => 'Manage asset batches for audit activities',
                 'parent_id' => 175,
-                'menulink' => '/audit_groups',
+                'menulink' => '/audit_asset_batches',
                 'icon' => null,
                 'isconfiguration' => true,
                 'ismenu_list' => true,
@@ -3013,8 +3013,8 @@ class TenantPermissionSeeder extends Seeder
             // 177
             [
                 'id' => 177,
-                'name' => 'Create Audit Group',
-                'description' => 'Create new audit groups',
+                'name' => 'Create Asset Batch for Audit',
+                'description' => 'Create new asset batches for audit activities',
                 'parent_id' => 176,
                 'menulink' => '#',
                 'icon' => null,
@@ -3030,8 +3030,8 @@ class TenantPermissionSeeder extends Seeder
             // 178
             [
                 'id' => 178,
-                'name' => 'Edit Audit Group',
-                'description' => 'Edit existing audit groups',
+                'name' => 'Edit Asset Batch for Audit',
+                'description' => 'Edit asset batches for audit activities',
                 'parent_id' => 176,
                 'menulink' => '#',
                 'icon' => null,
@@ -3047,8 +3047,8 @@ class TenantPermissionSeeder extends Seeder
             // 179
             [
                 'id' => 179,
-                'name' => 'Delete Audit Group',
-                'description' => 'Delete audit groups',
+                'name' => 'Delete Asset Batch for Audit',
+                'description' => 'Delete asset batches for audit activities',
                 'parent_id' => 176,
                 'menulink' => '#',
                 'icon' => null,
@@ -3064,74 +3064,6 @@ class TenantPermissionSeeder extends Seeder
             // 180
             [
                 'id' => 180,
-                'name' => 'Audit Staff',
-                'description' => 'Manage audit staff',
-                'parent_id' => 175,
-                'menulink' => '/audit_staff',
-                'icon' => null,
-                'isconfiguration' => true,
-                'ismenu_list' => true,
-                'menu_order' => 2,
-                'isactive' => true,
-                'is_enable_for_web_app' => true,
-                'is_enable_for_mobile_app' => false,
-                'created_at' => $currentTime,
-                'updated_at' => $currentTime
-            ],
-            // 181
-            [
-                'id' => 181,
-                'name' => 'Create Auditer',
-                'description' => 'Create new auditer',
-                'parent_id' => 180,
-                'menulink' => '#',
-                'icon' => null,
-                'isconfiguration' => true,
-                'ismenu_list' => false,
-                'menu_order' => 1,
-                'isactive' => true,
-                'is_enable_for_web_app' => true,
-                'is_enable_for_mobile_app' => false,
-                'created_at' => $currentTime,
-                'updated_at' => $currentTime
-            ],
-            // 182
-            [
-                'id' => 182,
-                'name' => 'Edit Auditer Configuration',
-                'description' => 'Edit auditer details and configuration',
-                'parent_id' => 180,
-                'menulink' => '#',
-                'icon' => null,
-                'isconfiguration' => true,
-                'ismenu_list' => false,
-                'menu_order' => 2,
-                'isactive' => true,
-                'is_enable_for_web_app' => true,
-                'is_enable_for_mobile_app' => false,
-                'created_at' => $currentTime,
-                'updated_at' => $currentTime
-            ],
-            // 183
-            [
-                'id' => 183,
-                'name' => 'Delete Auditer',
-                'description' => 'Delete auditer',
-                'parent_id' => 180,
-                'menulink' => '#',
-                'icon' => null,
-                'isconfiguration' => true,
-                'ismenu_list' => false,
-                'menu_order' => 3,
-                'isactive' => true,
-                'is_enable_for_web_app' => true,
-                'is_enable_for_mobile_app' => false,
-                'created_at' => $currentTime,
-                'updated_at' => $currentTime
-            ],
-            // 184
-            [
-                'id' => 184,
                 'name' => 'Assets',
                 'description' => 'Manage assets and asset-related activities',
                 'parent_id' => null,
@@ -3146,9 +3078,9 @@ class TenantPermissionSeeder extends Seeder
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
             ],
-            //185
+            //181
             [
-                'id' => 185,
+                'id' => 181,
                 'name' => 'Schedule Configurations',
                 'description' => 'Manage schedule configurations',
                 'parent_id' => 6,
