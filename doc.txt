@@ -66,7 +66,7 @@ php artisan queue:work redis --queue=tenant-registration,default,emails --sleep=
 # In another terminal, run the listener
 php artisan listen:tenant-registration-actions --batch=10 --daemon
 
-Local Testing Commands:
+Local Testing Commands: 
 
 # Check queue status
 php artisan queue:monitor 
