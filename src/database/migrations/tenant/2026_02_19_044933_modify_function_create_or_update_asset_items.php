@@ -139,14 +139,15 @@ return new class extends Migration
                             decline_rate = (item->>'declineRate')::NUMERIC,
                             assignee_type_id = (item->>'assignee_type_id')::BIGINT,
                             booking_availability = COALESCE((item->>'booking_availability')::BOOLEAN, true),
-                            is_schedule_available = COALESCE((item->>'is_schedule_available')::BOOLEAN, true),
 
                             updated_at = _current_time
                         WHERE id = (item->>'asset_item_id')::BIGINT
                         RETURNING id, row_to_json(asset_items) INTO current_item_id, inserted_row;
                         
-                        -- Capture is_schedule_available value
-                        is_schedule_available_val := COALESCE((item->>'is_schedule_available')::BOOLEAN, true);
+                        -- Get is_schedule_available value from existing record (not from input in edit mode)
+                        SELECT is_schedule_available INTO is_schedule_available_val 
+                        FROM asset_items 
+                        WHERE id = current_item_id;
                         
                         -- If no rows were updated, raise an exception
                         IF NOT FOUND THEN
