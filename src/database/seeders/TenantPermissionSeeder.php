@@ -1962,7 +1962,7 @@ class TenantPermissionSeeder extends Seeder
                 'name' => 'User Roles',
                 'description' => 'Manage user roles and their permissions',
                 'parent_id' => 114,
-                'menulink' => '/Roles',
+                'menulink' => '/user_roles',
                 'icon' => null,
                 'isconfiguration' => true,
                 'ismenu_list' => true,
@@ -2197,10 +2197,10 @@ class TenantPermissionSeeder extends Seeder
             // 129
             [
                 'id' => 129,
-                'name' => 'Manage Designations',
+                'name' => 'Designation',
                 'description' => 'Manage designations',
                 'parent_id' => 128,
-                'menulink' => '/designation_master',
+                'menulink' => '/designation',
                 'icon' => null,
                 'isconfiguration' => true,
                 'ismenu_list' => true,
@@ -2350,10 +2350,10 @@ class TenantPermissionSeeder extends Seeder
             // 138
             [
                 'id' => 138,
-                'name' => 'Manage Suppliers',
+                'name' => 'Suppliers',
                 'description' => 'Manage supplier details',
                 'parent_id' => 137,
-                'menulink' => '/manage_suppliers',
+                'menulink' => '/suppliers',
                 'icon' => null,
                 'isconfiguration' => true,
                 'ismenu_list' => true,
@@ -2435,10 +2435,10 @@ class TenantPermissionSeeder extends Seeder
             // 143
             [
                 'id' => 143,
-                'name' => 'Manage Customers',
+                'name' => 'Customers',
                 'description' => 'Manage customer details',
                 'parent_id' => 137,
-                'menulink' => '/manage_customers',
+                'menulink' => '/customers',
                 'icon' => null,
                 'isconfiguration' => true,
                 'ismenu_list' => true,
@@ -2829,7 +2829,7 @@ class TenantPermissionSeeder extends Seeder
                 'name' => 'System Settings',
                 'description' => 'Configure system settings',
                 'parent_id' => null,
-                'menulink' => '/system_settings',
+                'menulink' => '/application_settings',
                 'icon' => 'GrDocumentConfig',
                 'isconfiguration' => true,
                 'ismenu_list' => false,
