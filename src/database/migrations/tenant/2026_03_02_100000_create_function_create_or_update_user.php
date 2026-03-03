@@ -10,261 +10,275 @@ return new class extends Migration
      */
     public function up(): void
     {
-        // 1. Drop every existing overload of get_users
-        DB::unprepared(<<<'SQL'
-          
-                DO $$
-                    DECLARE
-                        r RECORD;
-                    BEGIN
-                        FOR r IN
-                            SELECT oid::regprocedure::text AS func_signature
-                            FROM pg_proc
-                            WHERE proname = 'get_users'
-                        LOOP
-                            EXECUTE format('DROP FUNCTION %s CASCADE;', r.func_signature);
-                        END LOOP;
-                    END$$;
-                    
-        CREATE OR REPLACE FUNCTION get_users(
-            p_tenant_id BIGINT,
-            p_user_id BIGINT DEFAULT NULL,
-            p_page_no INT DEFAULT 1,
-            p_page_size INT DEFAULT 10,
-            p_search TEXT DEFAULT NULL,
-            p_status TEXT DEFAULT NULL,
-            p_is_system_user BOOLEAN DEFAULT NULL,
-            p_prefetch_mode TEXT DEFAULT 'both',  -- none | after | both
-            p_sort_by TEXT DEFAULT NULL
+        DB::unprepared(<<<SQL
+
+        DO $$
+        DECLARE
+            r RECORD;
+        BEGIN
+            FOR r IN
+                SELECT oid::regprocedure::text AS func_signature
+                FROM pg_proc
+                WHERE proname = 'create_or_update_user'
+            LOOP
+                EXECUTE format('DROP FUNCTION %s CASCADE;', r.func_signature);
+            END LOOP;
+        END$$;
+
+        CREATE OR REPLACE FUNCTION create_or_update_user(
+            IN p_user_id BIGINT,
+            IN p_user_name VARCHAR(255),
+            IN p_email VARCHAR(255),
+            IN p_name VARCHAR(255),
+            IN p_contact_no VARCHAR(50),
+            IN p_contact_no_code BIGINT,
+            IN p_user_description TEXT,
+            IN p_profile_image TEXT,
+            IN p_designation_id BIGINT,
+            IN p_organization_id BIGINT,
+            IN p_password VARCHAR(255),
+            IN p_tenant_id BIGINT,
+            IN p_is_system_user BOOLEAN,
+            IN p_employee_number VARCHAR(255),
+            IN p_current_time TIMESTAMPTZ,
+            IN p_causer_id BIGINT DEFAULT NULL,
+            IN p_causer_name TEXT DEFAULT NULL
         )
-        RETURNS JSON
+        RETURNS TABLE (
+            status TEXT,
+            message TEXT,
+            user_id BIGINT,
+            old_data JSONB,
+            new_data JSONB
+        )
         LANGUAGE plpgsql
         AS $$
         DECLARE
-            user_count INT;
-            v_total_pages INT;
-
-            v_data_prev JSONB := '[]';
-            v_data_curr JSONB := '[]';
-            v_data_next JSONB := '[]';
-
-            v_offset_curr INT;
-            v_offset_prev INT;
-            v_offset_next INT;
-
-            v_order_clause TEXT;
-            v_sort_key TEXT;
-            v_prefetch_mode TEXT;
-
-            v_base_sql TEXT;
+            old_record JSONB;
+            new_record JSONB;
+            log_success BOOLEAN;
+            v_user_id BIGINT;
         BEGIN
-            -------------------------------------------------------------------
-            -- Input normalization & validation
-            -------------------------------------------------------------------
-            IF p_tenant_id IS NULL OR p_tenant_id <= 0 THEN
-                RETURN json_build_object(
-                    'status', 'FAILURE',
-                    'message', 'Invalid tenant ID',
-                    'data', json_build_object(
-                        'previous', '[]'::json,
-                        'current', '[]'::json,
-                        'next', '[]'::json
-                    )
-                );
+            -- Validate required fields
+            IF p_user_name IS NULL OR p_user_name = '' THEN
+                RETURN QUERY SELECT 'FAILURE'::TEXT, 'User name is required'::TEXT, NULL::BIGINT, NULL::JSONB, NULL::JSONB;
+                RETURN;
             END IF;
 
-            p_page_no   := GREATEST(p_page_no, 1);
-            p_page_size := GREATEST(p_page_size, 1);
+            IF p_email IS NULL OR p_email = '' THEN
+                RETURN QUERY SELECT 'FAILURE'::TEXT, 'Email is required'::TEXT, NULL::BIGINT, NULL::JSONB, NULL::JSONB;
+                RETURN;
+            END IF;
 
-            --  FIX: normalize search (prevents ILIKE '%%')
-            p_search := NULLIF(TRIM(p_search), '');
+            IF p_name IS NULL OR p_name = '' THEN
+                RETURN QUERY SELECT 'FAILURE'::TEXT, 'Name is required'::TEXT, NULL::BIGINT, NULL::JSONB, NULL::JSONB;
+                RETURN;
+            END IF;
 
-            v_sort_key := LOWER(REPLACE(REPLACE(COALESCE(p_sort_by, 'newest'), '-', ''), '_', ''));
-            v_prefetch_mode := LOWER(COALESCE(p_prefetch_mode, 'both'));
+            IF p_tenant_id IS NULL OR p_tenant_id = 0 THEN
+                RETURN QUERY SELECT 'FAILURE'::TEXT, 'Tenant ID cannot be null or zero'::TEXT, NULL::BIGINT, NULL::JSONB, NULL::JSONB;
+                RETURN;
+            END IF;
 
-            -------------------------------------------------------------------
-            -- Sorting (stable + deterministic)
-            -------------------------------------------------------------------
-            v_order_clause :=
-                CASE v_sort_key
-                    WHEN 'newest' THEN 'ORDER BY u.created_at DESC, u.id DESC'
-                    WHEN 'oldest' THEN 'ORDER BY u.created_at ASC,  u.id ASC'
-                    WHEN 'az'     THEN 'ORDER BY u.name ASC  NULLS LAST, u.id DESC'
-                    WHEN 'za'     THEN 'ORDER BY u.name DESC NULLS LAST, u.id DESC'
-                    ELSE               'ORDER BY u.created_at DESC, u.id DESC'
+            -- If not system user, employee number is required
+            IF p_is_system_user = FALSE AND (p_employee_number IS NULL OR p_employee_number = '') THEN
+                RETURN QUERY SELECT 'FAILURE'::TEXT, 'Employee number is required for non-system users'::TEXT, NULL::BIGINT, NULL::JSONB, NULL::JSONB;
+                RETURN;
+            END IF;
+
+            -- Check if this is an insert or update
+            IF p_user_id IS NULL OR p_user_id = 0 THEN
+                -- INSERT operation
+
+                -- Check if email already exists
+                IF EXISTS (
+                    SELECT 1 FROM users
+                    WHERE email = p_email
+                    AND tenant_id = p_tenant_id
+                    AND deleted_at IS NULL
+                ) THEN
+                    RETURN QUERY SELECT 'FAILURE'::TEXT, 'Email already exists'::TEXT, NULL::BIGINT, NULL::JSONB, NULL::JSONB;
+                    RETURN;
+                END IF;
+
+                -- Check if employee number already exists (for non-system users)
+                IF p_is_system_user = FALSE THEN
+                    IF EXISTS (
+                        SELECT 1 FROM users
+                        WHERE employee_number = p_employee_number
+                        AND tenant_id = p_tenant_id
+                        AND employee_account_enabled = TRUE
+                        AND deleted_at IS NULL
+                    ) THEN
+                        RETURN QUERY SELECT 'FAILURE'::TEXT, 'Employee number already exists'::TEXT, NULL::BIGINT, NULL::JSONB, NULL::JSONB;
+                        RETURN;
+                    END IF;
+                END IF;
+
+                -- Create new user
+                INSERT INTO users (
+                    user_name,
+                    name,
+                    email,
+                    contact_no,
+                    contact_no_code,
+                    address,
+                    organization,
+                    designation_id,
+                    profile_image,
+                    user_description,
+                    tenant_id,
+                    user_account_enabled,
+                    employee_account_enabled,
+                    employee_number,
+                    password,
+                    created_at,
+                    updated_at
+                )
+                VALUES (
+                    p_user_name,
+                    p_name,
+                    p_email,
+                    p_contact_no,
+                    p_contact_no_code,
+                    NULL, -- address removed as per requirement
+                    p_organization_id,
+                    p_designation_id,
+                    p_profile_image,
+                    p_user_description,
+                    p_tenant_id,
+                    p_is_system_user, -- user_account_enabled based on toggle
+                    TRUE, -- employee_account_enabled - always true
+                    p_employee_number,
+                    p_password,
+                    p_current_time,
+                    p_current_time
+                )
+                RETURNING id INTO v_user_id;
+
+                -- Get the inserted record
+                SELECT to_jsonb(u) INTO new_record
+                FROM users u
+                WHERE id = v_user_id;
+
+                -- Log the insert activity
+                BEGIN
+                    PERFORM log_activity(
+                        CASE WHEN p_is_system_user THEN 'create_system_user' ELSE 'create_employee_user' END,
+                        format('User %s created %s: %s', 
+                            p_causer_name, 
+                            CASE WHEN p_is_system_user THEN 'system user' ELSE 'employee user' END,
+                            p_name
+                        ),
+                        'users',
+                        v_user_id,
+                        'user',
+                        p_causer_id,
+                        new_record,
+                        p_tenant_id
+                    );
+                    log_success := TRUE;
+                EXCEPTION WHEN OTHERS THEN
+                    log_success := FALSE;
                 END;
 
-            -------------------------------------------------------------------
-            -- Base WHERE clause (single source of truth)
-            -------------------------------------------------------------------
-            v_base_sql := '
+                RETURN QUERY SELECT 
+                    'SUCCESS'::TEXT, 
+                    CASE WHEN p_is_system_user THEN 'System user created successfully' ELSE 'Employee user created successfully' END::TEXT, 
+                    v_user_id, 
+                    NULL::JSONB, 
+                    new_record;
+
+            ELSE
+                -- UPDATE operation
+
+                -- Check if user exists
+                IF NOT EXISTS (
+                    SELECT 1 FROM users
+                    WHERE id = p_user_id
+                    AND tenant_id = p_tenant_id
+                    AND deleted_at IS NULL
+                ) THEN
+                    RETURN QUERY SELECT 'FAILURE'::TEXT, 'User not found'::TEXT, NULL::BIGINT, NULL::JSONB, NULL::JSONB;
+                    RETURN;
+                END IF;
+
+                -- Check if email already exists for another user
+                IF EXISTS (
+                    SELECT 1 FROM users
+                    WHERE email = p_email
+                    AND tenant_id = p_tenant_id
+                    AND id != p_user_id
+                    AND deleted_at IS NULL
+                ) THEN
+                    RETURN QUERY SELECT 'FAILURE'::TEXT, 'Email already exists'::TEXT, NULL::BIGINT, NULL::JSONB, NULL::JSONB;
+                    RETURN;
+                END IF;
+
+                -- Check if employee number already exists for another user (for non-system users)
+                IF p_is_system_user = FALSE THEN
+                    IF EXISTS (
+                        SELECT 1 FROM users
+                        WHERE employee_number = p_employee_number
+                        AND tenant_id = p_tenant_id
+                        AND employee_account_enabled = TRUE
+                        AND id != p_user_id
+                        AND deleted_at IS NULL
+                    ) THEN
+                        RETURN QUERY SELECT 'FAILURE'::TEXT, 'Employee number already exists'::TEXT, NULL::BIGINT, NULL::JSONB, NULL::JSONB;
+                        RETURN;
+                    END IF;
+                END IF;
+
+                -- Get old record before update
+                SELECT to_jsonb(u) INTO old_record
                 FROM users u
-                LEFT JOIN designations d ON u.designation_id = d.id
-                WHERE u.tenant_id = $1
-                AND u.deleted_at IS NULL
-                AND ($2 IS NULL OR u.id = $2)
-                AND ($3 IS NULL OR 
-                    CASE 
-                        WHEN $3 = ''active'' THEN u.user_account_enabled = TRUE
-                        WHEN $3 = ''inactive'' THEN u.user_account_enabled = FALSE
-                        ELSE TRUE
-                    END
-                )
-                AND ($4 IS NULL OR u.is_system_user = $4)
-                AND (
-                    $5 IS NULL OR
-                    u.name ILIKE ''%'' || $5 || ''%'' OR
-                    u.email ILIKE ''%'' || $5 || ''%'' OR
-                    u.user_name ILIKE ''%'' || $5 || ''%'' OR
-                    u.employee_number ILIKE ''%'' || $5 || ''%'' OR
-                    u.user_description ILIKE ''%'' || $5 || ''%'' OR
-                    (
-                        $5 ~ ''[0-9]'' AND
-                        u.contact_no ILIKE ''%'' || $5 || ''%''
-                    )
-                )
-            ';
+                WHERE id = p_user_id;
 
-            -------------------------------------------------------------------
-            -- Total count
-            -------------------------------------------------------------------
-            EXECUTE 'SELECT COUNT(*) ' || v_base_sql
-            INTO user_count
-            USING p_tenant_id, p_user_id, p_status, p_is_system_user, p_search;
+                -- Update the user
+                UPDATE users
+                SET
+                    user_name = p_user_name,
+                    name = p_name,
+                    email = p_email,
+                    contact_no = p_contact_no,
+                    contact_no_code = p_contact_no_code,
+                    user_description = p_user_description,
+                    profile_image = p_profile_image,
+                    organization = p_organization_id,
+                    designation_id = p_designation_id,
+                    user_account_enabled = p_is_system_user,
+                    employee_account_enabled = TRUE, -- Always true
+                    employee_number = p_employee_number,
+                    updated_at = p_current_time
+                WHERE id = p_user_id;
 
-            IF user_count = 0 THEN
-                RETURN json_build_object(
-                    'status', 'FAILURE',
-                    'message', 'No users found',
-                    'meta', json_build_object(
-                        'total_records', 0,
-                        'total_pages', 0,
-                        'current_page', p_page_no,
-                        'page_size', p_page_size
-                    ),
-                    'data', json_build_object(
-                        'previous', '[]'::json,
-                        'current', '[]'::json,
-                        'next', '[]'::json
-                    )
-                );
+                -- Get updated record
+                SELECT to_jsonb(u) INTO new_record
+                FROM users u
+                WHERE id = p_user_id;
+
+                -- Log the update activity
+                BEGIN
+                    PERFORM log_activity(
+                        'update_user',
+                        format('User %s updated user: %s', p_causer_name, p_name),
+                        'users',
+                        p_user_id,
+                        'user',
+                        p_causer_id,
+                        new_record,
+                        p_tenant_id
+                    );
+                    log_success := TRUE;
+                EXCEPTION WHEN OTHERS THEN
+                    log_success := FALSE;
+                END;
+
+                RETURN QUERY SELECT 'SUCCESS'::TEXT, 'User updated successfully'::TEXT, p_user_id, old_record, new_record;
             END IF;
-
-            v_total_pages := CEIL(user_count::NUMERIC / p_page_size);
-
-            IF p_page_no > v_total_pages THEN
-                p_page_no := v_total_pages;
-            END IF;
-
-            v_offset_curr := (p_page_no - 1) * p_page_size;
-            v_offset_prev := GREATEST(v_offset_curr - p_page_size, 0);
-            v_offset_next := p_page_no * p_page_size;
-
-            -------------------------------------------------------------------
-            -- Current page (with roles aggregation)
-            -------------------------------------------------------------------
-            EXECUTE format(
-                'SELECT jsonb_agg(row_to_json(t)) FROM (
-                    SELECT
-                        u.id,
-                        u.user_name,
-                        u.email,
-                        u.name,
-                        u.contact_no,
-                        u.contact_no_code,
-                        u.profile_image,
-                        u.user_description,
-                        u.designation_id,
-                        u.organization,
-                        u.is_system_user,
-                        u.user_account_enabled,
-                        u.employee_account_enabled,
-                        u.employee_number,
-                        u.is_user_active,
-                        u.created_at,
-                        u.updated_at,
-                        d.designation as designation_name,
-                        (
-                            SELECT jsonb_agg(
-                                jsonb_build_object(
-                                    ''id'', r.id,
-                                    ''name'', r.name,
-                                    ''description'', r.description
-                                )
-                            )
-                            FROM role_user ru
-                            JOIN roles r ON ru.role_id = r.id
-                            WHERE ru.user_id = u.id
-                        ) as roles
-                    %s
-                    %s
-                    LIMIT %s OFFSET %s
-                ) t',
-                v_base_sql,
-                v_order_clause,
-                p_page_size,
-                v_offset_curr
-            )
-            INTO v_data_curr
-            USING p_tenant_id, p_user_id, p_status, p_is_system_user, p_search;
-
-            -------------------------------------------------------------------
-            -- Previous page
-            -------------------------------------------------------------------
-            IF v_prefetch_mode = 'both' AND p_page_no > 1 THEN
-                EXECUTE format(
-                    'SELECT jsonb_agg(row_to_json(t)) FROM (
-                        SELECT u.* %s %s LIMIT %s OFFSET %s
-                    ) t',
-                    v_base_sql,
-                    v_order_clause,
-                    p_page_size,
-                    v_offset_prev
-                )
-                INTO v_data_prev
-                USING p_tenant_id, p_user_id, p_status, p_is_system_user, p_search;
-            END IF;
-
-            -------------------------------------------------------------------
-            -- Next page
-            -------------------------------------------------------------------
-            IF v_prefetch_mode IN ('both', 'after') AND p_page_no < v_total_pages THEN
-                EXECUTE format(
-                    'SELECT jsonb_agg(row_to_json(t)) FROM (
-                        SELECT u.* %s %s LIMIT %s OFFSET %s
-                    ) t',
-                    v_base_sql,
-                    v_order_clause,
-                    p_page_size,
-                    v_offset_next
-                )
-                INTO v_data_next
-                USING p_tenant_id, p_user_id, p_status, p_is_system_user, p_search;
-            END IF;
-
-            -------------------------------------------------------------------
-            -- Final response
-            -------------------------------------------------------------------
-            RETURN json_build_object(
-                'status', 'SUCCESS',
-                'message', 'Users fetched successfully',
-                'meta', json_build_object(
-                    'total_records', user_count,
-                    'total_pages', v_total_pages,
-                    'current_page', p_page_no,
-                    'page_size', p_page_size,
-                    'prefetch_mode', v_prefetch_mode,
-                    'sort_by', v_sort_key
-                ),
-                'data', json_build_object(
-                    'previous', COALESCE(v_data_prev, '[]'::jsonb),
-                    'current',  COALESCE(v_data_curr, '[]'::jsonb),
-                    'next',     COALESCE(v_data_next, '[]'::jsonb)
-                )
-            );
         END;
         $$;
-
         SQL);
     }
 
@@ -273,19 +287,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        DB::unprepared(<<<'SQL'
-            DO $$
-            DECLARE
-                r RECORD;
-            BEGIN
-                FOR r IN
-                    SELECT oid::regprocedure::text AS func_signature
-                    FROM pg_proc
-                    WHERE proname = 'get_users'
-                LOOP
-                    EXECUTE format('DROP FUNCTION %s CASCADE;', r.func_signature);
-                END LOOP;
-            END$$;
-        SQL);
+        DB::unprepared('DROP FUNCTION IF EXISTS create_or_update_user');
     }
 };

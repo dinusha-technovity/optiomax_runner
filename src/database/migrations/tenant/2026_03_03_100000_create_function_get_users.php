@@ -35,7 +35,8 @@ return new class extends Migration
             p_status TEXT DEFAULT NULL,
             p_is_system_user BOOLEAN DEFAULT NULL,
             p_prefetch_mode TEXT DEFAULT 'both',  -- none | after | both
-            p_sort_by TEXT DEFAULT NULL
+            p_sort_by TEXT DEFAULT NULL,
+            p_get_all BOOLEAN DEFAULT FALSE  -- New parameter to get all users
         )
         RETURNS JSON
         LANGUAGE plpgsql
@@ -131,6 +132,72 @@ return new class extends Migration
             EXECUTE 'SELECT COUNT(*) ' || v_base_sql
             INTO user_count
             USING p_tenant_id, p_user_id, p_status, p_is_system_user, p_search;
+
+            -------------------------------------------------------------------
+            -- Handle get_all mode
+            -------------------------------------------------------------------
+            IF p_get_all THEN
+                -- Return all users without pagination
+                EXECUTE format(
+                    'SELECT jsonb_agg(row_to_json(t)) FROM (
+                        SELECT
+                            u.id,
+                            u.user_name,
+                            u.email,
+                            u.name,
+                            u.contact_no,
+                            u.contact_no_code,
+                            u.profile_image,
+                            u.user_description,
+                            u.designation_id,
+                            u.organization,
+                            u.is_system_user,
+                            u.user_account_enabled,
+                            u.employee_account_enabled,
+                            u.employee_number,
+                            u.is_user_active,
+                            u.created_at,
+                            u.updated_at,
+                            d.designation as designation_name,
+                            (
+                                SELECT jsonb_agg(
+                                    jsonb_build_object(
+                                        ''id'', r.id,
+                                        ''name'', r.name
+                                    )
+                                )
+                                FROM role_user ru
+                                JOIN roles r ON ru.role_id = r.id
+                                WHERE ru.user_id = u.id
+                            ) as roles
+                        %s
+                        %s
+                    ) t',
+                    v_base_sql,
+                    v_order_clause
+                )
+                INTO v_data_curr
+                USING p_tenant_id, p_user_id, p_status, p_is_system_user, p_search;
+
+                RETURN json_build_object(
+                    'status', 'SUCCESS',
+                    'message', 'All users fetched successfully',
+                    'meta', json_build_object(
+                        'total_records', user_count,
+                        'total_pages', 1,
+                        'current_page', 1,
+                        'page_size', user_count,
+                        'prefetch_mode', 'none',
+                        'sort_by', v_sort_key,
+                        'get_all', true
+                    ),
+                    'data', json_build_object(
+                        'previous', '[]'::jsonb,
+                        'current',  COALESCE(v_data_curr, '[]'::jsonb),
+                        'next',     '[]'::jsonb
+                    )
+                );
+            END IF;
 
             IF user_count = 0 THEN
                 RETURN json_build_object(
