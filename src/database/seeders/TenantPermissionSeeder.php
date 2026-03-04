@@ -2829,7 +2829,7 @@ class TenantPermissionSeeder extends Seeder
                 'name' => 'System Settings',
                 'description' => 'Configure system settings',
                 'parent_id' => null,
-                'menulink' => '/application_settings',
+                'menulink' => '/application_setting',
                 'icon' => 'GrDocumentConfig',
                 'isconfiguration' => true,
                 'ismenu_list' => false,
