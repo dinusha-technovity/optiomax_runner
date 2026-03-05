@@ -3095,6 +3095,176 @@ class TenantPermissionSeeder extends Seeder
                 'created_at' => $currentTime,
                 'updated_at' => $currentTime
             ],
+            // 182
+            [
+                'id' => 182,
+                'name' => 'Audit Periods',
+                'description' => 'Manage audit periods for compliance activities',
+                'parent_id' => 66,
+                'menulink' => '/audit_periods',
+                'icon' => null,
+                'isconfiguration' => false,
+                'ismenu_list' => true,
+                'menu_order' => 10,
+                'isactive' => true,
+                'is_enable_for_web_app' => true,
+                'is_enable_for_mobile_app' => false,
+                'created_at' => $currentTime,
+                'updated_at' => $currentTime
+            ],
+            // 183
+            [
+                'id' => 183,
+                'name' => 'Create Audit Period',
+                'description' => 'Create new audit periods for compliance activities',
+                'parent_id' => 182,
+                'menulink' => '#',
+                'icon' => null,
+                'isconfiguration' => true,
+                'ismenu_list' => false,
+                'menu_order' => 1,
+                'isactive' => true,
+                'is_enable_for_web_app' => true,
+                'is_enable_for_mobile_app' => false,
+                'created_at' => $currentTime,
+                'updated_at' => $currentTime
+            ],
+            // 184
+            [
+                'id' => 184,
+                'name' => 'Edit Audit Period',
+                'description' => 'Edit existing audit periods for compliance activities',
+                'parent_id' => 182,
+                'menulink' => '#',
+                'icon' => null,
+                'isconfiguration' => true,
+                'ismenu_list' => false,
+                'menu_order' => 2,
+                'isactive' => true,
+                'is_enable_for_web_app' => true,
+                'is_enable_for_mobile_app' => false,
+                'created_at' => $currentTime,
+                'updated_at' => $currentTime
+            ],
+            // 185
+            [
+                'id' => 185,
+                'name' => 'Delete Audit Period',
+                'description' => 'Delete existing audit periods for compliance activities',
+                'parent_id' => 182,
+                'menulink' => '#',
+                'icon' => null,
+                'isconfiguration' => true,
+                'ismenu_list' => false,
+                'menu_order' => 3,
+                'isactive' => true,
+                'is_enable_for_web_app' => true,
+                'is_enable_for_mobile_app' => false,
+                'created_at' => $currentTime,
+                'updated_at' => $currentTime
+            ],
+            // 186
+            [
+                'id' => 186,
+                'name' => 'Manage Audit Period',
+                'description' => 'Manage existing audit periods for compliance activities',
+                'parent_id' => 182,
+                'menulink' => '#',
+                'icon' => null,
+                'isconfiguration' => true,
+                'ismenu_list' => false,
+                'menu_order' => 4,
+                'isactive' => true,
+                'is_enable_for_web_app' => true,
+                'is_enable_for_mobile_app' => false,
+                'created_at' => $currentTime,
+                'updated_at' => $currentTime
+            ],
+            // 187
+            [
+                'id' => 187,
+                'name' => 'Configure Audit Period',
+                'description' => 'Configure existing audit periods for compliance activities',
+                'parent_id' => 182,
+                'menulink' => '#',
+                'icon' => null,
+                'isconfiguration' => true,
+                'ismenu_list' => false,
+                'menu_order' => 4,
+                'isactive' => true,
+                'is_enable_for_web_app' => true,
+                'is_enable_for_mobile_app' => false,
+                'created_at' => $currentTime,
+                'updated_at' => $currentTime
+            ],
+            // 188
+            [
+                'id' => 188,
+                'name' => 'Create Audit Sessions',
+                'description' => 'Create new audit sessions for compliance activities',
+                'parent_id' => 187,
+                'menulink' => '#',
+                'icon' => null,
+                'isconfiguration' => true,
+                'ismenu_list' => false,
+                'menu_order' => 1,
+                'isactive' => true,
+                'is_enable_for_web_app' => true,
+                'is_enable_for_mobile_app' => false,
+                'created_at' => $currentTime,
+                'updated_at' => $currentTime
+            ],
+            // 189
+            [
+                'id' => 189,
+                'name' => 'Edit Audit Sessions',
+                'description' => 'Edit existing audit sessions for compliance activities',
+                'parent_id' => 187,
+                'menulink' => '#',
+                'icon' => null,
+                'isconfiguration' => true,
+                'ismenu_list' => false,
+                'menu_order' => 2,
+                'isactive' => true,
+                'is_enable_for_web_app' => true,
+                'is_enable_for_mobile_app' => false,
+                'created_at' => $currentTime,
+                'updated_at' => $currentTime
+            ],
+            // 190
+            [
+                'id' => 190,
+                'name' => 'Delete Audit Sessions',
+                'description' => 'Delete existing audit sessions for compliance activities',
+                'parent_id' => 187,
+                'menulink' => '#',
+                'icon' => null,
+                'isconfiguration' => true,
+                'ismenu_list' => false,
+                'menu_order' => 3,
+                'isactive' => true,
+                'is_enable_for_web_app' => true,
+                'is_enable_for_mobile_app' => false,
+                'created_at' => $currentTime,
+                'updated_at' => $currentTime
+            ],
+            // 191
+            [
+                'id' => 191,
+                'name' => 'My Audits',
+                'description' => 'View and manage my assigned audits and related activities',
+                'parent_id' => 1,
+                'menulink' => '/my_audits',
+                'icon' => null,
+                'isconfiguration' => false,
+                'ismenu_list' => true,
+                'menu_order' => 3,
+                'isactive' => true,
+                'is_enable_for_web_app' => true,
+                'is_enable_for_mobile_app' => false,
+                'created_at' => $currentTime,
+                'updated_at' => $currentTime
+            ],
         ];
 
         // Upsert permissions - update if exists, insert if new
