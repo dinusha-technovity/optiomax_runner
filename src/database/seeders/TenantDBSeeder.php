@@ -68,6 +68,8 @@ class TenantDBSeeder extends Seeder
         $this->call(AssetAuditVariableTypeSeeder::class);
         $this->call(SystemSettingsSeeder::class);
         $this->call(AssigneeTypeSeeder::class);
-
+        $this->call(ZombieAssetConditionsSeeder::class);
+        $this->call(ZombieAssetReporterTypesSeeder::class);
+        $this->call(ZombieAssetValueRangesSeeder::class);
     }
 }
