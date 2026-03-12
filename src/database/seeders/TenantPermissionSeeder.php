@@ -2268,7 +2268,7 @@ class TenantPermissionSeeder extends Seeder
                 'name' => 'Build Organization',
                 'description' => 'Build organization structure',
                 'parent_id' => 128,
-                'menulink' => '/organization',
+                'menulink' => '/build_organization',
                 'icon' => null,
                 'isconfiguration' => true,
                 'ismenu_list' => true,
