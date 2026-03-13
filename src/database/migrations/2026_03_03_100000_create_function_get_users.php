@@ -111,7 +111,7 @@ return new class extends Migration
                         ELSE TRUE
                     END
                 )
-                AND ($4 IS NULL OR u.is_system_user = $4)
+                AND u.is_system_user = COALESCE($4, FALSE)
                 AND (
                     $5 IS NULL OR
                     u.name ILIKE ''%'' || $5 || ''%'' OR
