@@ -40,7 +40,7 @@ return new class extends Migration
         DB::unprepared(<<<'SQL'
             CREATE INDEX IF NOT EXISTS idx_ar_tenant_upgrade_active
                 ON asset_recommendations (tenant_id)
-                WHERE deleted_at IS NULL AND is_active = true AND asset_requisition_id IS NOT NULL;
+                WHERE deleted_at IS NULL AND is_active = true;
         SQL);
     }
 
