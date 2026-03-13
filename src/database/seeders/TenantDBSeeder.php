@@ -75,7 +75,6 @@ class TenantDBSeeder extends Seeder
         $this->call(AssetRequisitionLogTypeSeeder::class);
         $this->call(AssetUpgradeReasonsSeeder::class);
         $this->call(AssetRecommendationTypesSeeder::class);
-        $this->call(WorkOrderInitiateTypeSeeder::class);
         $this->call(AssetRecomendedUserTypesSeeder::class);
         $this->call(AssetUpgradeOutcomesSeeder::class);
         $this->call(AssetRequisitionTypesSeeder::class);
