@@ -42,7 +42,7 @@ return new class extends Migration
 
             $table->foreign('asset_requisition_id')->references('id')->on('asset_requisitions')->onDelete('cascade');
             $table->foreign('asset_id')->references('id')->on('asset_items')->onDelete('restrict');
-            $table->foreign('priority')->references('id')->on('work_order_priority_levels')->onDelete('set null');
+            $table->foreign('priority')->references('id')->on('asset_requisition_priority_types')->onDelete('set null');
             $table->foreign('mode_of_acquisition')->references('id')->on('asset_requisition_availability_types')->onDelete('restrict');
             // $table->foreign('disposal_recommended_type')->references('id')->on('disposal_recomandations')->onDelete('set null');
             $table->foreign('created_by')->references('id')->on('users')->onDelete('restrict');

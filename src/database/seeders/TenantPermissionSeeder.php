@@ -3303,10 +3303,10 @@ class TenantPermissionSeeder extends Seeder
             // 194
              [
                 'id' => 194,
-                'name' => 'Upgrade Request Decisions',
+                'name' => 'Asset Requisitions Decisions',
                 'description' => 'Upgrade or maintenance decisions based on asset reports',
                 'parent_id' => 193,
-                'menulink' => '/decision/asset_maintenance_decisions/upgrade_requests',  
+                'menulink' => '/decision/asset_maintenance_decisions/view_requests',  
                 'icon' => null,
                 'isconfiguration' => false,
                 'ismenu_list' => true,
@@ -3318,23 +3318,7 @@ class TenantPermissionSeeder extends Seeder
                 'updated_at' => $currentTime
             ],
 
-            // 195
-             [
-                'id' => 195,
-                'name' => 'Replace Request Decisions',
-                'description' => 'Upgrade or maintenance decisions based on asset reports',
-                'parent_id' => 193,
-                'menulink' => '/decision/asset_maintenance_decisions/replace_requests',  
-                'icon' => null,
-                'isconfiguration' => false,
-                'ismenu_list' => true,
-                'menu_order' => 7,
-                'isactive' => true,
-                'is_enable_for_web_app' => true,
-                'is_enable_for_mobile_app' => false,
-                'created_at' => $currentTime,
-                'updated_at' => $currentTime
-            ],
+           
 
             
         ];
